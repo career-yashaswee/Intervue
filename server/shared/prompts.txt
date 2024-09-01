@@ -1,0 +1,1 @@
+Generate a Course Tutorial on Following Details with Field as Course Name, Description, Along with Chapter Names, about, Duration: Category: 'Programming', Skill : Python, Level: Basic, Duration: 1 hours, NoOfChapters:5, in JSON Format
