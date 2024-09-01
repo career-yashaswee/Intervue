@@ -18,8 +18,8 @@ function ChapterList({ course }) {
   return (
     <div className="mt-3 font-medium text-xl">
       <h2 className="text-lg font-semibold md:text-2xl gradient-text border-b-2 border-primary pb-2">
-  Chapters
-</h2>
+        Chapters
+      </h2>
       <div className="mt-6">
         {loading
           ? // Skeleton Loading State
@@ -53,8 +53,12 @@ function ChapterList({ course }) {
                     {index + 1}
                   </h2>
                   <div className="flex flex-col gap-2">
-                    <h2 className="font-medium text-lg">{chapter?.chapterName}</h2>
-                    <p className="text-sm text-muted-foreground">{chapter?.about}</p>
+                    <h2 className="font-medium text-lg">
+                      {chapter?.chapterName}
+                    </h2>
+                    <p className="text-sm text-muted-foreground">
+                      {chapter?.about}
+                    </p>
                     <div className="flex items-center gap-2 text-primary">
                       <Clock className="w-4 h-4" />
                       <p className="text-sm">{chapter?.duration}</p>
@@ -62,12 +66,10 @@ function ChapterList({ course }) {
                   </div>
                 </div>
                 <CheckCircle className="text-3xl text-slate-700 h-4 w-4" />
-                
               </div>
             ))}
       </div>
-      <h2 className="border-b-2 border-primary pb-2 mb-4">
-</h2>
+      <h2 className="border-b-2 border-primary pb-2 mb-4"></h2>
     </div>
   );
 }

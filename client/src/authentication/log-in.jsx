@@ -18,7 +18,7 @@ import axios from "axios";
 import { Toggle } from "../components/ui/toggle";
 import { toast } from "sonner";
 import { LoadingButton } from "@/components/ui/loading-button";
-import { CircleAlert } from "lucide-react";
+import { CircleAlert, LogIn } from "lucide-react";
 
 export default function Login() {
 	const navigate = useNavigate();
@@ -62,7 +62,7 @@ export default function Login() {
 					<Card className="mx-auto max-w-sm">
 						<CardHeader>
 							<CardTitle className="text-xl font-bold gradient-text">
-								Login
+								<LogIn></LogIn> Login
 							</CardTitle>
 							<CardDescription className="text-balance text-muted-foreground">
 								Enter your username below to login to your account

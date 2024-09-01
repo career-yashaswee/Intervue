@@ -19,6 +19,8 @@ import { generateCourseLayout, saveCourseLayout } from "@/helpers/pathwayAPI";
 import LoadingDialog from "./components/LoadingDialog";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
+
+import { Spinner } from "@/components/ui/spinner";
 function CreateCourse() {
   const navigate = useNavigate();
   const { userCourseInput, setUserCourseInput } = useContext(UserInputContext);
