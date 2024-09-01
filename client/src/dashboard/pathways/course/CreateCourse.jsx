@@ -74,7 +74,7 @@ function CreateCourse() {
       userCourseInput?.addVideos +
       ", nChapters: " +
       userCourseInput?.nChapters +
-      " in pure JSON Format. Making, STRICTLY sure the fields are exactly same as mentioned above.";
+      " in pure JSON Format. Making, STRICTLY sure the fields are exactly in same case as mentioned above like in skillName, skill is lowercase and in Name, N is capital and follows lowercase.";
     const FINAL_PROMPT = BASIC_PROMPT + USER_INPUT_PROMPT;
 
     const result = await generateCourseLayout(FINAL_PROMPT);

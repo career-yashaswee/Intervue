@@ -14,7 +14,9 @@ import ChapterList from "./LayoutComponents/ChapterList";
 import { Button } from "@/components/ui/button";
 import { Bot, LayoutGrid } from "lucide-react";
 import { Spinner } from "@/components/ui/spinner";
+import { useNavigate } from "react-router-dom";
 function CourseLayout() {
+  const navigate = useNavigate();
   const userId = localStorage.getItem("_id");
   const courseId = localStorage.getItem("_pway");
   const [isLoading, setIsLoading] = useState(false);
@@ -46,11 +48,13 @@ function CourseLayout() {
           );
 
           const result = await markChapter(index, courseId, content, videoId);
+          navigate(`/course/${courseId}`);
         } catch (e) {
           console.log(e);
         }
       });
       const result = await publishCourseByCourseId(courseId);
+
     } catch (error) {
       console.log(error);
     } finally {
