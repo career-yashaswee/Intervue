@@ -12,7 +12,6 @@ export const listScenarios = async (userId) => {
 			},
 		};
 		const response = await axios.request(config);
-		console.log(response);
 		return response.data;
 	} catch (error) {
 		console.error("Error listing scenarios:", error);

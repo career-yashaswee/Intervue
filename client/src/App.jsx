@@ -16,79 +16,119 @@ import InputOTPForm from "./authentication/otp-input";
 import { ThemeProvider } from "@/components/theme-provider";
 import useSessionManager from "./clientSession/SessionManager";
 import SessionExpiryPopup from "./components/PopUp";
+import CourseLayout from "./dashboard/pathways/course/CourseLayout";
+import CreateCourseLayout from "./dashboard/pathways/course/CreateCourseLayout";
+import CreateCourse from "./dashboard/pathways/course/CreateCourse";
+import Course from "./dashboard/pathways/course/Course";
+import Learn from "./dashboard/pathways/course/learn/Learn";
 function App() {
-	const { isSessionExpired, setIsSessionExpired } = useSessionManager();
-	return (
-		<ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
-			<NetworkStatusProvider>
-				<Toaster position="bottom-right" richColors />
-				<NetworkStatusHandler />
-				<div className="App relative">
-					<Router>
-						<SessionExpiryPopup
-							show={isSessionExpired}
-							onClose={() => {
-								setIsSessionExpired(false);
-							}}
-							message={
-								isSessionExpired
-									? "Your session has expired. Sign-In again to continue."
-									: "You do not have access to this resource."
-							}
-						/>
-						<Routes>
-							<Route path="/" element={<Home />} />
-							<Route path="/log-in" element={<Login />} />
-							<Route path="/sign-up" element={<SignUp />} />
-							<Route path="/verify" element={<InputOTPForm />} />
-							<Route
-								path="/dashboard"
-								element={
-									<ProtectedRoute>
-										<Dashboard />
-									</ProtectedRoute>
-								}
-							/>
-							<Route
-								path="/dashboard/session"
-								element={
-									<ProtectedRoute>
-										<InterviewSession />
-									</ProtectedRoute>
-								}
-							/>
-							<Route
-								path="scenario"
-								element={
-									<ProtectedRoute>
-										<Scenario />
-									</ProtectedRoute>
-								}
-							/>
-							<Route
-								path="interview"
-								element={
-									<ProtectedRoute>
-										<Interview />
-									</ProtectedRoute>
-								}
-							/>
+  const { isSessionExpired, setIsSessionExpired } = useSessionManager();
+  return (
+    <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
+      <NetworkStatusProvider>
+        <Toaster position="bottom-right" richColors />
+        <NetworkStatusHandler />
+        <div className="App relative">
+          <Router>
+            <SessionExpiryPopup
+              show={isSessionExpired}
+              onClose={() => {
+                setIsSessionExpired(false);
+              }}
+              message={
+                isSessionExpired
+                  ? "Please log in again to continue using the app."
+                  : "You do not have access to this resource."
+              }
+            />
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/log-in" element={<Login />} />
+              <Route path="/sign-up" element={<SignUp />} />
+              <Route path="/verify" element={<InputOTPForm />} />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard/session"
+                element={
+                  <ProtectedRoute>
+                    <InterviewSession />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard/cc"
+                element={
+                  <ProtectedRoute>
+                    <CreateCourseLayout children={<CreateCourse />} />
+                  </ProtectedRoute>
+                }
+              />
 
-							<Route
-								path="setting"
-								element={
-									<ProtectedRoute>
-										<Setting />
-									</ProtectedRoute>
-								}
-							/>
-							<Route path="*" element={<Error />} />
-						</Routes>
-					</Router>
-				</div>
-			</NetworkStatusProvider>
-		</ThemeProvider>
-	);
+              <Route
+                path="/dashboard/cc/:courseId"
+                element={
+                  <ProtectedRoute>
+                    <CourseLayout />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/course/:courseId"
+                element={
+                  <ProtectedRoute>
+                    <Course />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/course/:courseId/learn"
+                element={
+                  <ProtectedRoute>
+                    <Learn />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="scenario"
+                element={
+                  <ProtectedRoute>
+                    <Scenario />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="interview"
+                element={
+                  <ProtectedRoute>
+                    <Interview />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="setting"
+                element={
+                  <ProtectedRoute>
+                    <Setting />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route path="*" element={<Error />} />
+            </Routes>
+          </Router>
+        </div>
+      </NetworkStatusProvider>
+    </ThemeProvider>
+  );
 }
 
 export default App;
