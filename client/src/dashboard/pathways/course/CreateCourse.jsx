@@ -54,11 +54,11 @@ function CreateCourse() {
   const GenerateCourseLayout = async () => {
     setLoading(true);
     const BASIC_PROMPT =
-      "Generate a Layout with Field as Category, Skill Name, Description, along with array of chapters, which have 'chapterName', 'about' and 'duration' with special emphasis on the inclusiveTopics and exempting the exclusiveTopics: ";
+      "Generate a Layout with Field as Category, Skill Name, Description, along with array of chapters, which have 'chapterName', 'about' and 'duration' with special emphasis on the inclusiveTopics and exempting the exclusiveTopics. ";
     const USER_INPUT_PROMPT =
       "category: " +
       userCourseInput?.category +
-      ", skill: " +
+      ", skillName: " +
       userCourseInput?.skill +
       ", description: " +
       userCourseInput?.description +
@@ -74,7 +74,7 @@ function CreateCourse() {
       userCourseInput?.addVideos +
       ", nChapters: " +
       userCourseInput?.nChapters +
-      " in JSON Format";
+      " in pure JSON Format. Making, STRICTLY sure the fields are exactly same as mentioned above.";
     const FINAL_PROMPT = BASIC_PROMPT + USER_INPUT_PROMPT;
 
     const result = await generateCourseLayout(FINAL_PROMPT);
