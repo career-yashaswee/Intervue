@@ -54,7 +54,6 @@ function CourseLayout() {
         }
       });
       const result = await publishCourseByCourseId(courseId);
-
     } catch (error) {
       console.log(error);
     } finally {
@@ -91,12 +90,13 @@ function CourseLayout() {
           </div>
         </Button>
       </div>
-      {isLoading && <div className="fixed inset-0 flex items-center justify-center bg-white/30 backdrop-blur-sm z-50">
-        <div className="flex flex-col items-center">
-          {/* Loading spinner using the shadcn Spinner component */}
-          <Spinner className="w-10 h-10 text-primary animate-spin"/>
+      {isLoading && (
+        <div className="fixed inset-0 flex items-center justify-center bg-white/30 backdrop-blur-sm z-50">
+          <div className="flex flex-col items-center">
+            <Spinner className="w-10 h-10 text-primary animate-spin" />
+          </div>
         </div>
-      </div>}
+      )}
     </div>
   );
 }

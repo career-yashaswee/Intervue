@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Bell,
+  Bot,
   CircleUser,
   Command,
   Layers2,
@@ -46,6 +47,7 @@ import Session from "./session/SessionDash";
 import DemoPage from "./session/page";
 import Pathway from "./pathways/Pathway";
 import { Progress } from "@/components/ui/progress";
+import Gemini from "./gemini/Gemini";
 
 function Dashboard() {
   const [selectedComponent, setSelectedComponent] = useState("Dashboard");
@@ -73,6 +75,8 @@ function Dashboard() {
         return <DashboardPage></DashboardPage>;
       case "Pathway":
         return <Pathway></Pathway>;
+      case "Coach":
+        return <Gemini />;
       case "Scenario":
         return (
           <div>
@@ -147,6 +151,18 @@ function Dashboard() {
                 >
                   <Route className="h-4 w-4" />
                   Pathway
+                </button>
+
+                <button
+                  onClick={() => setSelectedComponent("Coach")}
+                  className={`flex items-center gap-3  px-3 py-2 transition-all ${
+                    selectedComponent === "Pathway"
+                      ? "bg-primary text-muted"
+                      : "bg-muted text-primary hover:text-primary"
+                  }`}
+                >
+                  <Bot className="h-4 w-4" />
+                  Jobie Ai
                 </button>
                 <button
                   onClick={() => setSelectedComponent("Scenario")}
@@ -326,6 +342,7 @@ function Dashboard() {
                 </div>
               </form>
             </div>
+            <div></div>
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Button
