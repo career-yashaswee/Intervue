@@ -9,7 +9,7 @@ export const messageAdmin = async (info, message) => {
   const accounts = await web3.eth.getAccounts();
   const networkId = await web3.eth.net.getId();
   const AdminData = await Admin.networks[networkId];
-  const admin = new web3.eth.Contract(Admin.abi, AdminData?.address);
+  const admin = new web3.eth.Contract(Admin.abi, AdminData.address);
   const owner = await admin.methods?.owner().call();
 
   let key =
@@ -32,7 +32,7 @@ export const messageAdmin = async (info, message) => {
       .from(users)
       .where(
         and(eq(users.ethAddress, accounts[0]), eq(users.activeChat, owner))
-      )
+      );
 
     if (!userChatExists) {
       // Insert active chat for the user

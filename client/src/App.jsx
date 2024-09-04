@@ -45,6 +45,9 @@ import CreateCourseLayout from "./dashboard/pathways/course/CreateCourseLayout";
 import CreateCourse from "./dashboard/pathways/course/CreateCourse";
 import Course from "./dashboard/pathways/course/Course";
 import Learn from "./dashboard/pathways/course/learn/Learn";
+import MyProfile from "./dashboard/myProfile/MyProfile";
+import QRCodeScanner from "./augumented-reality/QRCodeScanner";
+import Base from "./home/Base";
 
 // function App() {
 //   const [isMeta, setisMeta] = useState(false);
@@ -234,7 +237,6 @@ function App() {
     const AdminData = await Admin.networks[networkId];
     if (AdminData) {
       const admin = new web3.eth.Contract(Admin.abi, AdminData.address);
-      console.log(admin);
       const isEmployee = await admin.methods.isEmployee(accounts[0]).call();
       const isOrganizationEndorser = await admin.methods
         .isOrganizationEndorser(accounts[0])
@@ -339,6 +341,14 @@ function App() {
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/verify" element={<InputOTPForm />} />
               <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <MyProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
                 path="/dashboard"
                 element={
                   <ProtectedRoute>
@@ -346,6 +356,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/dashboard/session"
                 element={
@@ -396,6 +407,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/interview"
                 element={
@@ -412,13 +424,17 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route
+              {/* <Route
                 path="/getemployee/:employee_address"
                 element={<GetEmployee />}
               />
-              <Route path="/getOrg/:orgAddress" element={<GetOrg />} />
+              <Route path="/getOrg/:orgAddress" element={<GetOrg />} /> */}
 
-              {/* <Route path="*" element={<Error />} /> */}
+              <Route path="*" element={<Error />} />
+              <Route
+                path="/profile/certificate/verify"
+                element={<QRCodeScanner />}
+              />
             </Routes>
           </BrowserRouter>
         </div>

@@ -29,7 +29,7 @@ const adminContract = new ethers.Contract(
 async function registerOrganization() {
   try {
     const tx = await adminContract.registerUser(
-      "0xBa04b91cc7aBF5E0DbDb7E5fd507657870Aefe56",
+      "0xBa04...",
       "Amazon", // Name
       "New York", // Location
       "Amazon is a parent organisation to Prime Videos", // Description
