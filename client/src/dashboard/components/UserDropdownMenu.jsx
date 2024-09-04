@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
 import { Navigate } from "react-router-dom";
 function UserDropdownMenu() {
-  const navigate = useNavigate;
+  const navigate = useNavigate();
   const logout = () => {
     localStorage.clear();
     navigate("/log-in");
