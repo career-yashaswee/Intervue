@@ -18,16 +18,6 @@ const QRCodeScanner = () => {
   const [permissionDenied, setPermissionDenied] = useState(false); // State for permission handling
   const navigate = useNavigate(); // For navigation
 
-  const myMarkerFoundFunction = () => {
-    console.log("Marker found!");
-    // do something when the marker is found
-  };
-
-  const myMarkerLostFunction = () => {
-    console.log("Marker lost!");
-    // do something when the marker is lost
-  };
-
   useEffect(() => {
     const startCamera = async () => {
       try {
@@ -55,13 +45,7 @@ const QRCodeScanner = () => {
 
     const scanQRCode = () => {
       if (!videoRef.current) return; // Ensure that videoRef is defined before using it
-      console.log("videoRef.current:", videoRef.current);
-      if (videoRef.current) {
-        console.log(
-          "videoRef.current.readyState:",
-          videoRef.current.readyState
-        );
-      }
+
       const canvas = document.createElement("canvas");
       const context = canvas.getContext("2d", { willReadFrequently: true });
 
@@ -156,36 +140,17 @@ const QRCodeScanner = () => {
         </Dialog>
       )}
       <video ref={videoRef} style={{ width: "100%" }} />
-      {/* <a-scene embedded arjs>
-        <a-marker
-          preset="barcode"
-          markerFound={myMarkerFoundFunction}
-          markerLost={myMarkerLostFunction}
-        >
-          {certificateDetails && (
-            <a-text
-              value={`Name: ${certificateDetails.name}\nScore: ${certificateDetails.score}\nTest Date: ${certificateDetails.testDate}\nOrganization: ${certificateDetails.organization}\nEndorser Address: ${certificateDetails.endorserAddress}\nReview: ${certificateDetails.review}`}
-              width="1.5"
-              align="center"
-              position="0 0.5 0"
-            ></a-text>
-          )}
-        </a-marker>
-        <a-entity camera></a-entity>
-      </a-scene> */}
       <a-scene
         embedded
-        arjs="sourceType: webcam; debugUIEnabled: false; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
+        arjs="sourceType: webcam; debugUIEnabled: true; detectionMode: mono_and_matrix; matrixCodeType: 3x3;"
       >
-        <a-assets></a-assets>
-
         <a-marker type="barcode" value="6">
-          <a-box position="0 0.5 0" color="yellow"></a-box>
+          <a-entity
+            position="0 0 0"
+            scale="0.05 0.05 0.05"
+            gltf-model="your-server/https://raw.githack.com/AR-js-org/AR.js/master/aframe/examples/image-tracking/nft/trex/scene.gltf"
+          ></a-entity>
         </a-marker>
-
-        {/* <a-marker id="animated-marker" type="barcode" value="4">
-          <a-entity gltf-model="#animated-asset" scale="2"></a-entity>
-        </a-marker> */}
         <a-entity camera></a-entity>
       </a-scene>
     </div>
