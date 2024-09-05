@@ -27,12 +27,12 @@ import ProtectedRoute from "./routes/ProtectedRoute";
 import Login from "./authentication/log-in";
 import Dashboard from "./dashboard/Dashboard";
 import Home from "./home/Home";
-import Scenario from "./dashboard/scenario/Scenario";
-import Interview from "./dashboard/interview/Interview";
+import Scenario from "./dashboard/interview/components/scenario/Scenario";
+import Interview from "./dashboard/interview/InterviewPage";
 import SignUp from "./authentication/sign-up";
 import Error from "./components/Error";
 import { Setting } from "./dashboard/setting/Setting";
-import InterviewSession from "./dashboard/session/Session";
+import InterviewSession from "./dashboard/interview/components/session/Session";
 import { NetworkStatusProvider } from "./context/NetworkStatusContext";
 import { Toaster } from "sonner";
 import NetworkStatusHandler from "./helpers/NetworkStatusHandler";
@@ -45,6 +45,10 @@ import CreateCourseLayout from "./dashboard/pathways/course/CreateCourseLayout";
 import CreateCourse from "./dashboard/pathways/course/CreateCourse";
 import Course from "./dashboard/pathways/course/Course";
 import Learn from "./dashboard/pathways/course/learn/Learn";
+import MyProfile from "./dashboard/myProfile/MyProfile";
+import Base from "./home/Base";
+import Community from "./dashboard/community/Community";
+import InterviewPage from "./dashboard/interview/InterviewPage";
 
 // function App() {
 //   const [isMeta, setisMeta] = useState(false);
@@ -234,7 +238,6 @@ function App() {
     const AdminData = await Admin.networks[networkId];
     if (AdminData) {
       const admin = new web3.eth.Contract(Admin.abi, AdminData.address);
-      console.log(admin);
       const isEmployee = await admin.methods.isEmployee(accounts[0]).call();
       const isOrganizationEndorser = await admin.methods
         .isOrganizationEndorser(accounts[0])
@@ -339,6 +342,22 @@ function App() {
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/verify" element={<InputOTPForm />} />
               <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <MyProfile />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/community"
+                element={
+                  <ProtectedRoute>
+                    <Community />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
                 path="/dashboard"
                 element={
                   <ProtectedRoute>
@@ -346,11 +365,12 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route
-                path="/dashboard/session"
+                path="/mock"
                 element={
                   <ProtectedRoute>
-                    <InterviewSession />
+                    <InterviewPage />
                   </ProtectedRoute>
                 }
               />
@@ -396,6 +416,7 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
               <Route
                 path="/interview"
                 element={
@@ -412,13 +433,13 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route
+              {/* <Route
                 path="/getemployee/:employee_address"
                 element={<GetEmployee />}
               />
-              <Route path="/getOrg/:orgAddress" element={<GetOrg />} />
+              <Route path="/getOrg/:orgAddress" element={<GetOrg />} /> */}
 
-              {/* <Route path="*" element={<Error />} /> */}
+              <Route path="*" element={<Error />} />
             </Routes>
           </BrowserRouter>
         </div>

@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Bell,
+  BookMarked,
   Bot,
+  BriefcaseBusiness,
   CircleUser,
   Command,
-  HeartHandshake,
+  FolderGit2,
   Layers2,
+  LibraryBig,
   LineChart,
   Loader2,
   Menu,
@@ -16,49 +19,35 @@ import {
   Radio,
   Route,
   Search,
+  Smile,
+  SquareAsterisk,
+  SquareChevronLeft,
+  Target,
   Zap,
-  Eye,
-  ScanSearch,
-  Telescope,
-  ScanText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Scenario from "./interview/components/scenario/Scenario";
-import Interview from "./interview/InterviewPage";
-import Resume from "./resume/Resume";
+
 import { getUserId } from "@/helpers/api";
-import { DashboardPage } from "./DashboardPage";
-import InterviewPage from "./interview/InterviewPage";
 
-import { useNavigate } from "react-router-dom";
+import DashboardHeader from "../components/DashboardHeader";
+import UpgradeCard from "../components/UpgradeCard";
 
-import DemoPage from "./interview/components/session/page";
-import Pathway from "./pathways/Pathway";
-import Gemini from "./gemini/Gemini";
-import DashboardHeader from "./components/DashboardHeader";
-import UpgradeCard from "./components/UpgradeCard";
-import Community from "./community/Community";
-import Insights from "./insights/Insights";
-import { FaChartArea } from "react-icons/fa";
-import Discover from "./discover/Discover";
+import Session from "./components/session/Session";
+import Scenario from "./components/scenario/Scenario";
+import Interview from "./components/interview/Interview";
+import Report from "./components/report/Report";
 
 const navItems = [
-  { label: "Dashboard", icon: <Command className="h-4 w-4" /> },
-  { label: "Discover", icon: <Telescope className="h-4 w-4" /> },
-  { label: "Pathway", icon: <Route className="h-4 w-4" /> },
-  { label: "Coach", icon: <Bot className="h-4 w-4" />, name: "Jobie Ai" },
-  // { label: "Scenario", icon: <Layers2 className="h-4 w-4" /> },
-  { label: "Insights", icon: <Eye className="h-4 w-4" /> },
-  { label: "Interview", icon: <MessagesSquare className="h-4 w-4" /> },
-
-  { label: "Resume", icon: <Paperclip className="h-4 w-4" /> },
-  { label: "Community", icon: <HeartHandshake className="h-4 w-4" /> },
+  { label: "Scenario", icon: <SquareAsterisk className="h-4 w-4" /> },
+  { label: "Session", icon: <Smile className="h-4 w-4" /> },
+  { label: "Interview", icon: <BriefcaseBusiness className="h-4 w-4" /> },
+  { label: "Report", icon: <Smile className="h-4 w-4" /> },
 ];
 
-function Dashboard() {
-  const navigate = useNavigate();
-  const [selectedComponent, setSelectedComponent] = useState("Dashboard");
+function InterviewPage() {
+  const [selectedComponent, setSelectedComponent] = useState("Scenario");
   const [isLoading, setIsLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   getUserId(localStorage.getItem("token"));
   const userId = localStorage.getItem("_id");
   useEffect(() => {
@@ -67,14 +56,10 @@ function Dashboard() {
   }, [selectedComponent]);
 
   const componentMap = {
-    Dashboard: <DashboardPage />,
-    Discover: <Discover />,
-    Pathway: <Pathway />,
-    Coach: <Gemini />,
-    Insights: <Insights />,
-    Interview: <InterviewPage />,
-    Resume: <Resume />,
-    Community: <Community />,
+    Scenario: <Scenario userId={userId}></Scenario>,
+    Session: <Session></Session>,
+    Interview: <Interview></Interview>,
+    Report: <Report userId={userId}></Report>,
   };
 
   const renderComponent = () => {
@@ -86,16 +71,7 @@ function Dashboard() {
       );
     }
 
-    if (selectedComponent === "Community") {
-      navigate("/community");
-    }
-    if (selectedComponent === "Interview") {
-      navigate("/mock");
-    }
-
-    const SelectedComponent = componentMap[selectedComponent] || (
-      <DashboardPage />
-    );
+    const SelectedComponent = componentMap[selectedComponent] || <Scenario />;
     return SelectedComponent;
   };
 
@@ -128,11 +104,13 @@ function Dashboard() {
                         ? "bg-primary text-muted"
                         : "bg-muted text-primary hover:text-primary"
                     } ${
-                      index === 0 ? "rounded-tl-[12px] rounded-tr-[12px]" : "" // Rounded top for first item
+                      index === 0 ? "rounded-tl-[12px] rounded-tr-[12px]" : ""
+                      // Rounded top for first item
                     } ${
                       index === navItems.length - 1
-                        ? "rounded-bl-[12px] rounded-br-[12px]" // Rounded bottom for last item
-                        : ""
+                        ? "rounded-bl-[12px] rounded-br-[12px]"
+                        : // Rounded bottom for last item
+                          ""
                     }`}
                   >
                     {item.icon}
@@ -145,12 +123,12 @@ function Dashboard() {
           </div>
         </div>
         <div className="flex flex-col">
-          <DashboardHeader view={"Dashboard"}></DashboardHeader>
-          {renderComponent()}
+          <DashboardHeader view={"Interview"}></DashboardHeader>
+          <div className="">{renderComponent()}</div>
         </div>
       </div>{" "}
     </div>
   );
 }
 
-export default Dashboard;
+export default InterviewPage;

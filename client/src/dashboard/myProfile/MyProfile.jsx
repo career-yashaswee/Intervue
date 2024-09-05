@@ -2,11 +2,14 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Bell,
+  BookMarked,
   Bot,
+  BriefcaseBusiness,
   CircleUser,
   Command,
-  HeartHandshake,
+  FolderGit2,
   Layers2,
+  LibraryBig,
   LineChart,
   Loader2,
   Menu,
@@ -16,49 +19,41 @@ import {
   Radio,
   Route,
   Search,
+  Smile,
+  SquareAsterisk,
+  SquareChevronLeft,
+  Target,
   Zap,
-  Eye,
-  ScanSearch,
-  Telescope,
-  ScanText,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Scenario from "./interview/components/scenario/Scenario";
-import Interview from "./interview/InterviewPage";
-import Resume from "./resume/Resume";
+
 import { getUserId } from "@/helpers/api";
-import { DashboardPage } from "./DashboardPage";
-import InterviewPage from "./interview/InterviewPage";
 
-import { useNavigate } from "react-router-dom";
+import DashboardHeader from "../components/DashboardHeader";
+import UpgradeCard from "../components/UpgradeCard";
 
-import DemoPage from "./interview/components/session/page";
-import Pathway from "./pathways/Pathway";
-import Gemini from "./gemini/Gemini";
-import DashboardHeader from "./components/DashboardHeader";
-import UpgradeCard from "./components/UpgradeCard";
-import Community from "./community/Community";
-import Insights from "./insights/Insights";
-import { FaChartArea } from "react-icons/fa";
-import Discover from "./discover/Discover";
+import AboutProfile from "./components/AboutProfile";
+import ExperienceProfile from "./components/ExperienceProfile";
+import EducationProfile from "./components/EducationProfile";
+import CoursesProfile from "./components/CoursesProfile";
+import SkillsProfile from "./components/SkillsProfile";
+import ProjectProfile from "./components/ProjectProfile";
+import HeaderProfile from "./components/HeaderProfile";
 
 const navItems = [
-  { label: "Dashboard", icon: <Command className="h-4 w-4" /> },
-  { label: "Discover", icon: <Telescope className="h-4 w-4" /> },
-  { label: "Pathway", icon: <Route className="h-4 w-4" /> },
-  { label: "Coach", icon: <Bot className="h-4 w-4" />, name: "Jobie Ai" },
-  // { label: "Scenario", icon: <Layers2 className="h-4 w-4" /> },
-  { label: "Insights", icon: <Eye className="h-4 w-4" /> },
-  { label: "Interview", icon: <MessagesSquare className="h-4 w-4" /> },
-
-  { label: "Resume", icon: <Paperclip className="h-4 w-4" /> },
-  { label: "Community", icon: <HeartHandshake className="h-4 w-4" /> },
+  { label: "Cover", icon: <Smile className="h-4 w-4" /> },
+  { label: "About", icon: <SquareAsterisk className="h-4 w-4" /> },
+  { label: "Experience", icon: <BriefcaseBusiness className="h-4 w-4" /> },
+  { label: "Education", icon: <LibraryBig className="h-4 w-4" /> },
+  { label: "Projects", icon: <FolderGit2 className="h-4 w-4" /> },
+  { label: "Courses", icon: <BookMarked className="h-4 w-4" /> },
+  { label: "Skills", icon: <Target className="h-4 w-4" /> },
 ];
 
-function Dashboard() {
-  const navigate = useNavigate();
-  const [selectedComponent, setSelectedComponent] = useState("Dashboard");
+function MyProfile() {
+  const [selectedComponent, setSelectedComponent] = useState("Cover");
   const [isLoading, setIsLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
   getUserId(localStorage.getItem("token"));
   const userId = localStorage.getItem("_id");
   useEffect(() => {
@@ -67,14 +62,19 @@ function Dashboard() {
   }, [selectedComponent]);
 
   const componentMap = {
-    Dashboard: <DashboardPage />,
-    Discover: <Discover />,
-    Pathway: <Pathway />,
-    Coach: <Gemini />,
-    Insights: <Insights />,
-    Interview: <InterviewPage />,
-    Resume: <Resume />,
-    Community: <Community />,
+    Cover: <HeaderProfile isLoading={isLoading}></HeaderProfile>,
+    About: (
+      <AboutProfile
+        isLoading={isLoading}
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+      ></AboutProfile>
+    ),
+    Experience: <ExperienceProfile isLoading={isLoading} />,
+    Education: <EducationProfile isLoading={isLoading} />,
+    Projects: <ProjectProfile isLoading={isLoading} />,
+    Courses: <CoursesProfile isLoading={isLoading} />,
+    Skills: <SkillsProfile isLoading={isLoading} />,
   };
 
   const renderComponent = () => {
@@ -86,15 +86,8 @@ function Dashboard() {
       );
     }
 
-    if (selectedComponent === "Community") {
-      navigate("/community");
-    }
-    if (selectedComponent === "Interview") {
-      navigate("/mock");
-    }
-
     const SelectedComponent = componentMap[selectedComponent] || (
-      <DashboardPage />
+      <AboutProfile />
     );
     return SelectedComponent;
   };
@@ -105,10 +98,7 @@ function Dashboard() {
         <div className="hidden border-r bg-muted/40 md:block">
           <div className="flex h-full max-h-screen flex-col gap-2">
             <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-              <Link
-                to="/dashboard"
-                className="flex items-center gap-2 font-semibold"
-              >
+            <Link to="/dashboard" className="flex items-center gap-2 font-semibold">
                 <MessageCircleDashed className="h-6 w-6" />
                 <span className="">Intervue</span>
               </Link>
@@ -145,12 +135,12 @@ function Dashboard() {
           </div>
         </div>
         <div className="flex flex-col">
-          <DashboardHeader view={"Dashboard"}></DashboardHeader>
-          {renderComponent()}
+          <DashboardHeader view={"My Profile"}></DashboardHeader>
+          <div className="p-6">{renderComponent()}</div>
         </div>
       </div>{" "}
     </div>
   );
 }
 
-export default Dashboard;
+export default MyProfile;

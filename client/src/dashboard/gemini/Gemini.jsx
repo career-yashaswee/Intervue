@@ -4,7 +4,7 @@ import React from "react";
 
 function Gemini() {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-white/30 backdrop-blur-sm z-50">
+    <div className="flex">
       <Sidebar />
       <Main />
     </div>
