@@ -9,6 +9,14 @@ const __dirname = dirname(__filename);
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  // server: {
+  //   host: "192.168.122.219", // or '0.0.0.0' to allow access from any network
+  //   port: 5173,
+  //   https: {
+  //     key: "./server.key", // Path to your private key
+  //     cert: "./server.crt", // Path to your certificate
+  //   },
+  // },
   plugins: [react(), commonjs()],
   optimizeDeps: {
     esbuildOptions: {
