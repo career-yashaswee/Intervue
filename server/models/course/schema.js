@@ -18,7 +18,11 @@ const CourseList = pgTable("courseList", {
   addVideos: varchar("addVideos").notNull(),
   createdBy: varchar("createdBy").notNull(),
   publish: boolean("publish").default(false),
-  banner: varchar("banner").notNull().default("https://storage.cloud.google.com/intervue-resume/66a4f031f21f99255c1c24bb/course.png"),
+  banner: varchar("banner")
+    .notNull()
+    .default(
+      "https://storage.cloud.google.com/intervue-resume/66a4f031f21f99255c1c24bb/course.png"
+    ),
 });
 
 const Chapters = pgTable("chapters", {

@@ -12,12 +12,15 @@ const resumeRoutes = require("./routes/resume");
 const interviewerRoutes = require("./routes/interviewer");
 const courseRoutes = require("./routes/course");
 const chapterRoutes = require("./routes/chapter");
-const bodyParser = require("body-parser");
+const documentRoutes = require("./routes/document");
+const jobRoutes = require("./routes/job");
+const insightsRoutes = require("./routes/insights");
 // --- ROUTES ---
+
+const bodyParser = require("body-parser");
 
 const app = express();
 const port = process.env.DEV_PORT || 3000;
-
 
 // Use CORS middleware
 app.use(cors());
@@ -26,7 +29,7 @@ app.use(cors());
 connectDB();
 
 // Middleware to parse JSON bodies
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 // Define routes
 app.use("/auth", authRoutes);
@@ -38,6 +41,9 @@ app.use("/resume", resumeRoutes);
 app.use("/interviewer", interviewerRoutes);
 app.use("/course", courseRoutes);
 app.use("/chapter", chapterRoutes);
+app.use("/document", documentRoutes);
+app.use("/job", jobRoutes);
+app.use("/insight", insightsRoutes);
 
 // Configure multer for file uploads (if needed)
 // const upload = multer({ dest: 'uploads/' });
