@@ -49,6 +49,12 @@ import MyProfile from "./dashboard/myProfile/MyProfile";
 import Base from "./home/Base";
 import Community from "./dashboard/community/Community";
 import InterviewPage from "./dashboard/interview/InterviewPage";
+import Flow from "./home/start/Flow";
+import JobDashboard from "./jobs/JobDashboard";
+import CompetencyDiagnostic from "./competency/CompetencyDiagnostic";
+import JobPage from "./jobs/JobPage";
+import JobTrackerDashboard from "./jobs/JobTrackerDashboard";
+import NextBestStepWidget from "./insights/next-best-steps/NextBestStepWidget";
 
 // function App() {
 //   const [isMeta, setisMeta] = useState(false);
@@ -341,6 +347,9 @@ function App() {
               <Route path="/log-in" element={<Login />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/verify" element={<InputOTPForm />} />
+
+              <Route path="/flow" element={<Flow />} />
+
               <Route
                 path="/profile"
                 element={
@@ -358,6 +367,41 @@ function App() {
                 }
               />
               <Route
+                path="/jobs/:jobId"
+                element={
+                  <ProtectedRoute>
+                    <JobPage />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard/interviews/track"
+                element={
+                  <ProtectedRoute>
+                    <JobTrackerDashboard />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/dashboard/next-step"
+                element={
+                  <ProtectedRoute>
+                    <NextBestStepWidget />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/diagnostic"
+                element={
+                  <ProtectedRoute>
+                    <CompetencyDiagnostic />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
                 path="/dashboard"
                 element={
                   <ProtectedRoute>
@@ -374,6 +418,8 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
+              <Route path="/jobs" element={<JobDashboard />} />
               <Route
                 path="/dashboard/cc"
                 element={

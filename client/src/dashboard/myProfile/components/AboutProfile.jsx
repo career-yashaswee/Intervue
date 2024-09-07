@@ -26,9 +26,7 @@ import {
   Trash,
 } from "lucide-react";
 
-
 function AboutProfile({ isLoading, isEditing, setIsEditing }) {
-
   const [expanded, setExpanded] = useState(false);
   const fullText =
     "Hi, I'm Yashaswee Kesharwani, currently pursuing a Bachelor's degree in Computer Science and Engineering from Lovely Professional University, minoring in Data Science, expected to graduate in 2026. My academic background is enriched with a solid understanding of Full Stack Web Development, Machine Learning/Artificial Intelligence, alongside proficiency in Java and Python. As the founder of Final Take, a data-first marketing firm, I have successfully driven brand value and sales for startups and content creators through innovative, data-driven ad optimization strategies. This role has sharpened my ability to analyze market dynamics, deploy effective marketing tactics, and generate significant revenue growth. I'm always eager to connect with like-minded professionals and explore opportunities to collaborate on exciting projects. Let's connect and see how we can make a difference together!";

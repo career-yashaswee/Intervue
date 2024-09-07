@@ -40,3 +40,13 @@ export const PATHWAY_API_URI = {
   PUBLISH_COURSE_BY_ID: `${BASE_URL}/course/publish`,
   MARK_CHAPTER: `${BASE_URL}/chapter/chapter`,
 };
+
+export const JOBS_API_URI = {
+  FETCH_ALL_JOBS: `${BASE_URL}/job`,
+  FETCH_JOB_BY_ID: (jobId) => `${BASE_URL}/job/${jobId}`,
+};
+
+export const INSIGHTS_API_URI = {
+  JOB_POSTINGS_OVER_TIME: (interval) =>
+    `${BASE_URL}/insight/job/postdate?interval=${interval}`,
+};
