@@ -22,6 +22,7 @@ import {
   Telescope,
   ScanText,
   BriefcaseBusiness,
+  ChevronLeftCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Scenario from "./interview/components/scenario/Scenario";
@@ -42,6 +43,7 @@ import Community from "./community/Community";
 import Insights from "./insights/Insights";
 import { FaChartArea } from "react-icons/fa";
 import JobsPageLayout from "@/jobs/JobPageLayout";
+import { name } from "@stream-io/video-react-sdk";
 
 const navItems = [
   { label: "Dashboard", icon: <Command className="h-4 w-4" /> },
@@ -54,6 +56,11 @@ const navItems = [
 
   { label: "Resume", icon: <Paperclip className="h-4 w-4" /> },
   { label: "Community", icon: <HeartHandshake className="h-4 w-4" /> },
+  {
+    label: "Back",
+    icon: <ChevronLeftCircle className="h-4 w-4" />,
+    name: "Back to Home",
+  },
 ];
 
 function Dashboard() {
@@ -102,6 +109,9 @@ function Dashboard() {
       navigate("/resume");
     }
 
+    if (selectedComponent === "Back") {
+      navigate("/");
+    }
     const SelectedComponent = componentMap[selectedComponent] || (
       <DashboardPage />
     );

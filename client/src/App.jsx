@@ -59,6 +59,7 @@ import AnimateR from "./routes/AnimatedRouter";
 import { AuroraBackgroundDemo } from "./components/example/aurora-background-demo";
 import BackgroundBeamsDemo from "./components/example/background-beams-demo";
 import AppleCardsCarouselDemo from "./components/example/apple-cards-carousel-demo-2";
+import FlowLayout from "./home/start/FlowLayout";
 // import VideoCall from "./dashboard/community/mentor/components/VideoCall";
 
 // function App() {
@@ -348,7 +349,7 @@ function App() {
             />
 
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/" element={<Base />} />
               <Route path="/log-in" element={<Login />} />
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/verify" element={<InputOTPForm />} />
@@ -357,7 +358,9 @@ function App() {
                 path="/flow"
                 element={
                   <AnimateR>
-                    <Flow />
+                    <FlowLayout>
+                      <Flow />
+                    </FlowLayout>
                   </AnimateR>
                 }
               />

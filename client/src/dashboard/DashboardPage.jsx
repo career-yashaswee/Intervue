@@ -2,6 +2,7 @@
 
 import { getHours } from "date-fns";
 import NPathwayCard from "./components/NPathwayCard";
+import NextBestStepWidget from "@/insights/next-best-steps/NextBestStepWidget";
 // import {
 // 	Card,
 // 	CardDescription,
@@ -28,13 +29,14 @@ export function DashboardPage() {
           {`Good ${greeting},`}&nbsp;
         </h1>
         <p className="text-4xl font-bold gradient-text">
-          {hey === undefined ? "Cloudy" : hey}
+          {hey == undefined ? "Cloudy" : hey}
         </p>
       </div>
       <p className="text-muted-foreground font-medium mt-2">
         Here's a Snapshot of your Career
       </p>
       <NPathwayCard></NPathwayCard>
+      <NextBestStepWidget></NextBestStepWidget>
     </main>
   );
 }

@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Bell,
   BookMarked,
   Bot,
   BriefcaseBusiness,
+  ChevronLeftCircle,
   CircleUser,
   Command,
   FolderGit2,
@@ -48,9 +49,16 @@ const navItems = [
   { label: "Projects", icon: <FolderGit2 className="h-4 w-4" /> },
   { label: "Courses", icon: <BookMarked className="h-4 w-4" /> },
   { label: "Skills", icon: <Target className="h-4 w-4" /> },
+  {
+    label: "Back",
+    icon: <ChevronLeftCircle className="h-4 w-4" />,
+    name: "Back to Dashboard",
+  },
 ];
 
 function MyProfile() {
+  const navigate = useNavigate();
+
   const [selectedComponent, setSelectedComponent] = useState("Cover");
   const [isLoading, setIsLoading] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
@@ -75,6 +83,7 @@ function MyProfile() {
     Projects: <ProjectProfile isLoading={isLoading} />,
     Courses: <CoursesProfile isLoading={isLoading} />,
     Skills: <SkillsProfile isLoading={isLoading} />,
+    Back: <div>Back</div>,
   };
 
   const renderComponent = () => {
@@ -89,6 +98,11 @@ function MyProfile() {
     const SelectedComponent = componentMap[selectedComponent] || (
       <AboutProfile />
     );
+
+    if (selectedComponent == "Back") {
+      navigate("/dashboard");
+    }
+
     return SelectedComponent;
   };
 
@@ -98,7 +112,10 @@ function MyProfile() {
         <div className="hidden border-r bg-muted/40 md:block">
           <div className="flex h-full max-h-screen flex-col gap-2">
             <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
-            <Link to="/dashboard" className="flex items-center gap-2 font-semibold">
+              <Link
+                to="/dashboard"
+                className="flex items-center gap-2 font-semibold"
+              >
                 <MessageCircleDashed className="h-6 w-6" />
                 <span className="">Intervue</span>
               </Link>

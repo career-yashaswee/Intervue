@@ -40,7 +40,7 @@ import MessagePage from "./components/MessagePage/MessagePage";
 import NotificationsPage from "./components/NotificationsPage";
 import SpacePage from "./components/SpacePage/SpacePage";
 import FollowingPage from "./components/FollowingPage";
-import Mentor from "./mentor/Mentor";
+import Mentor from "../mentor/Mentor";
 import WebinarDashboard from "./webinars/WebinarDashboard";
 
 const navItems = [

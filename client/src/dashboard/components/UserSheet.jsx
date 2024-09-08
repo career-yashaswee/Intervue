@@ -107,10 +107,6 @@ function UserSheet() {
             </CardHeader>
             <CardContent>
               <CheckoutButton />
-
-              <Button size="sm" className="w-full">
-                Upgrade
-              </Button>
             </CardContent>
           </Card>
         </div>

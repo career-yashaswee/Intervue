@@ -1,8 +1,11 @@
 import { useDropzone } from "react-dropzone";
-import { uploadResume, listResume, downloadResume } from "@/helpers/resumeAPI";
+import { uploadResume, uploadResumeOnboarding } from "@/helpers/resumeAPI";
 import { toast } from "sonner";
 import { useEffect, useState, useCallback } from "react";
 import { Button } from "@/components/ui/button";
+import { FileUpload } from "@/components/ui/file-upload";
+import { OBInputContext } from "@/context/OBInputContext";
+
 import {
   Card,
   CardContent,
@@ -10,30 +13,41 @@ import {
   CardTitle,
   CardFooter,
 } from "@/components/ui/card";
-
+import { useContext } from "react";
 import { DownloadIcon, Loader2 } from "lucide-react";
 // import * as z from "zod";
 // import { Info } from "lucide-react";
 
 function UploadResume() {
+  const [isDropped, setIsDropped] = useState(false);
   const [objects, setObjects] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [genNum, setGenNum] = useState(null);
 
+  const { OBInput, setOBInput } = useContext(OBInputContext);
+
+  const gsession = localStorage.getItem("gsession");
+
   const handleUpload = async (acceptedFiles) => {
     const file = acceptedFiles[0];
     if (file) {
       try {
-        await uploadResume(file)
+        await uploadResumeOnboarding(file, gsession)
           .then((response) => {
             toast.success("File Uploaded Successfully");
             setGenNum(response.data.bytes);
+            setOBInput((prev) => ({
+              ...prev,
+              file: file,
+            }));
           })
           .catch((error) => {
+            console.log(error);
             toast.error("Something went Wrong", error);
           });
       } catch (error) {
+        setIsDropped(false);
         console.log(error);
         toast.error("Something went Wrong");
       }
@@ -41,6 +55,7 @@ function UploadResume() {
   };
 
   const onDrop = useCallback((acceptedFiles) => {
+    setIsDropped(true);
     handleUpload(acceptedFiles);
   }, []);
 
@@ -57,13 +72,13 @@ function UploadResume() {
     const fetchObjects = async () => {
       setLoading(true);
       try {
-        const response = await listResume(userId);
-        setObjects(response.data.array);
+        // const response = await listResume(userId);
+        // setObjects(response.data.array);
       } catch (err) {
         if (err.response && err.response.status === 404) {
-          setObjects([]);
+          // setObjects([]);
         } else {
-          setError(err.message);
+          // setError(err.message);
         }
       } finally {
         setLoading(false);
@@ -86,13 +101,14 @@ function UploadResume() {
   }
 
   return (
-    <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm gap-1 text-center pb-8 pt-8">
-      <div {...getRootProps({ className: "dropzone" })}>
+    <div className="w-full max-w-screen-lg mx-auto min-h-96 bg-white dark:bg-black border-neutral-200 dark:border-neutral-800">
+      {/* <div {...getRootProps({ className: "dropzone" })}>
         <input {...getInputProps()} name="file" />
         <p className="text-sm text-muted-foreground">
           Click or Drag here your resume to upload{" "}
         </p>
-      </div>
+      </div> */}
+      <FileUpload onChange={handleUpload} />
     </div>
   );
 }

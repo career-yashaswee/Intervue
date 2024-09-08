@@ -38,11 +38,13 @@ import UpgradeCard from "@/dashboard/components/UpgradeCard";
 import SearchJobs from "./components/SearchJobs";
 import SavedJobs from "./components/JobSaved";
 import JobTracker from "./components/JobTrackerDashboard";
+import MarketAnalytics from "./components/MarketAnalytics";
 
 const navItems = [
   { label: "Search", icon: <Search className="h-4 w-4" /> },
   { label: "Saved", icon: <Pin className="h-4 w-4" /> },
   { label: "Application", icon: <PanelsTopLeft className="h-4 w-4" /> },
+  { label: "Analytics", icon: <LineChart className="h-4 w-4" /> },
 ];
 
 function JobsPageLayout() {
@@ -60,6 +62,7 @@ function JobsPageLayout() {
     Search: <SearchJobs></SearchJobs>,
     Saved: <SavedJobs></SavedJobs>,
     Application: <JobTracker></JobTracker>,
+    Analytics: <MarketAnalytics></MarketAnalytics>,
   };
 
   const renderComponent = () => {
@@ -124,6 +127,7 @@ function JobsPageLayout() {
           <DashboardHeader
             view={"Jobs"}
             isJobieRequired="true"
+            icon={<BriefcaseBusiness className="h-5 w-5"></BriefcaseBusiness>}
           ></DashboardHeader>
           <div className="">{renderComponent()}</div>
         </div>

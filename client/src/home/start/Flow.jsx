@@ -29,13 +29,13 @@ import RateYourself from "./components/RateYourself";
 import Overview from "./components/Overview";
 
 import { Spinner } from "@/components/ui/spinner";
-import { FlowContext } from "./context/FlowContext";
+import { OBInputContext } from "@/context/OBInputContext";
 
 function Flow() {
   const navigate = useNavigate();
-  // const { flowInput, setFlowInput } = useContext(FlowContext);
+  const { OBInput, setOBInput } = useContext(OBInputContext);
   const [loading, setLoading] = useState(false);
-  useEffect(() => {}, []);
+  useEffect(() => {}, [OBInput]);
 
   const StepperOptions = [
     {
@@ -55,7 +55,7 @@ function Flow() {
     },
     {
       id: 4,
-      name: "Rate Yourself",
+      name: "Rate",
       icon: <Star />,
     },
     {
@@ -129,27 +129,25 @@ function Flow() {
   };
 
   const checkStatus = () => {
-    // if (
-    //   activeIndex == 0 &&
-    //   (userCourseInput?.category == undefined ||
-    //     userCourseInput?.category?.length == 0)
-    // ) {
-    //   return true;
-    // }
-    // if (
-    //   activeIndex == 1 &&
-    //   (userCourseInput?.skill?.length == 0 ||
-    //     userCourseInput?.skill == undefined)
-    // ) {
-    //   return true;
-    // }
-    // if (
-    //   activeIndex == 1 &&
-    //   (userCourseInput?.description?.length == 0 ||
-    //     userCourseInput?.description == undefined)
-    // ) {
-    //   return true;
-    // }
+    if (
+      activeIndex == 0 &&
+      (OBInput?.file == undefined || OBInput?.file?.length == 0)
+    ) {
+      return false;
+    }
+
+    if (
+      activeIndex == 1 &&
+      (OBInput?.goal?.length == 0 || OBInput?.goal == undefined)
+    ) {
+      return true;
+    }
+    if (
+      activeIndex == 1 &&
+      (OBInput?.time?.length == 0 || OBInput?.time == undefined)
+    ) {
+      return true;
+    }
     // if (
     //   activeIndex == 2 &&
     //   (userCourseInput?.inclusiveTopic?.length == 0 ||
@@ -197,7 +195,7 @@ function Flow() {
 
   return (
     <div>
-      <div class="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
+      <div className="absolute inset-0 -z-10 h-full w-full bg-white bg-[linear-gradient(to_right,#8080800a_1px,transparent_1px),linear-gradient(to_bottom,#8080800a_1px,transparent_1px)] bg-[size:14px_24px]"></div>
       <div className="flex flex-col items-center min-h-screen">
         <h2 className="text-lg md:text-4xl font-bold gradient-text mb-10 mt-8"></h2>
         <div>
@@ -216,7 +214,7 @@ function Flow() {
                   {/* Stage Name */}
                   <div
                     className={`mt-2 text-center text-sm text-gray-300 ${
-                      activeIndex >= index ? "text-slate-950 font-bold" : ""
+                      activeIndex >= index ? "text-slate-950" : ""
                     }`}
                   >
                     {item.name}

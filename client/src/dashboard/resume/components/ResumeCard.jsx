@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Download, Briefcase, Share2 } from "lucide-react";
 
-export default function Component() {
+export default function ResumeCard({}) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
@@ -96,7 +96,7 @@ export default function Component() {
   );
 }
 
-function CircularChart({ score }: { score: number }) {
+function CircularChart({ score }) {
   const circumference = 2 * Math.PI * 30;
   const strokeDashoffset = circumference - (score / 100) * circumference;
 

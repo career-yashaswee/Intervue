@@ -17,6 +17,7 @@ export const SCENARIO_API_URI = {
 
 export const RESUME_API_URI = {
   UPLOAD: `${BASE_URL}/resume`,
+  GUEST_UPLOAD: `${BASE_URL}/resume/guest`,
   LIST: (userId) => `${BASE_URL}/resume/${userId}`,
   DOWNLOAD: (fileName) => `${BASE_URL}/resume/download?fileName=${fileName}`,
 };

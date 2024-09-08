@@ -1,6 +1,13 @@
 import { Button } from "@/components/ui/button";
+import { Cover } from "@/components/ui/cover";
 import { Link } from "react-router-dom";
+import { v4 as uuidv4 } from "uuid";
 export default function Hero() {
+  const handleOnboarding = () => {
+    const uuid = uuidv4();
+    localStorage.setItem("gsession", uuid);
+  };
+
   return (
     <>
       {/* Hero */}
@@ -35,19 +42,24 @@ export default function Hero() {
           {/* Title */}
           <div className="mt-5 max-w-2xl text-center mx-auto">
             <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl gradient-text">
-              Take your Career game to clouds and beyond!
+              Take your <Cover className="px-2"> Career Game </Cover> to clouds and beyond!
             </h1>
           </div>
           {/* End Title */}
           <div className="mt-5 max-w-3xl text-center mx-auto">
             <p className="text-xl text-muted-foreground">
-              Reach interview phase <b className="gradient-text">10X Quicker</b> and lot less confusing.
+              Reach interview phase <b className="gradient-text">10X Quicker</b>{" "}
+              while being lot less confusing.
             </p>
           </div>
-          {/* Buttons */} 
+          {/* Buttons */}
           <div className="mt-8 gap-3 flex justify-center">
             <Link to="/flow">
-              <Button variant="shine" size={"lg"}>
+              <Button
+                variant="shine"
+                size={"lg"}
+                onClick={() => handleOnboarding()}
+              >
                 Count me in
               </Button>
             </Link>

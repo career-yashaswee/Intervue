@@ -14,6 +14,7 @@ import {
   LibraryBig,
   LineChart,
   Loader2,
+  Lock,
   Menu,
   MessageCircleDashed,
   MessagesSquare,
@@ -38,6 +39,7 @@ import UpgradeCard from "@/dashboard/components/UpgradeCard";
 import ArtificialIntelligence from "./pages/ArtificialIntelligence";
 import General from "./pages/General";
 import Credits from "./pages/Credits";
+import Security from "./pages/Security";
 
 const navItems = [
   { label: "General", icon: <Smile className="h-4 w-4" /> },
@@ -47,6 +49,7 @@ const navItems = [
     icon: <SquareAsterisk className="h-4 w-4" />,
   },
   { label: "Credits", icon: <BriefcaseBusiness className="h-4 w-4" /> },
+  { label: "Security", icon: <Lock className="h-4 w-4" /> },
 ];
 
 function Setting() {
@@ -64,6 +67,7 @@ function Setting() {
     General: <General></General>,
     Ai: <ArtificialIntelligence></ArtificialIntelligence>,
     Credits: <Credits></Credits>,
+    Security: <Security />,
   };
 
   const renderComponent = () => {
@@ -127,7 +131,7 @@ function Setting() {
         <div className="flex flex-col">
           <DashboardHeader
             view={"Settings"}
-			icon={<Settings className="h-5 w-5"/>}
+            icon={<Settings className="h-5 w-5" />}
           ></DashboardHeader>
           <div className="">{renderComponent()}</div>
         </div>

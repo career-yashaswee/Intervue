@@ -74,8 +74,8 @@ const SearchInput = ({
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const timer = setTimeout(() => setIsLoading(false), 1500);
-    return () => clearTimeout(timer);
+    // const timer = setTimeout(() => setIsLoading(false), 1500);
+    // return () => clearTimeout(timer);
   }, []);
 
   const handleAddItem = (item) => {
@@ -196,7 +196,7 @@ export default function Preferences() {
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
-      <Card className="w-full max-w-md mx-auto bg-white-sm shadow-lg">
+      <Card className="w-full max-w-md mx-auto bg-white shadow-lg">
         <CardContent className="mt-4">
           <form className="space-y-6">
             <SearchInput

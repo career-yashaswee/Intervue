@@ -37,7 +37,7 @@ const SkillPill = ({ level, isSelected, onClick, icon, tabIndex }) => {
             ? "bg-black text-white hover:bg-black"
             : "bg-white text-black border border-gray-300"
         }
-        hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2`}
+         focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2`}
     >
       {icon}
       <span>{level}</span>

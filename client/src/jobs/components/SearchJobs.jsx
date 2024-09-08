@@ -127,6 +127,7 @@ export default function SearchJobs() {
 
   // Simulating data fetch
   useEffect(() => {
+    setIsLoading(true);
     fetchAllJobs().then((fetchedJobs) => {
       setJobs(fetchedJobs);
       setFilteredJobs(fetchedJobs);
@@ -207,9 +208,7 @@ export default function SearchJobs() {
   );
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="text-3xl font-bold mb-8">Job Dashboard</h1>
-      <Widget />
+    <div className="container mx-auto p-4">
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Filters */}
         <div className="w-full lg:w-1/4 space-y-6">
@@ -288,79 +287,87 @@ export default function SearchJobs() {
         {/* Job Listings */}
         <div className="w-full lg:w-3/4">
           <div className="flex justify-between items-center mb-6">
-            <h2 className="text-xl font-semibold">
-              {filteredJobs.length} Jobs Found
-            </h2>
-            <Select value={sortBy} onValueChange={setSortBy}>
-              <SelectTrigger className="w-[180px]">
-                <SelectValue placeholder="Sort by" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="recommended">Recommended</SelectItem>
-                <SelectItem value="recent">Most Recent</SelectItem>
-                <SelectItem value="salary">Highest Salary</SelectItem>
-              </SelectContent>
-            </Select>
+            <Tabs defaultValue="for-you">
+              <TabsList>
+                <TabsTrigger value="for-you">For You</TabsTrigger>
+                <TabsTrigger value="search">Search Jobs</TabsTrigger>
+              </TabsList>
+              <h2 className="text-xl font-semibold">
+                {filteredJobs.length} Jobs Found
+              </h2>
+              <Select value={sortBy} onValueChange={setSortBy}>
+                <SelectTrigger className="w-[180px]">
+                  <SelectValue placeholder="Sort by" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="recommended">Recommended</SelectItem>
+                  <SelectItem value="recent">Most Recent</SelectItem>
+                  <SelectItem value="salary">Highest Salary</SelectItem>
+                </SelectContent>
+              </Select>
+              <TabsContent value="for-you">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <AnimatePresence>
+                    {paginatedJobs.map((job) => (
+                      <JobCard key={job.id} job={job} isLoading={isLoading} />
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </TabsContent>
+
+              <TabsContent value="search">
+                <div className="grid gap-6 md:grid-cols-2">
+                  <AnimatePresence>
+                    {paginatedJobs.map((job) => (
+                      <JobCard key={job.id} job={job} isLoading={isLoading} />
+                    ))}
+                  </AnimatePresence>
+                </div>
+              </TabsContent>
+            </Tabs>
           </div>
-
-          <Tabs defaultValue="for-you">
-            <TabsList>
-              <TabsTrigger value="for-you">For You</TabsTrigger>
-              <TabsTrigger value="search">Search Jobs</TabsTrigger>
-            </TabsList>
-            <TabsContent value="for-you">
-              <div className="grid gap-6 md:grid-cols-2">
-                <AnimatePresence>
-                  {paginatedJobs.map((job) => (
-                    <JobCard key={job.id} job={job} isLoading={isLoading} />
-                  ))}
-                </AnimatePresence>
-              </div>
-            </TabsContent>
-            <TabsContent value="search">
-              <div className="grid gap-6 md:grid-cols-2">
-                <AnimatePresence>
-                  {paginatedJobs.map((job) => (
-                    <JobCard key={job.id} job={job} isLoading={isLoading} />
-                  ))}
-                </AnimatePresence>
-              </div>
-            </TabsContent>
-          </Tabs>
-
           {/* Pagination */}
-          <div className="flex justify-center mt-8">
-            <Button
-              onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-              disabled={currentPage === 1}
-              variant="outline"
-              size="sm"
-            >
-              <FontAwesomeIcon icon={faChevronLeft} className="mr-2 w-3 h-3" />
-              Previous
-            </Button>
-            <span className="mx-4 flex items-center text-sm">
-              Page {currentPage} of{" "}
-              {Math.ceil(filteredJobs.length / jobsPerPage)}
-            </span>
-            <Button
-              onClick={() =>
-                setCurrentPage((prev) =>
-                  Math.min(
-                    prev + 1,
-                    Math.ceil(filteredJobs.length / jobsPerPage)
+          <div className="relative left-0 right-0 p-6 bg-white">
+            <div className="flex justify-between items-center">
+              <Button
+                onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                disabled={currentPage === 1}
+                variant="outline"
+                size="sm"
+                D
+              >
+                <FontAwesomeIcon
+                  icon={faChevronLeft}
+                  className="mr-2 w-3 h-3"
+                />
+                Previous
+              </Button>
+              <span className="mx-4 flex items-center text-sm">
+                Page {currentPage} of{" "}
+                {Math.ceil(filteredJobs.length / jobsPerPage)}
+              </span>
+              <Button
+                onClick={() =>
+                  setCurrentPage((prev) =>
+                    Math.min(
+                      prev + 1,
+                      Math.ceil(filteredJobs.length / jobsPerPage)
+                    )
                   )
-                )
-              }
-              disabled={
-                currentPage === Math.ceil(filteredJobs.length / jobsPerPage)
-              }
-              variant="outline"
-              size="sm"
-            >
-              Next
-              <FontAwesomeIcon icon={faChevronRight} className="ml-2 w-3 h-3" />
-            </Button>
+                }
+                disabled={
+                  currentPage === Math.ceil(filteredJobs.length / jobsPerPage)
+                }
+                variant="outline"
+                size="sm"
+              >
+                Next
+                <FontAwesomeIcon
+                  icon={faChevronRight}
+                  className="ml-2 w-3 h-3"
+                />
+              </Button>
+            </div>
           </div>
         </div>
       </div>

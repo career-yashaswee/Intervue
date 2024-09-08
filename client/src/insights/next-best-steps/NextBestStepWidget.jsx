@@ -2,7 +2,14 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { CheckCircle, Clock, ChevronUp, ChevronDown, X } from "lucide-react";
+import {
+  CheckCircle,
+  Clock,
+  ChevronUp,
+  ChevronDown,
+  X,
+  Footprints,
+} from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
@@ -77,14 +84,22 @@ export default function NextBestStepWidget() {
       initial={{ y: "100%" }}
       animate={{ y: isOpen ? 0 : "calc(100% - 60px)" }}
       transition={{ type: "spring", stiffness: 300, damping: 30 }}
-      className="fixed bottom-0 left-0 right-0 w-full max-w-md mx-auto bg-white rounded-t-xl shadow-lg overflow-hidden"
+      className="fixed bottom-0 left-2/4 right-0 w-full max-w-md mx-auto bg-white rounded-t-xl shadow-md overflow-hidden border border-black border-dashed antialiased"
     >
       <div
-        className="p-4 cursor-pointer flex justify-between items-center"
+        className="p-3 cursor-pointer flex justify-between items-center"
         onClick={() => setIsOpen(!isOpen)}
       >
-        <h2 className="text-xl font-bold">Suggest Next Best Steps</h2>
+        <div className="flex items-center space-x-2 ml-4">
+          <Footprints
+            name="arrow-right-circle"
+            className="w-5 h-5 text-gray-600"
+          />
+          <h2 className="text-xl font-semibold">Next Best Steps</h2>
+        </div>
+
         <Button
+          className=""
           variant="ghost"
           size="icon"
           onClick={(e) => {
