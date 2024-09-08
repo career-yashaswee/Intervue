@@ -34,7 +34,7 @@ const SkillPill = ({ level, isSelected, onClick, icon, tabIndex }) => {
       className={`p-3 text-sm font-medium rounded-full transition-all flex items-center justify-center space-x-2
         ${
           isSelected
-            ? "bg-black text-white"
+            ? "bg-black text-white hover:bg-black"
             : "bg-white text-black border border-gray-300"
         }
         hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-500 focus:ring-offset-2`}

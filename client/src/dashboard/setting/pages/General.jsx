@@ -10,7 +10,7 @@ import {
 import { Checkbox } from "@/components/ui/checkbox";
 import { Input } from "@/components/ui/input";
 
-export function General() {
+export default function General() {
 	return (
 		<main>
 			<Card x-chunk="dashboard-04-chunk-1">

@@ -1,157 +1,130 @@
-import { useDropzone } from "react-dropzone";
-import { uploadResume, listResume, downloadResume } from "@/helpers/resumeAPI";
-import { toast } from "sonner";
-import { useEffect, useState, useCallback } from "react";
-import { Button } from "@/components/ui/button";
+import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-  CardFooter,
-} from "@/components/ui/card";
+  Bell,
+  BookMarked,
+  Bot,
+  BriefcaseBusiness,
+  CircleUser,
+  Command,
+  FolderGit2,
+  Hammer,
+  Hand,
+  Layers2,
+  LibraryBig,
+  LineChart,
+  Loader2,
+  Menu,
+  MessageCircleDashed,
+  MessagesSquare,
+  Paperclip,
+  Radio,
+  Route,
+  Search,
+  Smile,
+  SquareAsterisk,
+  SquareChevronLeft,
+  SquareLibrary,
+  Target,
+  Zap,
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
-import { DownloadIcon, Loader2 } from "lucide-react";
-// import * as z from "zod";
-// import { Info } from "lucide-react";
+import { getUserId } from "@/helpers/api";
+
+import DashboardHeader from "../components/DashboardHeader";
+import UpgradeCard from "../components/UpgradeCard";
+
+import ResumeShelf from "./components/ResumeShelf";
+import ResumeBuilder from "./components/ResumeBuilder";
+
+const navItems = [
+  { label: "AiBuilder", name:"Ai Builder" ,icon: <Hammer className="h-4 w-4" /> },
+  { label: "Shelf", icon: <SquareLibrary className="h-4 w-4" /> },
+];
 
 function Resume() {
-  const [objects, setObjects] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
-  const [genNum, setGenNum] = useState(null);
-
-  const openInNewTab = (url) => {
-    const newWindow = window.open(url, "_blank", "noopener,noreferrer");
-    if (newWindow) newWindow.opener = null;
-  };
-
-  const handleUpload = async (acceptedFiles) => {
-    const file = acceptedFiles[0];
-    if (file) {
-      try {
-        await uploadResume(file)
-          .then((response) => {
-            toast.success("File Uploaded Successfully");
-            setGenNum(response.data.bytes);
-          })
-          .catch((error) => {
-            toast.error("Something went Wrong", error);
-          });
-      } catch (error) {
-        console.log(error);
-        toast.error("Something went Wrong");
-      }
-    }
-  };
-
-  const handleDownload = async (fileName) => {
-    try {
-      await downloadResume(fileName)
-        .then((response) => {
-          openInNewTab(response.data.signedUrl);
-        })
-        .catch((error) => {
-          console.log(error);
-          toast.error("Something went wrong");
-        });
-    } catch (error) {
-      toast.error("Something went Wrong");
-    }
-  };
-
-  const onDrop = useCallback((acceptedFiles) => {
-    handleUpload(acceptedFiles);
-  }, []);
-
-  const { getRootProps, getInputProps } = useDropzone({
-    maxFiles: 1,
-    accept: {
-      "application/pdf": [".pdf"],
-    },
-    onDrop,
-  });
-
-  let userId = localStorage.getItem("_id");
+  const [selectedComponent, setSelectedComponent] = useState("Shelf");
+  const [isLoading, setIsLoading] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  getUserId(localStorage.getItem("token"));
+  const userId = localStorage.getItem("_id");
   useEffect(() => {
-    const fetchObjects = async () => {
-      setLoading(true);
-      try {
-        const response = await listResume(userId);
-        setObjects(response.data.array);
-      } catch (err) {
-        if (err.response && err.response.status === 404) {
-          setObjects([]);
-        } else {
-          setError(err.message);
-        }
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchObjects();
-  }, [genNum, userId]);
+    setIsLoading(true);
+    setIsLoading(false);
+  }, [selectedComponent]);
 
-  if (loading) {
-    return (
-      <div className="flex justify-center items-center h-screen flex-col gap-2">
-        <Loader2 className="h-5 w-5 animate-spin" />
-        <p className="text-sm">Loading</p>
-      </div>
-    );
-  }
+  const componentMap = {
+    AiBuilder: <ResumeBuilder></ResumeBuilder>,
+    Shelf: <ResumeShelf></ResumeShelf>,
+  };
 
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
+  const renderComponent = () => {
+    if (isLoading) {
+      return (
+        <div className="flex justify-center items-center h-full">
+          <Loader2 className="h-8 w-8 animate-spin" />
+        </div>
+      );
+    }
+
+    const SelectedComponent = componentMap[selectedComponent] || <ResumeShelf />;
+    return SelectedComponent;
+  };
 
   return (
-    <main className="flex flex-1 flex-col gap-4 p-4 lg:gap-6 lg:p-6">
-      <div className="flex items-center">
-        <h1 className="text-lg font-bold md:text-2xl gradient-text">Resume</h1>
-      </div>
-      {objects.length === 0 ? (
-        <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm gap-1 text-center pb-8 pt-8">
-          <div {...getRootProps({ className: "dropzone" })}>
-            <input {...getInputProps()} name="file" />
-            <p className="text-sm text-muted-foreground">
-              Click or Drag here your resume to upload{" "}
-            </p>
-          </div>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {objects.map((object) => (
-            <Card key={object._id} className="flex flex-col">
-              <CardHeader>
-                <CardTitle>{object.name}</CardTitle>
-                <p>{object.size}</p>
-              </CardHeader>
-              <CardContent>
-                <p>{object.timeCreated}</p>
-              </CardContent>
-              <CardFooter className="flex justify-between">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  onClick={() => handleDownload(object.name)}
-                >
-                  <DownloadIcon></DownloadIcon>
-                </Button>
-              </CardFooter>
-            </Card>
-          ))}
-          <div className="flex flex-1 items-center justify-center rounded-lg border border-dashed shadow-sm gap-1 text-center pb-8 pt-8 min-h-[12rem]">
-            <div {...getRootProps({ className: "dropzone" })}>
-              <input {...getInputProps()} name="file" />
-              <p className="text-xs text-muted-foreground">
-                <i>Click or Drag here to upload your resume</i>
-              </p>
+    <div className="relative min-h-screen w-screen bg-white">
+      <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
+        <div className="hidden border-r bg-muted/40 md:block">
+          <div className="flex h-full max-h-screen flex-col gap-2">
+            <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
+              <Link
+                to="/dashboard"
+                className="flex items-center gap-2 font-semibold"
+              >
+                <MessageCircleDashed className="h-6 w-6" />
+                <span className="">Intervue</span>
+              </Link>
+              <Button variant="outline" size="icon" className="ml-auto h-8 w-8">
+                <Bell className="h-4 w-4" />
+                <span className="sr-only">Toggle notifications</span>
+              </Button>
             </div>
+            <div className="flex-1">
+              <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
+                {navItems.map((item, index) => (
+                  <button
+                    key={item.label}
+                    onClick={() => setSelectedComponent(item.label)}
+                    className={`flex items-center gap-3 px-3 py-2 transition-all ${
+                      selectedComponent === item.label
+                        ? "bg-primary text-muted"
+                        : "bg-muted text-primary hover:text-primary"
+                    } ${
+                      index === 0 ? "rounded-tl-[12px] rounded-tr-[12px]" : "" // Rounded top for first item
+                    } ${
+                      index === navItems.length - 1
+                        ? "rounded-bl-[12px] rounded-br-[12px]" // Rounded bottom for last item
+                        : ""
+                    }`}
+                  >
+                    {item.icon}
+                    {item.name || item.label}
+                  </button>
+                ))}
+              </nav>
+            </div>
+            <UpgradeCard></UpgradeCard>
           </div>
         </div>
-      )}
-    </main>
+        <div className="flex flex-col">
+          <DashboardHeader view={"Resume"} icon={<Paperclip className="h-4 w-4" />}
+            >
+          </DashboardHeader>
+          <div className="">{renderComponent()}</div>
+        </div>
+      </div>{" "}
+    </div>
   );
 }
 

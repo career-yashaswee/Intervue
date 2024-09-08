@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 
-export function Ai() {
+export default function ArtificialIntelligence() {
 	return (
 		<main className="flex gap-6 flex-col">
 			<Card x-chunk="dashboard-04-chunk-1">

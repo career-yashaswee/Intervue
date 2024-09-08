@@ -264,7 +264,7 @@ function ChatScreen() {
   const groupedMessages = groupMessagesByDate(filteredMessages);
 
   return (
-    <div className="flex h-screen bg-gray-100">
+    <div className="flex h-svh bg-gray-100">
       {/* Sidebar */}
       <AnimatePresence>
         {sidebarOpen && (
@@ -277,7 +277,10 @@ function ChatScreen() {
             <div className="p-4 border-b">
               <h2 className="text-xl font-semibold">Recent Chats</h2>
             </div>
-            <ScrollArea className="h-[calc(100vh-5rem)]">
+            <ScrollArea
+              className="h-[calc(100vh-5rem)] overflow-y-auto"
+              ref={scrollAreaRef}
+            >
               {loading
                 ? // Skeleton loading for recent chats
                   Array(5)

@@ -6,9 +6,9 @@ import IconSection from "./Features";
 export default function Home() {
   return (
     <>
-      <Navbar />
+      {/* <Navbar /> */}
       <Hero />
-      <IconSection />
+      {/* <IconSection /> */}
     </>
   );
 }

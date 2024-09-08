@@ -106,7 +106,7 @@ const Filter = ({ icon, label, options, onChange, value }) => (
 );
 
 // Main component
-export default function JobDashboard() {
+export default function SearchJobs() {
   const [isLoading, setIsLoading] = useState(true);
   const [jobs, setJobs] = useState([]);
   const [filteredJobs, setFilteredJobs] = useState([]);

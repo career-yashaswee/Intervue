@@ -1,4 +1,3 @@
-import { description } from "@/dashboard/components/NPathwayCard";
 import { Album, BookOpen, BriefcaseBusiness } from "lucide-react";
 
 export default [

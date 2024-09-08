@@ -8,7 +8,7 @@ export default function Hero() {
         <div className="container py-24 lg:py-24">
           {/* Announcement Banner */}
           <div className="flex justify-center">
-            <Link
+            {/* <Link
               className="inline-flex items-center gap-x-2 border text-sm p-1 ps-3 rounded-full transition"
               to="https://github.com/career-yashaswee/Intervue"
             >
@@ -29,27 +29,26 @@ export default function Hero() {
                   <path d="m9 18 6-6-6-6" />
                 </svg>
               </span>
-            </Link>
+            </Link> */}
           </div>
           {/* End Announcement Banner */}
           {/* Title */}
           <div className="mt-5 max-w-2xl text-center mx-auto">
             <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl gradient-text">
-              AI Mock Interview Coach
+              Take your Career game to clouds and beyond!
             </h1>
           </div>
           {/* End Title */}
           <div className="mt-5 max-w-3xl text-center mx-auto">
             <p className="text-xl text-muted-foreground">
-              2X your chances to land that job offer you always dreamt of with
-              AI
+              Reach interview phase <b className="gradient-text">10X Quicker</b> and lot less confusing.
             </p>
           </div>
-          {/* Buttons */}
+          {/* Buttons */} 
           <div className="mt-8 gap-3 flex justify-center">
             <Link to="/flow">
               <Button variant="shine" size={"lg"}>
-                Interview Now
+                Count me in
               </Button>
             </Link>
             <Button size={"lg"} variant={"outline"}>

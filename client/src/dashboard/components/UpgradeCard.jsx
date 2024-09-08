@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
+import CheckoutButton from "@/components/CheckoutButton";
 function UpgradeCard() {
   return (
     <div className="mt-auto p-4">
@@ -27,9 +28,7 @@ function UpgradeCard() {
         </CardHeader>
 
         <CardContent className="p-2 pt-0 md:p-4 md:pt-0">
-          <Button size="sm" className="w-full">
-            Upgrade
-          </Button>
+          <CheckoutButton />
         </CardContent>
       </Card>
     </div>

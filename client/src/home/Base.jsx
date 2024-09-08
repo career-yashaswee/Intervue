@@ -17,6 +17,7 @@ const Base = () => {
           backgroundColor: 0x000000, // Customize the background color
           skyColor: 0xffffff, // Customize the sky color
           cloudColor: 0xadc1de, // Customize the cloud color
+          minFrameTime: 10,
         })
       );
     }

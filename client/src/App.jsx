@@ -31,7 +31,7 @@ import Scenario from "./dashboard/interview/components/scenario/Scenario";
 import Interview from "./dashboard/interview/InterviewPage";
 import SignUp from "./authentication/sign-up";
 import Error from "./components/Error";
-import { Setting } from "./dashboard/setting/Setting";
+import Setting from "./dashboard/setting/Setting";
 import InterviewSession from "./dashboard/interview/components/session/Session";
 import { NetworkStatusProvider } from "./context/NetworkStatusContext";
 import { Toaster } from "sonner";
@@ -50,11 +50,16 @@ import Base from "./home/Base";
 import Community from "./dashboard/community/Community";
 import InterviewPage from "./dashboard/interview/InterviewPage";
 import Flow from "./home/start/Flow";
-import JobDashboard from "./jobs/JobDashboard";
 import CompetencyDiagnostic from "./competency/CompetencyDiagnostic";
-import JobPage from "./jobs/JobPage";
-import JobTrackerDashboard from "./jobs/JobTrackerDashboard";
 import NextBestStepWidget from "./insights/next-best-steps/NextBestStepWidget";
+import Resume from "./dashboard/resume/Resume";
+import JobsPageLayout from "./jobs/JobPageLayout";
+import ChatSupport from "./components/chatbot/ChatSupport";
+import AnimateR from "./routes/AnimatedRouter";
+import { AuroraBackgroundDemo } from "./components/example/aurora-background-demo";
+import BackgroundBeamsDemo from "./components/example/background-beams-demo";
+import AppleCardsCarouselDemo from "./components/example/apple-cards-carousel-demo-2";
+// import VideoCall from "./dashboard/community/mentor/components/VideoCall";
 
 // function App() {
 //   const [isMeta, setisMeta] = useState(false);
@@ -348,7 +353,14 @@ function App() {
               <Route path="/sign-up" element={<SignUp />} />
               <Route path="/verify" element={<InputOTPForm />} />
 
-              <Route path="/flow" element={<Flow />} />
+              <Route
+                path="/flow"
+                element={
+                  <AnimateR>
+                    <Flow />
+                  </AnimateR>
+                }
+              />
 
               <Route
                 path="/profile"
@@ -358,29 +370,14 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              <Route
-                path="/community"
-                element={
-                  <ProtectedRoute>
-                    <Community />
-                  </ProtectedRoute>
-                }
-              />
+              <Route path="/community" element={<Community />} />
               <Route
                 path="/jobs/:jobId"
-                element={
-                  <ProtectedRoute>
-                    <JobPage />
-                  </ProtectedRoute>
-                }
+                element={<ProtectedRoute></ProtectedRoute>}
               />
               <Route
                 path="/dashboard/interviews/track"
-                element={
-                  <ProtectedRoute>
-                    <JobTrackerDashboard />
-                  </ProtectedRoute>
-                }
+                element={<ProtectedRoute></ProtectedRoute>}
               />
 
               <Route
@@ -391,6 +388,14 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              {/* <Route
+                path="/community/mentor"
+                element={
+                  <ProtectedRoute>
+                    <VideoCall />
+                  </ProtectedRoute>
+                }
+              /> */}
 
               <Route
                 path="/diagnostic"
@@ -419,7 +424,7 @@ function App() {
                 }
               />
 
-              <Route path="/jobs" element={<JobDashboard />} />
+              <Route path="/jobs" element={<JobsPageLayout />} />
               <Route
                 path="/dashboard/cc"
                 element={
@@ -459,6 +464,15 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <Scenario />
+                  </ProtectedRoute>
+                }
+              />
+
+              <Route
+                path="/resume"
+                element={
+                  <ProtectedRoute>
+                    <Resume />
                   </ProtectedRoute>
                 }
               />

@@ -21,6 +21,7 @@ import {
   ScanSearch,
   Telescope,
   ScanText,
+  BriefcaseBusiness,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Scenario from "./interview/components/scenario/Scenario";
@@ -40,11 +41,11 @@ import UpgradeCard from "./components/UpgradeCard";
 import Community from "./community/Community";
 import Insights from "./insights/Insights";
 import { FaChartArea } from "react-icons/fa";
-import Discover from "./discover/Discover";
+import JobsPageLayout from "@/jobs/JobPageLayout";
 
 const navItems = [
   { label: "Dashboard", icon: <Command className="h-4 w-4" /> },
-  { label: "Discover", icon: <Telescope className="h-4 w-4" /> },
+  { label: "Jobs", icon: <BriefcaseBusiness className="h-4 w-4" /> },
   { label: "Pathway", icon: <Route className="h-4 w-4" /> },
   { label: "Coach", icon: <Bot className="h-4 w-4" />, name: "Jobie Ai" },
   // { label: "Scenario", icon: <Layers2 className="h-4 w-4" /> },
@@ -68,7 +69,7 @@ function Dashboard() {
 
   const componentMap = {
     Dashboard: <DashboardPage />,
-    Discover: <Discover />,
+    Job: <JobsPageLayout />,
     Pathway: <Pathway />,
     Coach: <Gemini />,
     Insights: <Insights />,
@@ -86,11 +87,19 @@ function Dashboard() {
       );
     }
 
+    if (selectedComponent === "Jobs") {
+      navigate("/jobs");
+    }
+
     if (selectedComponent === "Community") {
       navigate("/community");
     }
     if (selectedComponent === "Interview") {
       navigate("/mock");
+    }
+
+    if (selectedComponent === "Resume") {
+      navigate("/resume");
     }
 
     const SelectedComponent = componentMap[selectedComponent] || (

@@ -15,48 +15,13 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Skeleton } from "@/components/ui/skeleton";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
-const jobTypes = ["Internship", "Freelance", "Full-Time", "Part-Time"];
-const indianStates = [
-  "Andhra Pradesh",
-  "Arunachal Pradesh",
-  "Assam",
-  "Bihar",
-  "Chhattisgarh",
-  "Goa",
-  "Gujarat",
-  "Haryana",
-  "Himachal Pradesh",
-  "Jharkhand",
-  "Karnataka",
-  "Kerala",
-  "Madhya Pradesh",
-  "Maharashtra",
-  "Manipur",
-  "Meghalaya",
-  "Mizoram",
-  "Nagaland",
-  "Odisha",
-  "Punjab",
-  "Rajasthan",
-  "Sikkim",
-  "Tamil Nadu",
-  "Telangana",
-  "Tripura",
-  "Uttar Pradesh",
-  "Uttarakhand",
-  "West Bengal",
-];
-const companyTypes = ["Start-ups", "MNCs", "SMEs", "Government", "Non-profit"];
-const industries = [
-  "IT",
-  "Medical",
-  "Finance",
-  "Education",
-  "Manufacturing",
-  "Retail",
-  "Hospitality",
-];
+import {
+  indianStates,
+  companyTypes,
+  industries,
+  jobTypes,
+  domains,
+} from "@/shared/Preferences";
 
 const useSearch = (items, searchTerm) => {
   const [results, setResults] = useState([]);
@@ -220,18 +185,18 @@ const SearchInput = ({
 };
 
 export default function Preferences() {
-  const [jobTypes, setJobTypes] = useState([]);
+  const [domain, setDomain] = useState([]);
+  const [jobsTypes, setJobsTypes] = useState([]);
   const [locations, setLocations] = useState([]);
   const [companies, setCompanies] = useState([]);
-  const [industries, setIndustries] = useState([]);
+  const [industry, setIndustry] = useState([]);
 
   return (
     <motion.div
       whileHover={{ scale: 1.02 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
     >
-      <Card className="w-full max-w-md mx-auto">
-        <div className="h-1 bg-gradient-to-r from-blue-500 to-green-500" />
+      <Card className="w-full max-w-md mx-auto bg-white-sm shadow-lg">
         <CardContent className="mt-4">
           <form className="space-y-6">
             <SearchInput
@@ -239,9 +204,9 @@ export default function Preferences() {
               label="Domain"
               icon={<Target className="h-4 w-4" />}
               placeholder="Search Domains"
-              items={jobTypes}
-              selectedItems={jobTypes}
-              setSelectedItems={setJobTypes}
+              items={domains}
+              selectedItems={domain}
+              setSelectedItems={setDomain}
             />
 
             <Separator />
@@ -252,8 +217,8 @@ export default function Preferences() {
               icon={<Briefcase className="h-4 w-4" />}
               placeholder="Search job types"
               items={jobTypes}
-              selectedItems={jobTypes}
-              setSelectedItems={setJobTypes}
+              selectedItems={jobsTypes}
+              setSelectedItems={setJobsTypes}
             />
 
             <Separator />
@@ -288,8 +253,8 @@ export default function Preferences() {
               icon={<Factory className="h-4 w-4" />}
               placeholder="Search industries"
               items={industries}
-              selectedItems={industries}
-              setSelectedItems={setIndustries}
+              selectedItems={industry}
+              setSelectedItems={setIndustry}
             />
           </form>
         </CardContent>

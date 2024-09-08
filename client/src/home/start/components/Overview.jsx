@@ -100,7 +100,7 @@ function Roadmap({ steps }) {
       <div className="relative">
         {steps.map((step, index) => (
           <React.Fragment key={step.id}>
-            {index > 0 && (
+            {/* {index > 0 && (
               <motion.div
                 className="absolute left-1/2 w-1 bg-gradient-to-b from-blue-500 to-green-500"
                 initial={{ height: 0 }}
@@ -108,7 +108,7 @@ function Roadmap({ steps }) {
                 transition={{ duration: 0.5, delay: index * 0.1 }}
                 style={{ top: `${index * 250}px`, height: "250px" }}
               />
-            )}
+            )} */}
             <motion.div
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -158,8 +158,10 @@ const mockSteps = [
 ];
 
 function Overview() {
+  localStorage.setItem("referrer", "onboard");
+
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen">
       <Roadmap steps={mockSteps} />
     </div>
   );

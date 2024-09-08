@@ -50,3 +50,7 @@ export const INSIGHTS_API_URI = {
   JOB_POSTINGS_OVER_TIME: (interval) =>
     `${BASE_URL}/insight/job/postdate?interval=${interval}`,
 };
+
+export const STRIPE_API_URI = {
+  CREATE_CHECKOUT_SESSION: `${BASE_URL}/stripe/checkout`,
+};

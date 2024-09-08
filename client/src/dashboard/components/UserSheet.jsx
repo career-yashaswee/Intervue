@@ -34,6 +34,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import CheckoutButton from "@/components/CheckoutButton";
 function UserSheet() {
   return (
     <Sheet>
@@ -105,6 +106,8 @@ function UserSheet() {
               </CardDescription>
             </CardHeader>
             <CardContent>
+              <CheckoutButton />
+
               <Button size="sm" className="w-full">
                 Upgrade
               </Button>

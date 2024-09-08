@@ -5,8 +5,8 @@ import { ChevronRight, MessageCircleDashed } from "lucide-react"; // Import the 
 
 const Navbar = () => {
   return (
-    <div className="relative">
-      <nav className="backdrop-filter backdrop-blur-lg fixed top-0 left-0 right-0 z-10">
+    <div className="relative z-10">
+      <nav className="backdrop-filter backdrop-blur-lg fixed top-0 left-0 right-0">
         <div className="container mx-auto flex justify-between items-center py-4">
           <div className="flex items-center text-lg font-bold">
             <MessageCircleDashed className="mr-2" /> Intervue.cloud
