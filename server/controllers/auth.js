@@ -4,7 +4,8 @@ const VCode = require("../models/VerificationCode");
 
 const Email = require("../helpers/sendVerificationEmail");
 
-const { OAuth2Client } = require("google-auth-library");
+// const { OAuth2Client } = require("google-auth-library");
+const { oauth2Client } = require("../utils/googleConfig");
 
 // Register a new user
 const register = async (req, res, next) => {
@@ -149,19 +150,25 @@ const verifyEmail = async (req, res, next) => {
 };
 
 const googleLogin = async (req, res, next) => {
-  const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
-  const { token } = req.body;
   try {
-    const ticket = await client.verifyIdToken({
-      idToken: token,
-      audience: process.env.GOOGLE_CLIENT_ID,
-    });
-    const { sub, email, name, picture } = ticket.getPayload();
+    const { code } = req.query;
+    const googleResponse = await oauth2Client.getToken(code);
+    oauth2Client.setCredentials(googleResponse.tokens);
 
-    let user = await findOne({ googleId: sub });
+    const { data } = await axios.get(
+      "https://www.googleapis.com/oauth2/v2/userinfo",
+      {
+        headers: {
+          Authorization: `Bearer ${googleResponse.tokens.access_token}`,
+        },
+      }
+    );
+    const { sub, email, name, picture } = data;
+    let user = await findOne({ email });
     if (!user) {
       user = new User({
-        googleId: sub,
+        firstName: name.split(" ")[0],
+        lastName: name.split(" ")[1],
         username: user.generateUsername(),
         email,
         password: user.generatePassword(),
@@ -172,7 +179,18 @@ const googleLogin = async (req, res, next) => {
       await user.save();
     }
 
-    res.status(200).json({ message: "User registered successfully", user });
+    const { _id } = user;
+
+    // Generate JWT token
+    const token = sign.sign(
+      { userId: _id, first: user.firstName },
+      process.env.SECRET_KEY,
+      {
+        expiresIn: "1 hour",
+      }
+    );
+
+    res.status(200).json({ token });
   } catch (error) {
     console.error("Error verifying Google token:", error);
     res.status(500).json({ message: "Internal server error" });
