@@ -24,6 +24,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { Spinner } from "@/components/ui/spinner";
 import { LoadingButton } from "@/components/ui/loading-button";
+import { useGoogleLogin } from "@react-oauth/google";
+
 const schema = z.object({
   username: z
     .string()
@@ -114,6 +116,24 @@ export default function SignUp() {
     }
   };
 
+  const googleResponse = async (response) => {
+    //   try {
+    //     if (response["code"]) {
+    //       const result = await google
+    //     }
+    //     console.log(response);
+    //   } catch (e) {
+    //     console.log(response);
+    //   }
+    // };
+
+    const googleLogin = useGoogleLogin({
+      onSuccess: googleResponse,
+      onError: googleResponse,
+      flow: "auth-code",
+    });
+  };
+
   return (
     <div className="relative flex h-screen w-screen">
       {/* Left Half with Gradient Background */}
@@ -124,11 +144,13 @@ export default function SignUp() {
               I'm Jobie Ai
             </h1>
             <p></p>
-            { referrer == "onboard" && <p className="text-slate-400 max-w-lg mx-auto my-3 text-sm text-center relative z-10">
-              Sign up to help me give you access to your personalised learning
-              roadmap and your next 3 best-steps to achieve your career goals 10X
-              Quicker!
-            </p>}
+            {referrer == "onboard" && (
+              <p className="text-slate-400 max-w-lg mx-auto my-3 text-sm text-center relative z-10">
+                Sign up to help me give you access to your personalised learning
+                roadmap and your next 3 best-steps to achieve your career goals
+                10X Quicker!
+              </p>
+            )}
           </div>
           <BackgroundBeams />
         </div>
@@ -291,7 +313,11 @@ export default function SignUp() {
                     </Button>
                   )}
 
-                  <Button variant="outline" className="w-full">
+                  <Button
+                    variant="outline"
+                    className="w-full"
+                    // onClick={}
+                  >
                     Sign up with Google
                   </Button>
                 </div>

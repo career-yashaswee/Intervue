@@ -42,11 +42,14 @@ function DashboardHeader({
       {isJobieRequired ? (
         <div className="flex items-center space-x-2">
           <Button variant="shine" className="flex items-center space-x-2">
-            <MessageCircleQuestion className="h-5 w-5" /> {/* Adjust size as needed */}
+            <MessageCircleQuestion className="h-5 w-5" />{" "}
+            {/* Adjust size as needed */}
             <span>Ask Jobie</span>
           </Button>
         </div>
       ) : null}
+
+      <UserSearchBar />
 
       <UserDropdownMenu></UserDropdownMenu>
     </header>

@@ -13,11 +13,13 @@ const Base = () => {
         CLOUDS({
           el: vantaRef.current,
           THREE,
-          color: 0x0099ff, // Customize the color
-          backgroundColor: 0x000000, // Customize the background color
-          skyColor: 0xffffff, // Customize the sky color
-          cloudColor: 0xadc1de, // Customize the cloud color
-          minFrameTime: 10,
+          color: 0x0099ff,
+          backgroundColor: 0x000000,
+          skyColor: 0xffffff,
+          cloudColor: 0xadc1de,
+          zoom: 3.5,
+          speed: 1.5,
+          minFrameTime: 5,
         })
       );
     }

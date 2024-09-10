@@ -60,6 +60,9 @@ import { AuroraBackgroundDemo } from "./components/example/aurora-background-dem
 import BackgroundBeamsDemo from "./components/example/background-beams-demo";
 import AppleCardsCarouselDemo from "./components/example/apple-cards-carousel-demo-2";
 import FlowLayout from "./home/start/FlowLayout";
+import EditorPage from "./dashboard/practice/components/EditorPage";
+import EditorPageLayout from "./dashboard/practice/components/EditorPageLayout";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 // import VideoCall from "./dashboard/community/mentor/components/VideoCall";
 
 // function App() {
@@ -233,108 +236,108 @@ import FlowLayout from "./home/start/FlowLayout";
 
 function App() {
   const { isSessionExpired, setIsSessionExpired } = useSessionManager();
-  const [isMeta, setisMeta] = useState(false);
-  const [isEmployee, setisEmployee] = useState(false);
-  const [account, setaccount] = useState("");
-  const [isOrganizationEndorser, setisOrganizationEndorser] = useState(false);
-  const [isOwner, setisOwner] = useState(false);
-  const [loadcomp, setloadcomp] = useState(false);
+  // const [isMeta, setisMeta] = useState(false);
+  // const [isEmployee, setisEmployee] = useState(false);
+  // const [account, setaccount] = useState("");
+  // const [isOrganizationEndorser, setisOrganizationEndorser] = useState(false);
+  // const [isOwner, setisOwner] = useState(false);
+  // const [loadcomp, setloadcomp] = useState(false);
 
-  const loadBlockChainData = async () => {
-    const web3 = window.web3;
-    const accounts = await web3.eth.getAccounts();
-    if (accounts) {
-      setaccount(accounts[0]);
-    }
-    const networkId = await web3.eth.net.getId();
-    const AdminData = await Admin.networks[networkId];
-    if (AdminData) {
-      const admin = new web3.eth.Contract(Admin.abi, AdminData.address);
-      const isEmployee = await admin.methods.isEmployee(accounts[0]).call();
-      const isOrganizationEndorser = await admin.methods
-        .isOrganizationEndorser(accounts[0])
-        .call();
-      const owner = await admin.methods.owner().call();
-      setisEmployee(isEmployee);
-      setisOrganizationEndorser(isOrganizationEndorser);
-      setisOwner(owner === accounts[0]);
-    } else {
-      toast.error("The Admin Contract does not exist on this network!");
-    }
-  };
+  // const loadBlockChainData = async () => {
+  //   const web3 = window.web3;
+  //   const accounts = await web3.eth.getAccounts();
+  //   if (accounts) {
+  //     setaccount(accounts[0]);
+  //   }
+  //   const networkId = await web3.eth.net.getId();
+  //   const AdminData = await Admin.networks[networkId];
+  //   if (AdminData) {
+  //     const admin = new web3.eth.Contract(Admin.abi, AdminData.address);
+  //     const isEmployee = await admin.methods.isEmployee(accounts[0]).call();
+  //     const isOrganizationEndorser = await admin.methods
+  //       .isOrganizationEndorser(accounts[0])
+  //       .call();
+  //     const owner = await admin.methods.owner().call();
+  //     setisEmployee(isEmployee);
+  //     setisOrganizationEndorser(isOrganizationEndorser);
+  //     setisOwner(owner === accounts[0]);
+  //   } else {
+  //     toast.error("The Admin Contract does not exist on this network!");
+  //   }
+  // };
 
-  useEffect(() => {
-    const func = async () => {
-      setisMeta(true);
-      setloadcomp(true);
-      if (window.ethereum) {
-        await window.ethereum.request({ method: "eth_requestAccounts" });
-        window.web3 = new Web3(window.ethereum);
-        await loadBlockChainData();
-      } else if (window.web3) {
-        window.web3 = new Web3(window.web3.currentProvider);
-        await loadBlockChainData();
-      } else {
-        setisMeta(false);
-      }
-      setloadcomp(false);
-    };
-    func();
-  }, []);
+  // useEffect(() => {
+  //   const func = async () => {
+  //     setisMeta(true);
+  //     setloadcomp(true);
+  //     if (window.ethereum) {
+  //       await window.ethereum.request({ method: "eth_requestAccounts" });
+  //       window.web3 = new Web3(window.ethereum);
+  //       await loadBlockChainData();
+  //     } else if (window.web3) {
+  //       window.web3 = new Web3(window.web3.currentProvider);
+  //       await loadBlockChainData();
+  //     } else {
+  //       setisMeta(false);
+  //     }
+  //     setloadcomp(false);
+  //   };
+  //   func();
+  // }, []);
 
-  const adminRoutes = () => (
-    <Routes>
-      <Route path="/admin" element={<AllEmployees />} />
-      <Route
-        path="/admin/all-organization-endorser"
-        element={<AllOrganizationEndorser />}
-      />
-      <Route path="/admin/create-user" element={<AdminPageCreate />} />
-      <Route path="/admin/notifications" element={<NotificationsAdmin />} />
-    </Routes>
-  );
+  // const adminRoutes = () => (
+  //   <Routes>
+  //     <Route path="/admin" element={<AllEmployees />} />
+  //     <Route
+  //       path="/admin/all-organization-endorser"
+  //       element={<AllOrganizationEndorser />}
+  //     />
+  //     <Route path="/admin/create-user" element={<AdminPageCreate />} />
+  //     <Route path="/admin/notifications" element={<NotificationsAdmin />} />
+  //   </Routes>
+  // );
 
-  const employeeRoutes = () => (
-    <Routes>
-      <Route path="/employee" element={<EmployeePage />} />
-      <Route path="/employee/update-profile" element={<UpdateProfile />} />
-      <Route
-        path="/employee/notifications"
-        element={<NotificationsEmployee />}
-      />
-    </Routes>
-  );
+  // const employeeRoutes = () => (
+  //   <Routes>
+  //     <Route path="/employee" element={<EmployeePage />} />
+  //     <Route path="/employee/update-profile" element={<UpdateProfile />} />
+  //     <Route
+  //       path="/employee/notifications"
+  //       element={<NotificationsEmployee />}
+  //     />
+  //   </Routes>
+  // );
 
-  const isOrganizationEndorserRoutes = () => (
-    <Routes>
-      <Route path="/organization" element={<Organization />} />
-      <Route path="/organization/endorse-skill" element={<EndorseSkill />} />
-      <Route path="/organization/endorse-section" element={<Endorse />} />
-      <Route
-        path="/organization/notifications"
-        element={<NotificationsOrg />}
-      />
-    </Routes>
-  );
+  // const isOrganizationEndorserRoutes = () => (
+  //   <Routes>
+  //     <Route path="/organization" element={<Organization />} />
+  //     <Route path="/organization/endorse-skill" element={<EndorseSkill />} />
+  //     <Route path="/organization/endorse-section" element={<Endorse />} />
+  //     <Route
+  //       path="/organization/notifications"
+  //       element={<NotificationsOrg />}
+  //     />
+  //   </Routes>
+  // );
 
-  const noRoleRoutes = () => (
-    <Routes>
-      <Route path="/no-role" element={<NoRole />} />
-      <Route path="/no-role/notifications" element={<Notifications />} />
-    </Routes>
-  );
+  // const noRoleRoutes = () => (
+  //   <Routes>
+  //     <Route path="/no-role" element={<NoRole />} />
+  //     <Route path="/no-role/notifications" element={<Notifications />} />
+  //   </Routes>
+  // );
 
-  const renderBlockchainRoutes = () => {
-    if (isOwner) return adminRoutes();
-    else if (isEmployee) return employeeRoutes();
-    else if (isOrganizationEndorser) return isOrganizationEndorserRoutes();
-    else return noRoleRoutes();
-  };
+  // const renderBlockchainRoutes = () => {
+  //   if (isOwner) return adminRoutes();
+  //   else if (isEmployee) return employeeRoutes();
+  //   else if (isOrganizationEndorser) return isOrganizationEndorserRoutes();
+  //   else return noRoleRoutes();
+  // };
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
       <NetworkStatusProvider>
-        <Toaster position="bottom-right" richColors />
+        <Toaster position="top-right" richColors />
         <NetworkStatusHandler />
         <div className="App relative">
           <BrowserRouter>
@@ -350,8 +353,26 @@ function App() {
 
             <Routes>
               <Route path="/" element={<Base />} />
-              <Route path="/log-in" element={<Login />} />
-              <Route path="/sign-up" element={<SignUp />} />
+              <Route
+                path="/log-in"
+                element={
+                  <GoogleOAuthProvider clientId={"SDS"}>
+                    <Login />
+                  </GoogleOAuthProvider>
+                }
+              />
+              <Route
+                path="/sign-up"
+                element={
+                  <GoogleOAuthProvider
+                    clientId={
+                      "18778878240-e4a51gclug69terlnlib92jddu5s84gg.apps.googleusercontent.com"
+                    }
+                  >
+                    <SignUp />
+                  </GoogleOAuthProvider>
+                }
+              />
               <Route path="/verify" element={<InputOTPForm />} />
 
               <Route
@@ -445,6 +466,11 @@ function App() {
                     <CourseLayout />
                   </ProtectedRoute>
                 }
+              />
+
+              <Route
+                path="/practice/editor/:roomId"
+                element={<EditorPageLayout />}
               />
               <Route
                 path="/course/:courseId"

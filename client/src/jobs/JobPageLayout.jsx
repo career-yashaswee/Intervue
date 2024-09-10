@@ -5,6 +5,7 @@ import {
   BookMarked,
   Bot,
   BriefcaseBusiness,
+  CircleHelp,
   CircleUser,
   Command,
   FolderGit2,
@@ -40,8 +41,11 @@ import SavedJobs from "./components/JobSaved";
 import JobTracker from "./components/JobTrackerDashboard";
 import MarketAnalytics from "./components/MarketAnalytics";
 
+import TestPageLayout from "./Diagnostic/TestPageLayout";
+
 const navItems = [
   { label: "Search", icon: <Search className="h-4 w-4" /> },
+  { label: "Competency", icon: <CircleHelp className="h-4 w-4" /> },
   { label: "Saved", icon: <Pin className="h-4 w-4" /> },
   { label: "Application", icon: <PanelsTopLeft className="h-4 w-4" /> },
   { label: "Analytics", icon: <LineChart className="h-4 w-4" /> },
@@ -60,6 +64,7 @@ function JobsPageLayout() {
 
   const componentMap = {
     Search: <SearchJobs></SearchJobs>,
+    Competency: <TestPageLayout />,
     Saved: <SavedJobs></SavedJobs>,
     Application: <JobTracker></JobTracker>,
     Analytics: <MarketAnalytics></MarketAnalytics>,

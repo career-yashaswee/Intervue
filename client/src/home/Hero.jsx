@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Cover } from "@/components/ui/cover";
 import { Link } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 export default function Hero() {
@@ -42,7 +41,7 @@ export default function Hero() {
           {/* Title */}
           <div className="mt-5 max-w-2xl text-center mx-auto">
             <h1 className="scroll-m-20 text-4xl font-extrabold tracking-tight lg:text-5xl gradient-text">
-              Take your <Cover className="px-2"> Career Game </Cover> to clouds and beyond!
+              Take your Career Game to clouds and beyond!
             </h1>
           </div>
           {/* End Title */}

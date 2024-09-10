@@ -47,8 +47,10 @@ function UserDropdownMenu() {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>
             <div>
-              Yashaswee
-              <div className="text-muted-foreground font-light">career.yashaswee...</div>
+              {localStorage.getItem("user@first")}
+              <div className="text-muted-foreground font-light">
+                career.yashaswee...
+              </div>
             </div>
           </DropdownMenuLabel>
           <DropdownMenuSeparator />

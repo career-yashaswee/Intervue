@@ -23,6 +23,7 @@ import {
   ScanText,
   BriefcaseBusiness,
   ChevronLeftCircle,
+  Dumbbell,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Scenario from "./interview/components/scenario/Scenario";
@@ -44,11 +45,13 @@ import Insights from "./insights/Insights";
 import { FaChartArea } from "react-icons/fa";
 import JobsPageLayout from "@/jobs/JobPageLayout";
 import { name } from "@stream-io/video-react-sdk";
+import Practice from "./practice/Practice";
 
 const navItems = [
   { label: "Dashboard", icon: <Command className="h-4 w-4" /> },
   { label: "Jobs", icon: <BriefcaseBusiness className="h-4 w-4" /> },
   { label: "Pathway", icon: <Route className="h-4 w-4" /> },
+  { label: "Practice", icon: <Dumbbell className="h-4 w-4" /> },
   { label: "Coach", icon: <Bot className="h-4 w-4" />, name: "Jobie Ai" },
   // { label: "Scenario", icon: <Layers2 className="h-4 w-4" /> },
   { label: "Insights", icon: <Eye className="h-4 w-4" /> },
@@ -78,6 +81,7 @@ function Dashboard() {
     Dashboard: <DashboardPage />,
     Job: <JobsPageLayout />,
     Pathway: <Pathway />,
+    Practice: <Practice/>,
     Coach: <Gemini />,
     Insights: <Insights />,
     Interview: <InterviewPage />,

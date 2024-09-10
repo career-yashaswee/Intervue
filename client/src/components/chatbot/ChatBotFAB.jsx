@@ -1,23 +1,32 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import ChatSupport from "./ChatSupport";
 import { BotMessageSquare, ArrowLeft } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useLocation } from "react-router-dom"; // or 'next/router' for Next.js
 
-const ChatBotFAB = () => {
+const ChatBotFAB = ({ currentPath }) => {
   const [isChatVisible, setIsChatVisible] = useState(false);
-  // const location = useLocation(); // For checking the current route
+  const [showHint, setShowHint] = useState(false);
 
-  // List of routes where the chat bot should be hidden
-  // const hiddenRoutes = ["/login", "/register", "/another-route"];
+  const hiddenRoutes = ["/flow", "/register", "/another-route"];
+  const isHidden = hiddenRoutes.includes(currentPath);
 
-  // Check if the current route is in the hidden routes list
-  const isHidden = false;
-  //  hiddenRoutes.includes(location.pathname);
+  useEffect(() => {
+    // Show the hint bubble after 5 seconds (5000 ms) if chat is not visible
+    const timer = setTimeout(() => {
+      if (!isChatVisible) {
+        setShowHint(true);
+      }
+    }, 5000);
+
+    // Cleanup the timer when the component is unmounted or chat becomes visible
+    return () => clearTimeout(timer);
+  }, [isChatVisible]);
 
   const handleToggleChat = () => {
     setIsChatVisible(!isChatVisible);
+    setShowHint(false); // Hide hint bubble when chat is toggled
   };
 
   return (
@@ -43,6 +52,21 @@ const ChatBotFAB = () => {
                 <BotMessageSquare className="w-5 h-5" />
               )}
             </Button>
+
+            {/* Hint Bubble */}
+            <AnimatePresence>
+              {showHint && (
+                <motion.div
+                  initial={{ opacity: 0, y: -10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -10 }}
+                  transition={{ duration: 0.4 }}
+                  className="absolute bottom-12 right-0 bg-gray-800 text-white text-sm p-2 rounded-full shadow-lg"
+                >
+                  Stuck?
+                </motion.div>
+              )}
+            </AnimatePresence>
           </motion.div>
 
           {/* Chat Support with Animation */}

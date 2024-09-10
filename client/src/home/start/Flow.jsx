@@ -202,7 +202,7 @@ function Flow() {
           <div className="flex items-center">
             {StepperOptions.map((item, index) => (
               <div key={index} className="inline-flex items-center">
-                <div className="flex flex-col items-center w-[50px] md:w-[100px]">
+                <div className="flex flex-col items-center w-[50px] md:w-[100px] ">
                   {/* Icon */}
                   <div
                     className={`bg-gray-200 p-3 rounded-full text-white h-12 w-12 flex items-center justify-center ${
@@ -223,7 +223,7 @@ function Flow() {
 
                 {/* Line connecting the steps, only show if not the last step */}
                 {index !== StepperOptions.length - 1 && (
-                  <div className="flex-1 h-1 mx-2 w-[50px] md:w-[100px] lg:w-[170px] rounded-full align-middle">
+                  <div className="flex-1 h-1 mb-6 w-[50px] md:w-[100px] lg:w-[170px] rounded-full align-middle">
                     <div
                       className={`h-1 w-full rounded-full ${
                         activeIndex - 1 >= index
