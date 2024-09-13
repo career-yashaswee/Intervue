@@ -71,7 +71,7 @@ const SearchInput = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const { results, error } = useSearch(items, searchTerm);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     // const timer = setTimeout(() => setIsLoading(false), 1500);

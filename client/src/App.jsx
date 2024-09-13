@@ -26,7 +26,7 @@ import LoadComp from "../src/blockchain/components/LoadComp";
 import ProtectedRoute from "./routes/ProtectedRoute";
 import Login from "./authentication/log-in";
 import Dashboard from "./dashboard/Dashboard";
-import Home from "./home/Home";
+import home from "./home/Home";
 import Scenario from "./dashboard/interview/components/scenario/Scenario";
 import Interview from "./dashboard/interview/InterviewPage";
 import SignUp from "./authentication/sign-up";
@@ -50,19 +50,24 @@ import Base from "./home/Base";
 import Community from "./dashboard/community/Community";
 import InterviewPage from "./dashboard/interview/InterviewPage";
 import Flow from "./home/start/Flow";
-import CompetencyDiagnostic from "./competency/CompetencyDiagnostic";
 import NextBestStepWidget from "./insights/next-best-steps/NextBestStepWidget";
 import Resume from "./dashboard/resume/Resume";
 import JobsPageLayout from "./jobs/JobPageLayout";
 import ChatSupport from "./components/chatbot/ChatSupport";
-import AnimateR from "./routes/AnimatedRouter";
-import { AuroraBackgroundDemo } from "./components/example/aurora-background-demo";
-import BackgroundBeamsDemo from "./components/example/background-beams-demo";
-import AppleCardsCarouselDemo from "./components/example/apple-cards-carousel-demo-2";
+import AnimateR from "./routes/AnimatedRoute";
 import FlowLayout from "./home/start/FlowLayout";
 import EditorPage from "./dashboard/practice/components/EditorPage";
 import EditorPageLayout from "./dashboard/practice/components/EditorPageLayout";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import Mentor from "./mentor/Mentor";
+
+import ModalProvider from "./judge/context/ModalContext";
+// import PlaygroundProvider from "./judge/context/PlaygroundContext";
+// import Home from "./judge/screens/Home";
+// import Playground from "./judge/screens/Playground";
+import { StakeHolderCard } from "./home/landing/components/StakeHolderCard";
+import LandingPage from "./home/landing/LandingPage";
+
 // import VideoCall from "./dashboard/community/mentor/components/VideoCall";
 
 // function App() {
@@ -340,6 +345,8 @@ function App() {
         <Toaster position="top-right" richColors />
         <NetworkStatusHandler />
         <div className="App relative">
+          {/* <PlaygroundProvider> */}
+          {/* <ModalProvider> */}
           <BrowserRouter>
             <SessionExpiryPopup
               show={isSessionExpired}
@@ -412,22 +419,18 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              {/* <Route
-                path="/community/mentor"
+              <Route
+                path="/mentor"
                 element={
                   <ProtectedRoute>
-                    <VideoCall />
+                    <Mentor />
                   </ProtectedRoute>
                 }
-              /> */}
+              />
 
               <Route
                 path="/diagnostic"
-                element={
-                  <ProtectedRoute>
-                    <CompetencyDiagnostic />
-                  </ProtectedRoute>
-                }
+                element={<ProtectedRoute></ProtectedRoute>}
               />
 
               <Route
@@ -522,6 +525,13 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              {/* <Route path="/judge" element={<Home />} /> */}
+              <Route path="/about" element={<LandingPage />} />
+              {/* <Route
+                    path="/judge/playground/:folderId/:playgroundId"
+                    element={<Playground />}
+                  /> */}
+
               {/* <Route
                 path="/getemployee/:employee_address"
                 element={<GetEmployee />}
@@ -531,6 +541,8 @@ function App() {
               <Route path="*" element={<Error />} />
             </Routes>
           </BrowserRouter>
+          {/* </ModalProvider> */}
+          {/* </PlaygroundProvider> */}
         </div>
       </NetworkStatusProvider>
     </ThemeProvider>

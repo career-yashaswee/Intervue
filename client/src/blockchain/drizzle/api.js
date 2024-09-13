@@ -32,7 +32,7 @@ export const messageAdmin = async (info, message) => {
       .from(users)
       .where(
         and(eq(users.ethAddress, accounts[0]), eq(users.activeChat, owner))
-      )
+      );
 
     if (!userChatExists) {
       // Insert active chat for the user

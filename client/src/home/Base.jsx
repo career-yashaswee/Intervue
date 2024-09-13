@@ -30,7 +30,7 @@ const Base = () => {
   }, [vantaEffect]);
 
   return (
-    <div ref={vantaRef} style={{ width: "100%", height: "100vh" }}>
+    <div ref={vantaRef} style={{ width: "100vw", height: "100vh" }}>
       <Home />
     </div>
   );

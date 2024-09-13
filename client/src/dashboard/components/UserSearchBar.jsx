@@ -36,8 +36,8 @@ function UserSearchBar() {
         onClick={handleCommandMenuToggle} // Toggle CommandMenu on button click
       >
         <Search className="mr-2 h-4 w-4" />
-        Search documentation...
-        <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100">
+        Type a command or Search
+        <kbd className="pointer-events-none ml-auto inline-flex h-5 select-none items-center gap-1 rounded border bg-muted px-1.5 font-mono text-[10px] font-medium text-muted-foreground opacity-100 shadow-sm">
           <span className="text-xs mt-0.5">⌘</span>K
         </kbd>
       </Button>

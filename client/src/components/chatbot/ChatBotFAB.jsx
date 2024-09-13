@@ -9,7 +9,12 @@ const ChatBotFAB = ({ currentPath }) => {
   const [isChatVisible, setIsChatVisible] = useState(false);
   const [showHint, setShowHint] = useState(false);
 
-  const hiddenRoutes = ["/flow", "/register", "/another-route"];
+  const hiddenRoutes = [
+    "/flow",
+    "/register",
+    "/another-route",
+    "/dashboard/cc",
+  ];
   const isHidden = hiddenRoutes.includes(currentPath);
 
   useEffect(() => {
@@ -18,7 +23,7 @@ const ChatBotFAB = ({ currentPath }) => {
       if (!isChatVisible) {
         setShowHint(true);
       }
-    }, 5000);
+    }, 10000);
 
     // Cleanup the timer when the component is unmounted or chat becomes visible
     return () => clearTimeout(timer);

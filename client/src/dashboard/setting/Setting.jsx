@@ -133,7 +133,7 @@ function Setting() {
             view={"Settings"}
             icon={<Settings className="h-5 w-5" />}
           ></DashboardHeader>
-          <div className="">{renderComponent()}</div>
+          <div className="p-4">{renderComponent()}</div>
         </div>
       </div>{" "}
     </div>

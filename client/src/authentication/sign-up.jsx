@@ -136,7 +136,6 @@ export default function SignUp() {
 
   return (
     <div className="relative flex h-screen w-screen">
-      {/* Left Half with Gradient Background */}
       <div className="flex-1 flex items-center justify-center">
         <div className="h-full w-full bg-neutral-950 relative flex flex-col items-center justify-center antialiased">
           <div className="max-w-2xl mx-auto p-4">

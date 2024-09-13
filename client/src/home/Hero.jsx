@@ -14,11 +14,14 @@ export default function Hero() {
         <div className="container py-24 lg:py-24">
           {/* Announcement Banner */}
           <div className="flex justify-center">
-            {/* <Link
+            <Link
               className="inline-flex items-center gap-x-2 border text-sm p-1 ps-3 rounded-full transition"
               to="https://github.com/career-yashaswee/Intervue"
             >
-              PRO Release - View on GitHub
+              <span className="inline-block bg-gray-200 text-black font-mono px-1 py-0.5 rounded-sm">
+                v1
+              </span>
+              Release - View on GitHub
               <span className="py-1.5 px-2.5 inline-flex justify-center items-center gap-x-2 rounded-full bg-muted-foreground/15 font-semibold text-sm">
                 <svg
                   className="flex-shrink-0 w-4 h-4"
@@ -35,7 +38,7 @@ export default function Hero() {
                   <path d="m9 18 6-6-6-6" />
                 </svg>
               </span>
-            </Link> */}
+            </Link>
           </div>
           {/* End Announcement Banner */}
           {/* Title */}

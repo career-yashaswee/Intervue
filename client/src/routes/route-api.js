@@ -1,6 +1,10 @@
 const BASE_URL = import.meta.env.VITE_BACKEND_URI;
 const YT_API_KEY = import.meta.env.VITE_YOUTUBE_API_KEY;
 
+export const WEB_PUSH_URI = {
+  SUBSCRIBE: `${BASE_URL}/webpush/subscribe`,
+};
+
 export const AUTH_API_URI = {
   REGISTER_USER: `${BASE_URL}/auth/register`,
   CHECK_USERNAME: (username) => `${BASE_URL}/auth/user/${username}`,

@@ -17,6 +17,11 @@ import {
   BookOpen,
   Zap,
   Target,
+  Clock,
+  CheckCircle,
+  AlertCircle,
+  CheckCheck,
+  Check,
 } from "lucide-react";
 import Editor from "react-simple-code-editor";
 import { highlight, languages } from "prismjs";
@@ -82,7 +87,7 @@ const questions = [
 
 const QuestionTypes = {
   mcq: ({ question, options, onAnswer, answer }) => (
-    <RadioGroup onValueChange={onAnswer} value={answer} className="space-y-2">
+    <RadioGroup onValueChange={onAnswer} value={answer} className="mx-2">
       {options &&
         options.map((option, index) => (
           <div key={index} className="flex items-center space-x-2">
@@ -143,10 +148,10 @@ const speakText = (text) => {
   }
 };
 
-export default function CompetencyDiagnostic() {
+export default function TestSession({ timeAlloted = 300,  }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
-  const [timeLeft, setTimeLeft] = useState(3600); // 1 hour in seconds
+  const [timeLeft, setTimeLeft] = useState(timeAlloted); // 1 hour in seconds
   const [isLoading, setIsLoading] = useState(true);
   const [flaggedQuestions, setFlaggedQuestions] = useState({});
   const [showDescription, setShowDescription] = useState(false);
@@ -243,9 +248,25 @@ export default function CompetencyDiagnostic() {
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: -20 }}
         transition={{ duration: 0.3 }}
-        className="w-full max-w-4xl bg-white rounded-xl shadow-lg p-8 space-y-6"
+        className="w-full max-w-4xl bg-white rounded-xl shadow-sm p-8 space-y-6"
       >
-        <div className="flex justify-between items-center">
+        <div className="mb-6">
+          <Progress
+            value={((currentQuestion + 1) / questions.length) * 100}
+            className="w-full"
+          />
+          <div className="flex justify-between my-4 text-sm text-gray-600">
+            <span>
+              Question {currentQuestion + 1} of {questions.length}
+            </span>
+            <span>
+              <Clock className="inline-block mr-1" size={16} />
+              {Math.floor(timeLeft / 60)}:{timeLeft % 60 < 10 ? "0" : ""}
+              {timeLeft % 60}
+            </span>
+          </div>
+        </div>
+        {/* <div className="flex justify-between items-center">
           <div className="flex items-center space-x-2">
             <motion.div
               className="w-12 h-12 rounded-full border-4 border-gray-200 flex items-center justify-center"
@@ -268,9 +289,9 @@ export default function CompetencyDiagnostic() {
               background: "linear-gradient(to right, black, silver)",
             }}
           />
-        </div>
+        </div> */}
 
-        <div className="flex justify-between">
+        {/* <div className="flex justify-between">
           {questions.map((q, index) => (
             <motion.button
               key={q.id}
@@ -290,7 +311,7 @@ export default function CompetencyDiagnostic() {
               {index + 1}
             </motion.button>
           ))}
-        </div>
+        </div> */}
 
         <AnimatePresence mode="wait">
           <motion.div
@@ -300,20 +321,59 @@ export default function CompetencyDiagnostic() {
             exit={{ opacity: 0, x: -20 }}
             transition={{ duration: 0.3 }}
           >
-            <div className="flex items-center space-x-2 mb-4">
+            <div className="flex flex-col mb-4 gap-2">
+              <div className="flex flex-row gap-2">
+                <div className="flex items-center space-x-1">
+                  <BookOpen size={16} />
+                  <span className="text-sm font-medium">
+                    {question.category}
+                  </span>
+                </div>
+                <div className="flex items-center space-x-1">
+                  <Zap size={16} />
+                  <span className="text-sm font-medium">
+                    {question.difficulty}
+                  </span>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-2">
+                <Target size={16} />
+                <div className="flex space-x-2">
+                  {question.skills.map((skill, index) => (
+                    <motion.div
+                      key={index}
+                      whileHover={{
+                        scale: 1.1,
+                        boxShadow: "0 2px 2px rgba(0, 0, 0, 0.2)",
+                      }}
+                      transition={{
+                        type: "spring",
+                        stiffness: 300,
+                        damping: 20,
+                      }}
+                      className="px-2 py-1 bg-gray-200 text-sm font-medium text-gray-700 rounded-full cursor-pointer hover:bg-gray-300"
+                    >
+                      {skill}
+                    </motion.div>
+                  ))}
+                </div>
+              </div>
+            </div>
+            <div className="flex items-center mb-4">
+              <h2 className="text-2xl font-bold flex-grow">
+                {question.question}
+              </h2>
               <Button
                 onClick={handleFlag}
                 variant="outline"
                 size="icon"
-                className={`rounded-full ${
+                className={`rounded-full mr-2 ${
                   flaggedQuestions[currentQuestion] ? "bg-yellow-400" : ""
                 }`}
               >
                 <Flag size={16} />
               </Button>
-              <h2 className="text-2xl font-bold flex-grow">
-                {question.question}
-              </h2>
               <Button
                 onClick={() => speakText(question.question)}
                 variant="outline"
@@ -323,24 +383,7 @@ export default function CompetencyDiagnostic() {
                 <Volume2 size={16} />
               </Button>
             </div>
-            <div className="flex space-x-2 mb-4">
-              <div className="flex items-center space-x-1">
-                <BookOpen size={16} />
-                <span className="text-sm font-medium">{question.category}</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <Zap size={16} />
-                <span className="text-sm font-medium">
-                  {question.difficulty}
-                </span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <Target size={16} />
-                <span className="text-sm font-medium">
-                  {question.skills.join(", ")}
-                </span>
-              </div>
-            </div>
+
             {showDescription ? (
               <p className="text-sm text-gray-600 mb-4">
                 {question.description}
@@ -384,7 +427,7 @@ export default function CompetencyDiagnostic() {
               size="icon"
             >
               {currentQuestion === questions.length - 1 ? (
-                "Submit"
+                <Check size={24} />
               ) : (
                 <ChevronRight size={24} />
               )}
@@ -392,6 +435,27 @@ export default function CompetencyDiagnostic() {
           </motion.div>
         </div>
       </motion.div>
+      <div className="mt-8 flex space-x-4">
+        {questions.map((q, index) => (
+          <motion.div
+            key={q.id}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            className={`w-8 h-8 rounded-full flex items-center justify-center cursor-pointer ${
+              index === currentQuestion
+                ? "bg-black text-white"
+                : "bg-white text-black border"
+            }`}
+            onClick={() => setCurrentQuestion(index)}
+          >
+            {answers[index] ? (
+              <CheckCircle size={16} />
+            ) : (
+              <AlertCircle size={16} />
+            )}
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }

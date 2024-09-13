@@ -40,7 +40,6 @@ import MessagePage from "./components/MessagePage/MessagePage";
 import NotificationsPage from "./components/NotificationsPage";
 import SpacePage from "./components/SpacePage/SpacePage";
 import FollowingPage from "./components/FollowingPage";
-import Mentor from "../mentor/Mentor";
 import WebinarDashboard from "./webinars/WebinarDashboard";
 
 const navItems = [
@@ -50,7 +49,6 @@ const navItems = [
   { label: "Messages", icon: <FolderGit2 className="h-4 w-4" /> },
   { label: "Spaces", icon: <LibraryBig className="h-4 w-4" /> },
   { label: "Bookmarks", icon: <BookMarked className="h-4 w-4" /> },
-  { label: "Mentor", icon: <Hand className="h-4 w-4" /> },
   { label: "Webinars", icon: <Radio className="h-4 w-4" /> },
   { label: "Notifications", icon: <Target className="h-4 w-4" /> },
 ];
@@ -73,7 +71,6 @@ function Community() {
     Messages: <MessagePage></MessagePage>,
     Spaces: <SpacePage></SpacePage>,
     Bookmarks: <BookmarksPage></BookmarksPage>,
-    Mentor: <Mentor></Mentor>,
     Webinars: <WebinarDashboard></WebinarDashboard>,
     Notifications: <NotificationsPage></NotificationsPage>,
   };

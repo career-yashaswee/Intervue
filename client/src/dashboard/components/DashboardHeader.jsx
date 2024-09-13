@@ -13,14 +13,13 @@ function DashboardHeader({
   isJobieRequired = false,
 }) {
   return (
-    <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px] lg:px-6">
+    <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px]">
       <div className="flex items-center space-x-1 bg-black text-white px-3 py-1 rounded-full hover:bg-opacity-80 transition duration-200">
         {icon && <div className="flex items-center">{icon}</div>}
         <span className="text-xl">{view}</span>
       </div>
 
       <UserSheet></UserSheet>
-      <div></div>
       {isSearchRequired ? (
         <UserSearchBar></UserSearchBar>
       ) : (

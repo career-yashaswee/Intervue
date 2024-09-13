@@ -5,6 +5,7 @@ import {
   Bot,
   CircleUser,
   Command,
+  Hand,
   HeartHandshake,
   Layers2,
   LineChart,
@@ -46,6 +47,7 @@ import { FaChartArea } from "react-icons/fa";
 import JobsPageLayout from "@/jobs/JobPageLayout";
 import { name } from "@stream-io/video-react-sdk";
 import Practice from "./practice/Practice";
+import Mentor from "@/mentor/Mentor";
 
 const navItems = [
   { label: "Dashboard", icon: <Command className="h-4 w-4" /> },
@@ -58,6 +60,7 @@ const navItems = [
   { label: "Interview", icon: <MessagesSquare className="h-4 w-4" /> },
 
   { label: "Resume", icon: <Paperclip className="h-4 w-4" /> },
+  { label: "Mentor", icon: <Hand className="h-4 w-4" /> },
   { label: "Community", icon: <HeartHandshake className="h-4 w-4" /> },
   {
     label: "Back",
@@ -81,11 +84,12 @@ function Dashboard() {
     Dashboard: <DashboardPage />,
     Job: <JobsPageLayout />,
     Pathway: <Pathway />,
-    Practice: <Practice/>,
+    Practice: <Practice />,
     Coach: <Gemini />,
     Insights: <Insights />,
     Interview: <InterviewPage />,
     Resume: <Resume />,
+    Mentor: <Mentor />,
     Community: <Community />,
   };
 
@@ -111,6 +115,10 @@ function Dashboard() {
 
     if (selectedComponent === "Resume") {
       navigate("/resume");
+    }
+
+    if (selectedComponent === "Mentor") {
+      navigate("/mentor");
     }
 
     if (selectedComponent === "Back") {

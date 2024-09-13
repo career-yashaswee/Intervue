@@ -29,7 +29,7 @@ const Main = () => {
               <p>
                 <span>Hello, {localStorage.getItem("user@first")} </span>
               </p>
-              <p>How Can i Help You Today?</p>
+              <p>How Can i Help Your Career Grow?</p>
             </div>
             <div className="cards">
               <div

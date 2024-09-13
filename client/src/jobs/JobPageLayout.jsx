@@ -2,32 +2,14 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Bell,
-  BookMarked,
-  Bot,
   BriefcaseBusiness,
   CircleHelp,
-  CircleUser,
-  Command,
-  FolderGit2,
-  Hand,
-  Layers2,
-  LibraryBig,
   LineChart,
   Loader2,
-  Menu,
   MessageCircleDashed,
-  MessagesSquare,
   PanelsTopLeft,
-  Paperclip,
   Pin,
-  Radio,
-  Route,
   Search,
-  Smile,
-  SquareAsterisk,
-  SquareChevronLeft,
-  Target,
-  Zap,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 

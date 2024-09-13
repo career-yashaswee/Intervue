@@ -80,8 +80,9 @@ export default function Login() {
         <div className="w-full max-w-md">
           <Card className="mx-auto max-w-sm">
             <CardHeader>
+              <LogIn></LogIn>
               <CardTitle className="text-xl font-bold gradient-text">
-                <LogIn></LogIn> Login
+                Login
               </CardTitle>
               <CardDescription className="text-balance text-muted-foreground">
                 Enter your username below to login to your account

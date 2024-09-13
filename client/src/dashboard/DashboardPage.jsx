@@ -36,7 +36,7 @@ export function DashboardPage() {
         Here's a Snapshot of your Career
       </p>
       <NPathwayCard></NPathwayCard>
-      <NextBestStepWidget></NextBestStepWidget>
+      {/* <NextBestStepWidget></NextBestStepWidget> */}
     </main>
   );
 }

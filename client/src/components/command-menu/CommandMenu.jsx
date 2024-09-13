@@ -7,9 +7,10 @@ import {
   CommandList,
 } from "@/components/ui/command";
 import React from "react";
+import { useEffect } from "react";
 
 export default function CommandMenu({ open, onOpenChange }) {
-  React.useEffect(() => {
+  useEffect(() => {
     const down = (e) => {
       if (e.key === "k" && (e.metaKey || e.ctrlKey)) {
         e.preventDefault();
@@ -29,6 +30,11 @@ export default function CommandMenu({ open, onOpenChange }) {
           <CommandItem>Calendar</CommandItem>
           <CommandItem>Search Emoji</CommandItem>
           <CommandItem>Calculator</CommandItem>
+        </CommandGroup>
+        <CommandGroup heading="Modules">
+          <CommandItem>Jobs</CommandItem>
+          <CommandItem>Pathway</CommandItem>
+          <CommandItem>Practice</CommandItem>
         </CommandGroup>
       </CommandList>
     </CommandDialog>
