@@ -39,8 +39,8 @@ const MonacoEditor = ({ socketRef, roomId, onCodeChange }) => {
       onCodeChange(code); // Notify parent component of the code change
 
       // Emit the code change to other users via socket
-      if (socketRef?.current) {
-        socketRef?.current.emit(ACTIONS.CODE_CHANGE, {
+      if (socketRef.current) {
+        socketRef.current.emit(ACTIONS.CODE_CHANGE, {
           roomId,
           code,
         });
@@ -49,26 +49,30 @@ const MonacoEditor = ({ socketRef, roomId, onCodeChange }) => {
   };
 
   useEffect(() => {
-    if (socketRef?.current) {
-      // Listen for changes from other users
-      socketRef?.current.on(ACTIONS.CODE_CHANGE, ({ code }) => {
-        console.log(code);
-        if (code !== null && editorRef.current) {
-          // Update the editor content without triggering the change event again
-          const currentValue = editorRef.current.getValue();
-          console.log(currentValue);
-          if (currentValue !== code) {
-            editorRef.current.setValue(code);
-          }
+    const handleCodeChange = ({ code }) => {
+      // console.log(code);
+      if (code !== null && editorRef.current) {
+        // Update the editor content without triggering the change event again
+        const currentValue = editorRef.current.getValue();
+        // console.log(currentValue);
+        if (currentValue !== code) {
+          editorRef.current.setValue(code);
         }
-      });
+      }
+    };
+
+    if (socketRef.current) {
+      // Listen for changes from other users
+      socketRef.current.on(ACTIONS.CODE_CHANGE, handleCodeChange);
     }
 
-    return () => {
-      // Cleanup the socket listener on unmount
-      // socketRef?.current.off(ACTIONS.CODE_CHANGE);
-    };
-  }, [socketRef?.current]);
+    // return () => {
+    //   // Cleanup the socket listener on unmount
+    //   if (socketRef?.current) {
+    //     socketRef?.current.off(ACTIONS.CODE_CHANGE, handleCodeChange);
+    //   }
+    // };
+  }, [socketRef, roomId]); // Add socketRef and roomId as dependencies
 
   return (
     <div className="h-screen w-full">
