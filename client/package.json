@@ -14,6 +14,8 @@
   "dependencies": {
     "@codemirror/lang-cpp": "^6.0.2",
     "@codemirror/lang-javascript": "^6.2.2",
+    "@dnd-kit/core": "^6.1.0",
+    "@dnd-kit/sortable": "^8.0.0",
     "@eslint/config-array": "^0.17.1",
     "@eslint/object-schema": "^2.1.4",
     "@fortawesome/fontawesome-svg-core": "^6.6.0",
@@ -131,6 +133,7 @@
     "styled-components": "^6.1.13",
     "tailwindcss-animate": "^1.0.7",
     "three": "^0.168.0",
+    "uuid": "^10.0.0",
     "uuid4": "^2.0.3",
     "uuidv4": "^6.2.13",
     "vanta": "^0.5.24",

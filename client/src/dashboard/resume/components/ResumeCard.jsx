@@ -7,7 +7,16 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Download, Briefcase, Share2 } from "lucide-react";
 
-export default function ResumeCard({}) {
+export default function ResumeCard({
+  previewImage,
+  business,
+  logo,
+  role,
+  technology,
+  version,
+  score,
+  handleDownload,
+}) {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

@@ -19,8 +19,7 @@ const Main = () => {
   return (
     <div className="main">
       <div className="nav">
-        <p>Jobie Ai</p>
-        <img src={assets.user} alt="" />
+        <p className="gradient-text font-semibold">Jobie Ai</p>
       </div>
       <div className="main-container">
         {!showResults ? (
@@ -29,47 +28,56 @@ const Main = () => {
               <p>
                 <span>Hello, {localStorage.getItem("user@first")} </span>
               </p>
-              <p>How Can i Help Your Career Grow?</p>
+              <p>How can i help your career grow?</p>
             </div>
             <div className="cards">
               <div
                 className="card"
                 onClick={() =>
-                  handleCardClick("Suggest Some Place To Visit In Kerala")
+                  handleCardClick(
+                    "Why am I not being recommended for senior software developer roles?"
+                  )
                 }
               >
-                <p>Suggest Some Place To Visit In Kerala </p>
+                <p>
+                  Why am I not being recommended for senior software developer
+                  roles?{" "}
+                </p>
                 <img src={assets.compass_icon} alt="" />
               </div>
               <div
                 className="card"
                 onClick={() =>
                   handleCardClick(
-                    "Brainstorm team bonding activities for our work retreat"
+                    "Do you think I’m ready for my upcoming interview?"
                   )
                 }
               >
-                <p>Brainstorm team bonding activities for our work retreat </p>
+                <p>Do you think I’m ready for my upcoming interview? </p>
                 <img src={assets.message_icon} alt="" />
               </div>
               <div
                 className="card"
                 onClick={() =>
-                  handleCardClick("How to Create a Gyroscope using Disc?")
+                  handleCardClick(
+                    "Why am I not getting responses from the jobs I've applied for?"
+                  )
                 }
               >
-                <p>How to Create a Gyroscope using Disc?</p>
+                <p>
+                  Why am I not getting responses from the jobs I've applied for?{" "}
+                </p>
                 <img src={assets.bulb_icon} alt="" />
               </div>
               <div
                 className="card"
                 onClick={() => {
                   handleCardClick(
-                    "Create a Script for the youtube video about coding "
+                    "Why did I score low on the competency diagnostic?"
                   );
                 }}
               >
-                <p>Create a Script for the youtube video about coding </p>
+                <p>Why did I score low on the competency diagnostic? </p>
                 <img src={assets.code_icon} alt="" />
               </div>
             </div>
@@ -119,8 +127,8 @@ const Main = () => {
           </div>
           <div className="bottom-info">
             <p>
-              Gemini may display inaccurate info, including about people, so
-              double-check its responses. Your privacy & Gemini Apps
+              Jobie may display inaccurate info, including about people, so
+              double-check its responses.
             </p>
           </div>
         </div>

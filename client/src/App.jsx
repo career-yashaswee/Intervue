@@ -67,6 +67,8 @@ import ModalProvider from "./judge/context/ModalContext";
 // import Playground from "./judge/screens/Playground";
 import { StakeHolderCard } from "./home/landing/components/StakeHolderCard";
 import LandingPage from "./home/landing/LandingPage";
+import Practice from "./dashboard/practice/Practice";
+import PracticeLayout from "./dashboard/practice/PracticeLayout";
 
 // import VideoCall from "./dashboard/community/mentor/components/VideoCall";
 
@@ -470,6 +472,8 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+
+              <Route path="/practice" element={<PracticeLayout />} />
 
               <Route
                 path="/practice/editor/:roomId"

@@ -1,5 +1,4 @@
 import React from "react";
-import placeholder from "../../../assets/placeholder.png";
 import { BookOpen, EllipsisVertical, Layers, Star } from "lucide-react";
 import DropDownOptions from "./DropDownOptions";
 import { deleteCourseByCourseId } from "@/helpers/pathwayAPI";

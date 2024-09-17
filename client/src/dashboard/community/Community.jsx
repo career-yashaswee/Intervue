@@ -40,7 +40,7 @@ import MessagePage from "./components/MessagePage/MessagePage";
 import NotificationsPage from "./components/NotificationsPage";
 import SpacePage from "./components/SpacePage/SpacePage";
 import FollowingPage from "./components/FollowingPage";
-import WebinarDashboard from "./webinars/WebinarDashboard";
+import WebinarDashboard from "./components/WebinarDashboard";
 
 const navItems = [
   { label: "Feed", icon: <Smile className="h-4 w-4" /> },
@@ -135,8 +135,8 @@ function Community() {
         </div>
         <div className="flex flex-col">
           <DashboardHeader
+            isAskQuestionRequired={true}
             view={"Community"}
-            isMentorRequired="true"
           ></DashboardHeader>
           <div className="">{renderComponent()}</div>
         </div>

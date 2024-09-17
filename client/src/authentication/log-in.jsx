@@ -28,6 +28,7 @@ export default function Login() {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm();
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
@@ -50,6 +51,7 @@ export default function Login() {
       navigate("/dashboard"); // Redirect to a protected route
     } catch (err) {
       toast.error("Incorrect Username or Password");
+      reset({ username: "", password: "" });
       // setError("Invalid credentials. Please try again.");
     } finally {
       setLoading(false);
@@ -128,6 +130,7 @@ export default function Login() {
                     id="password"
                     type="password"
                     autoComplete="on"
+                    placeholder="Your Password here"
                     {...register("password", {
                       required: "Password is required",
                     })}

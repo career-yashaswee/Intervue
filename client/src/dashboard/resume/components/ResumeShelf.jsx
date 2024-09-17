@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/card";
 
 import { DownloadIcon, Loader2 } from "lucide-react";
+import ResumeCard from "./ResumeCard";
 // import * as z from "zod";
 // import { Info } from "lucide-react";
 
@@ -122,6 +123,8 @@ function ResumeShelf() {
       ) : (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
           {objects.map((object) => (
+            // <ResumeCard key={object._id}/>
+
             <Card key={object._id} className="flex flex-col">
               <CardHeader>
                 <CardTitle>{object.name}</CardTitle>

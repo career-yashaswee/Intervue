@@ -5,13 +5,11 @@ import "./index.css";
 import ContextProvider from "./context/GeminiContext.jsx";
 import ChatBotFAB from "./components/chatbot/ChatBotFAB.jsx";
 
-const currentPath = window.location.pathname;
-
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ContextProvider>
       <App />
-      <ChatBotFAB currentPath={currentPath} />;
+      <ChatBotFAB currentPath={window.location.pathname} />;
     </ContextProvider>
   </React.StrictMode>
 );

@@ -39,7 +39,11 @@ import ResumeShelf from "./components/ResumeShelf";
 import ResumeBuilder from "./components/ResumeBuilder";
 
 const navItems = [
-  { label: "AiBuilder", name:"Ai Builder" ,icon: <Hammer className="h-4 w-4" /> },
+  {
+    label: "AiBuilder",
+    name: "Ai Builder",
+    icon: <Hammer className="h-4 w-4" />,
+  },
   { label: "Shelf", icon: <SquareLibrary className="h-4 w-4" /> },
 ];
 
@@ -68,7 +72,9 @@ function Resume() {
       );
     }
 
-    const SelectedComponent = componentMap[selectedComponent] || <ResumeShelf />;
+    const SelectedComponent = componentMap[selectedComponent] || (
+      <ResumeShelf />
+    );
     return SelectedComponent;
   };
 
@@ -118,9 +124,10 @@ function Resume() {
           </div>
         </div>
         <div className="flex flex-col">
-          <DashboardHeader view={"Resume"} icon={<Paperclip className="h-4 w-4" />}
-            >
-          </DashboardHeader>
+          <DashboardHeader
+            view={"Resume"}
+            icon={<Paperclip className="h-4 w-4" />}
+          ></DashboardHeader>
           <div className="">{renderComponent()}</div>
         </div>
       </div>{" "}

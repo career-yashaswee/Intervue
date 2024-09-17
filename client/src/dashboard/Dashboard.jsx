@@ -25,6 +25,8 @@ import {
   BriefcaseBusiness,
   ChevronLeftCircle,
   Dumbbell,
+  Medal,
+  PencilRuler,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Scenario from "./interview/components/scenario/Scenario";
@@ -42,17 +44,24 @@ import Gemini from "./gemini/Gemini";
 import DashboardHeader from "./components/DashboardHeader";
 import UpgradeCard from "./components/UpgradeCard";
 import Community from "./community/Community";
-import Insights from "./insights/Insights";
+import Insights from "../insights/Insights";
 import { FaChartArea } from "react-icons/fa";
 import JobsPageLayout from "@/jobs/JobPageLayout";
 import { name } from "@stream-io/video-react-sdk";
 import Practice from "./practice/Practice";
 import Mentor from "@/mentor/Mentor";
+import AchievementPage from "./achievements/AchievementPage";
+import WorkbenchPageLayout from "@/workbench/WorkbenchPageLayout";
 
 const navItems = [
   { label: "Dashboard", icon: <Command className="h-4 w-4" /> },
   { label: "Jobs", icon: <BriefcaseBusiness className="h-4 w-4" /> },
   { label: "Pathway", icon: <Route className="h-4 w-4" /> },
+  {
+    label: "WorkBench",
+    icon: <PencilRuler className="h-4 w-4" />,
+    name: "Work Bench",
+  },
   { label: "Practice", icon: <Dumbbell className="h-4 w-4" /> },
   { label: "Coach", icon: <Bot className="h-4 w-4" />, name: "Jobie Ai" },
   // { label: "Scenario", icon: <Layers2 className="h-4 w-4" /> },
@@ -61,6 +70,7 @@ const navItems = [
 
   { label: "Resume", icon: <Paperclip className="h-4 w-4" /> },
   { label: "Mentor", icon: <Hand className="h-4 w-4" /> },
+  { label: "Achievements", icon: <Medal className="h-4 w-4" /> },
   { label: "Community", icon: <HeartHandshake className="h-4 w-4" /> },
   {
     label: "Back",
@@ -84,6 +94,7 @@ function Dashboard() {
     Dashboard: <DashboardPage />,
     Job: <JobsPageLayout />,
     Pathway: <Pathway />,
+    WorkBench: <WorkbenchPageLayout />,
     Practice: <Practice />,
     Coach: <Gemini />,
     Insights: <Insights />,
@@ -91,6 +102,7 @@ function Dashboard() {
     Resume: <Resume />,
     Mentor: <Mentor />,
     Community: <Community />,
+    Achievements: <AchievementPage />,
   };
 
   const renderComponent = () => {
@@ -104,6 +116,10 @@ function Dashboard() {
 
     if (selectedComponent === "Jobs") {
       navigate("/jobs");
+    }
+
+    if (selectedComponent === "Practice") {
+      navigate("/practice");
     }
 
     if (selectedComponent === "Community") {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import logo from "../../../../assets/placeholder.png";
+// import logo from "../../../../assets/placeholder.png";
 import { SwatchBook } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import EditBasicCourseInfo from "../components/EditBasicCourseInfo";
@@ -63,9 +63,10 @@ function CourseBasicInfo({ course, edit = true }) {
           {/* Learn Now Button */}
           {!edit && (
             <Link to={"learn"}>
-              <Button 
-              className="w-full mt-5 bg-primary text-white rounded-md flex items-center justify-center gap-2 hover:bg-primary-dark transition duration-200 ease-in-out"
-              variant="shine">
+              <Button
+                className="w-full mt-5 bg-primary text-white rounded-md flex items-center justify-center gap-2 hover:bg-primary-dark transition duration-200 ease-in-out"
+                variant="shine"
+              >
                 {loading ? (
                   <Skeleton className="w-4 h-4 rounded-full" />
                 ) : (
@@ -87,7 +88,7 @@ function CourseBasicInfo({ course, edit = true }) {
             <Skeleton className="w-full h-70 rounded-xl" />
           ) : (
             <img
-              src={logo}
+              src={"https://picsum.photos/250?image=9"}
               width={350}
               height={250}
               className="max-w-full rounded-xl object-cover border-slate-950"

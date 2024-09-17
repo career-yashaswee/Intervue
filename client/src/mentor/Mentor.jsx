@@ -54,8 +54,16 @@ const navItems = [
     icon: <Route className="h-4 w-4" />,
     name: "Sessions",
   },
-  { label: "MentorTasks", icon: <Dumbbell className="h-4 w-4" /> },
-  { label: "MyReferrals", icon: <Bot className="h-4 w-4" /> },
+  {
+    label: "MentorTasks",
+    icon: <Dumbbell className="h-4 w-4" />,
+    name: "Tasks",
+  },
+  {
+    label: "MyReferrals",
+    icon: <Bot className="h-4 w-4" />,
+    name: "Referrals",
+  },
   {
     label: "Back",
     icon: <ChevronLeftCircle className="h-4 w-4" />,
@@ -65,7 +73,7 @@ const navItems = [
 
 function Mentor() {
   const navigate = useNavigate();
-  const [selectedComponent, setSelectedComponent] = useState("My Mentor");
+  const [selectedComponent, setSelectedComponent] = useState("MyMentor");
   const [isLoading, setIsLoading] = useState(false);
   getUserId(localStorage.getItem("token"));
   const userId = localStorage.getItem("_id");
