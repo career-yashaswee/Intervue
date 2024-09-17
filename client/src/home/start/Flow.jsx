@@ -148,48 +148,6 @@ function Flow() {
     ) {
       return true;
     }
-    // if (
-    //   activeIndex == 2 &&
-    //   (userCourseInput?.inclusiveTopic?.length == 0 ||
-    //     userCourseInput?.inclusiveTopic == undefined)
-    // ) {
-    //   return true;
-    // }
-    // if (
-    //   activeIndex == 2 &&
-    //   (userCourseInput?.exclusiveTopic?.length == 0 ||
-    //     userCourseInput?.exclusiveTopic == undefined)
-    // ) {
-    //   return true;
-    // }
-    // if (
-    //   activeIndex == 3 &&
-    //   (userCourseInput?.level?.length == 0 ||
-    //     userCourseInput?.level == undefined)
-    // ) {
-    //   return true;
-    // }
-    // if (
-    //   activeIndex == 3 &&
-    //   (userCourseInput?.duration?.length == 0 ||
-    //     userCourseInput?.duration == undefined)
-    // ) {
-    //   return true;
-    // }
-    // if (
-    //   activeIndex == 3 &&
-    //   (userCourseInput?.addVideos?.length == 0 ||
-    //     userCourseInput?.addVideos == undefined)
-    // ) {
-    //   return true;
-    // }
-    // if (
-    //   activeIndex == 3 &&
-    //   (userCourseInput?.nChapters?.length == 0 ||
-    //     userCourseInput?.nChapters == undefined)
-    // ) {
-    //   return true;
-    // }
     return false;
   };
 
@@ -223,7 +181,7 @@ function Flow() {
 
                 {/* Line connecting the steps, only show if not the last step */}
                 {index !== StepperOptions.length - 1 && (
-                  <div className="flex-1 h-1 mb-6 w-[50px] md:w-[100px] lg:w-[170px] rounded-full align-middle">
+                  <div className="flex-1 h-1 mb-6 w-[30px] md:w-[100px] lg:w-[170px] rounded-full align-middle">
                     <div
                       className={`h-1 w-full rounded-full ${
                         activeIndex - 1 >= index
@@ -237,7 +195,7 @@ function Flow() {
             ))}
           </div>
         </div>
-        <div className="px-15 md:px-20 lg:px-44 mt-20 relative w-full">
+        <div className="px-5 md:px-20 lg:px-44 mt-20 relative w-full">
           {activeIndex == 0 ? (
             <UploadResume />
           ) : activeIndex == 1 ? (
@@ -256,9 +214,7 @@ function Flow() {
               onClick={() => setActiveIndex(activeIndex - 1)}
             >
               <div className="flex items-center gap-2">
-                <ChevronLeft className="w-5 h-5" />{" "}
-                {/* Adjust size as needed */}
-                <span>Previous</span>
+                <ChevronLeft className="w-5 h-5" /> <span>Previous</span>
               </div>
             </Button>
           </div>
@@ -271,7 +227,6 @@ function Flow() {
                 <div className="flex items-center gap-2 ">
                   <span>Next Step</span>
                   <ChevronRight className="w-5 h-5" />{" "}
-                  {/* Adjust size as needed */}
                 </div>
               </Button>
             )}

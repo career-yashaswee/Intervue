@@ -76,7 +76,7 @@ export default function CommandMenu({ open, onOpenChange }) {
             Practice
           </CommandItem>
         </CommandGroup>
-        
+
         <CommandGroup heading="Pathways">
           <CommandItem onSelect={() => handleSelect("generatePathway")}>
             Generate Pathways

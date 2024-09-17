@@ -28,6 +28,7 @@ import { highlight, languages } from "prismjs";
 import "prismjs/components/prism-clike";
 import "prismjs/components/prism-javascript";
 import "prismjs/themes/prism.css";
+import { useNavigate } from "react-router-dom";
 
 const questions = [
   {
@@ -148,14 +149,14 @@ const speakText = (text) => {
   }
 };
 
-export default function TestSession({ timeAlloted = 300,  }) {
+export default function TestSession({ timeAlloted = 300 }) {
   const [currentQuestion, setCurrentQuestion] = useState(0);
   const [answers, setAnswers] = useState({});
   const [timeLeft, setTimeLeft] = useState(timeAlloted); // 1 hour in seconds
   const [isLoading, setIsLoading] = useState(true);
   const [flaggedQuestions, setFlaggedQuestions] = useState({});
   const [showDescription, setShowDescription] = useState(false);
-
+  const navigate = useNavigate();
   useEffect(() => {
     const timer = setInterval(() => {
       setTimeLeft((prevTime) => (prevTime > 0 ? prevTime - 1 : 0));
@@ -219,7 +220,7 @@ export default function TestSession({ timeAlloted = 300,  }) {
 
   const handleSubmit = () => {
     // Implement submit logic here
-    alert("Test submitted successfully!");
+    navigate("result");
   };
 
   if (isLoading) {

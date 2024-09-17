@@ -192,7 +192,11 @@ function Dashboard() {
           </div>
         </div>
         <div className="flex flex-col">
-          <DashboardHeader view={"Dashboard"}></DashboardHeader>
+          <DashboardHeader
+            view={"Dashboard"}
+            isColabEditorRequired
+            isMentorRequired
+          ></DashboardHeader>
           {renderComponent()}
         </div>
       </div>{" "}

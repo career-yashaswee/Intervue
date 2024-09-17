@@ -69,8 +69,11 @@ import { StakeHolderCard } from "./home/landing/components/StakeHolderCard";
 import LandingPage from "./home/landing/LandingPage";
 import Practice from "./dashboard/practice/Practice";
 import PracticeLayout from "./dashboard/practice/PracticeLayout";
-
-// import VideoCall from "./dashboard/community/mentor/components/VideoCall";
+import TestSession from "./jobs/Diagnostic/components/TestSession";
+import ResumeLatexBuilder from "./dashboard/resume/components/ResumeLatexBuilder";
+import Notebook from "./workbench/Notebook";
+import VideoCall from "./mentor/components/VideoCall";
+// import JudgeHome from "./judge/screens/Home";
 
 // function App() {
 //   const [isMeta, setisMeta] = useState(false);
@@ -126,48 +129,48 @@ import PracticeLayout from "./dashboard/practice/PracticeLayout";
 //     func();
 //   }, []);
 
-//   // const adminRoutes = () => (
-//   //   <Routes>
-//   //     <Route path="/" element={<AllEmployees />} />
-//   //     <Route
-//   //       path="/all-organization-endorser"
-//   //       element={<AllOrganizationEndorser />}
-//   //     />
-//   //     <Route path="/create-user" element={<AdminPageCreate />} />
-//   //     <Route path="/notifications" element={<NotificationsAdmin />} />
-//   //   </Routes>
-//   // );
+//   const adminRoutes = () => (
+//     <Routes>
+//       <Route path="/" element={<AllEmployees />} />
+//       <Route
+//         path="/all-organization-endorser"
+//         element={<AllOrganizationEndorser />}
+//       />
+//       <Route path="/create-user" element={<AdminPageCreate />} />
+//       <Route path="/notifications" element={<NotificationsAdmin />} />
+//     </Routes>
+//   );
 
-//   // const employeeRoutes = () => (
-//   //   <Routes>
-//   //     <Route path="/" element={<EmployeePage />} />
-//   //     <Route path="/update-profile" element={<UpdateProfile />} />
-//   //     <Route path="/notifications" element={<NotificationsEmployee />} />
-//   //   </Routes>
-//   // );
+//   const employeeRoutes = () => (
+//     <Routes>
+//       <Route path="/" element={<EmployeePage />} />
+//       <Route path="/update-profile" element={<UpdateProfile />} />
+//       <Route path="/notifications" element={<NotificationsEmployee />} />
+//     </Routes>
+//   );
 
-//   // const isOrganizationEndorserRoutes = () => (
-//   //   <Routes>
-//   //     <Route path="/" element={<Organization />} />
-//   //     <Route path="/endorse-skill" element={<EndorseSkill />} />
-//   //     <Route path="/endorse-section" element={<Endorse />} />
-//   //     <Route path="/notifications" element={<NotificationsOrg />} />
-//   //   </Routes>
-//   // );
+//   const isOrganizationEndorserRoutes = () => (
+//     <Routes>
+//       <Route path="/" element={<Organization />} />
+//       <Route path="/endorse-skill" element={<EndorseSkill />} />
+//       <Route path="/endorse-section" element={<Endorse />} />
+//       <Route path="/notifications" element={<NotificationsOrg />} />
+//     </Routes>
+//   );
 
-//   // const noRoleRoutes = () => (
-//   //   <Routes>
-//   //     <Route path="/" element={<NoRole />} />
-//   //     <Route path="/notifications" element={<Notifications />} />
-//   //   </Routes>
-//   // );
+//   const noRoleRoutes = () => (
+//     <Routes>
+//       <Route path="/" element={<NoRole />} />
+//       <Route path="/notifications" element={<Notifications />} />
+//     </Routes>
+//   );
 
-//   // const renderRoutes = () => {
-//   //   if (isOwner) return adminRoutes();
-//   //   else if (isEmployee) return employeeRoutes();
-//   //   else if (isOrganizationEndorser) return isOrganizationEndorserRoutes();
-//   //   else return noRoleRoutes();
-//   // };
+//   const renderRoutes = () => {
+//     if (isOwner) return adminRoutes();
+//     else if (isEmployee) return employeeRoutes();
+//     else if (isOrganizationEndorser) return isOrganizationEndorserRoutes();
+//     else return noRoleRoutes();
+//   };
 
 //   return (
 //     <div>
@@ -243,103 +246,103 @@ import PracticeLayout from "./dashboard/practice/PracticeLayout";
 
 function App() {
   const { isSessionExpired, setIsSessionExpired } = useSessionManager();
-  // const [isMeta, setisMeta] = useState(false);
-  // const [isEmployee, setisEmployee] = useState(false);
-  // const [account, setaccount] = useState("");
-  // const [isOrganizationEndorser, setisOrganizationEndorser] = useState(false);
-  // const [isOwner, setisOwner] = useState(false);
-  // const [loadcomp, setloadcomp] = useState(false);
+  const [isMeta, setisMeta] = useState(false);
+  const [isEmployee, setisEmployee] = useState(false);
+  const [account, setaccount] = useState("");
+  const [isOrganizationEndorser, setisOrganizationEndorser] = useState(false);
+  const [isOwner, setisOwner] = useState(false);
+  const [loadcomp, setloadcomp] = useState(false);
 
-  // const loadBlockChainData = async () => {
-  //   const web3 = window.web3;
-  //   const accounts = await web3.eth.getAccounts();
-  //   if (accounts) {
-  //     setaccount(accounts[0]);
-  //   }
-  //   const networkId = await web3.eth.net.getId();
-  //   const AdminData = await Admin.networks[networkId];
-  //   if (AdminData) {
-  //     const admin = new web3.eth.Contract(Admin.abi, AdminData.address);
-  //     const isEmployee = await admin.methods.isEmployee(accounts[0]).call();
-  //     const isOrganizationEndorser = await admin.methods
-  //       .isOrganizationEndorser(accounts[0])
-  //       .call();
-  //     const owner = await admin.methods.owner().call();
-  //     setisEmployee(isEmployee);
-  //     setisOrganizationEndorser(isOrganizationEndorser);
-  //     setisOwner(owner === accounts[0]);
-  //   } else {
-  //     toast.error("The Admin Contract does not exist on this network!");
-  //   }
-  // };
+  const loadBlockChainData = async () => {
+    const web3 = window.web3;
+    const accounts = await web3.eth.getAccounts();
+    if (accounts) {
+      setaccount(accounts[0]);
+    }
+    const networkId = await web3.eth.net.getId();
+    const AdminData = await Admin.networks[networkId];
+    if (AdminData) {
+      const admin = new web3.eth.Contract(Admin.abi, AdminData.address);
+      const isEmployee = await admin.methods.isEmployee(accounts[0]).call();
+      const isOrganizationEndorser = await admin.methods
+        .isOrganizationEndorser(accounts[0])
+        .call();
+      const owner = await admin.methods.owner().call();
+      setisEmployee(isEmployee);
+      setisOrganizationEndorser(isOrganizationEndorser);
+      setisOwner(owner === accounts[0]);
+    } else {
+      toast.error("The Admin Contract does not exist on this network!");
+    }
+  };
 
-  // useEffect(() => {
-  //   const func = async () => {
-  //     setisMeta(true);
-  //     setloadcomp(true);
-  //     if (window.ethereum) {
-  //       await window.ethereum.request({ method: "eth_requestAccounts" });
-  //       window.web3 = new Web3(window.ethereum);
-  //       await loadBlockChainData();
-  //     } else if (window.web3) {
-  //       window.web3 = new Web3(window.web3.currentProvider);
-  //       await loadBlockChainData();
-  //     } else {
-  //       setisMeta(false);
-  //     }
-  //     setloadcomp(false);
-  //   };
-  //   func();
-  // }, []);
+  useEffect(() => {
+    const func = async () => {
+      setisMeta(true);
+      setloadcomp(true);
+      if (window.ethereum) {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        window.web3 = new Web3(window.ethereum);
+        await loadBlockChainData();
+      } else if (window.web3) {
+        window.web3 = new Web3(window.web3.currentProvider);
+        await loadBlockChainData();
+      } else {
+        setisMeta(false);
+      }
+      setloadcomp(false);
+    };
+    func();
+  }, []);
 
-  // const adminRoutes = () => (
-  //   <Routes>
-  //     <Route path="/admin" element={<AllEmployees />} />
-  //     <Route
-  //       path="/admin/all-organization-endorser"
-  //       element={<AllOrganizationEndorser />}
-  //     />
-  //     <Route path="/admin/create-user" element={<AdminPageCreate />} />
-  //     <Route path="/admin/notifications" element={<NotificationsAdmin />} />
-  //   </Routes>
-  // );
+  const adminRoutes = () => (
+    <Routes>
+      <Route path="/admin" element={<AllEmployees />} />
+      <Route
+        path="/admin/all-organization-endorser"
+        element={<AllOrganizationEndorser />}
+      />
+      <Route path="/admin/create-user" element={<AdminPageCreate />} />
+      <Route path="/admin/notifications" element={<NotificationsAdmin />} />
+    </Routes>
+  );
 
-  // const employeeRoutes = () => (
-  //   <Routes>
-  //     <Route path="/employee" element={<EmployeePage />} />
-  //     <Route path="/employee/update-profile" element={<UpdateProfile />} />
-  //     <Route
-  //       path="/employee/notifications"
-  //       element={<NotificationsEmployee />}
-  //     />
-  //   </Routes>
-  // );
+  const employeeRoutes = () => (
+    <Routes>
+      <Route path="/employee" element={<EmployeePage />} />
+      <Route path="/employee/update-profile" element={<UpdateProfile />} />
+      <Route
+        path="/employee/notifications"
+        element={<NotificationsEmployee />}
+      />
+    </Routes>
+  );
 
-  // const isOrganizationEndorserRoutes = () => (
-  //   <Routes>
-  //     <Route path="/organization" element={<Organization />} />
-  //     <Route path="/organization/endorse-skill" element={<EndorseSkill />} />
-  //     <Route path="/organization/endorse-section" element={<Endorse />} />
-  //     <Route
-  //       path="/organization/notifications"
-  //       element={<NotificationsOrg />}
-  //     />
-  //   </Routes>
-  // );
+  const isOrganizationEndorserRoutes = () => (
+    <Routes>
+      <Route path="/organization" element={<Organization />} />
+      <Route path="/organization/endorse-skill" element={<EndorseSkill />} />
+      <Route path="/organization/endorse-section" element={<Endorse />} />
+      <Route
+        path="/organization/notifications"
+        element={<NotificationsOrg />}
+      />
+    </Routes>
+  );
 
-  // const noRoleRoutes = () => (
-  //   <Routes>
-  //     <Route path="/no-role" element={<NoRole />} />
-  //     <Route path="/no-role/notifications" element={<Notifications />} />
-  //   </Routes>
-  // );
+  const noRoleRoutes = () => (
+    <Routes>
+      <Route path="/no-role" element={<NoRole />} />
+      <Route path="/no-role/notifications" element={<Notifications />} />
+    </Routes>
+  );
 
-  // const renderBlockchainRoutes = () => {
-  //   if (isOwner) return adminRoutes();
-  //   else if (isEmployee) return employeeRoutes();
-  //   else if (isOrganizationEndorser) return isOrganizationEndorserRoutes();
-  //   else return noRoleRoutes();
-  // };
+  const renderBlockchainRoutes = () => {
+    if (isOwner) return adminRoutes();
+    else if (isEmployee) return employeeRoutes();
+    else if (isOrganizationEndorser) return isOrganizationEndorserRoutes();
+    else return noRoleRoutes();
+  };
 
   return (
     <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
@@ -453,6 +456,8 @@ function App() {
                 }
               />
 
+              <Route path="/resume/build" element={<ResumeLatexBuilder />} />
+              <Route path="/notebook" element={<Notebook />} />
               <Route path="/jobs" element={<JobsPageLayout />} />
               <Route
                 path="/dashboard/cc"
@@ -471,6 +476,12 @@ function App() {
                     <CourseLayout />
                   </ProtectedRoute>
                 }
+              />
+
+              <Route path="/mentor/connect" element={<VideoCall />} />
+              <Route
+                path="/competency/:competencyId"
+                element={<TestSession />}
               />
 
               <Route path="/practice" element={<PracticeLayout />} />
@@ -529,18 +540,18 @@ function App() {
                   </ProtectedRoute>
                 }
               />
-              {/* <Route path="/judge" element={<Home />} /> */}
-              <Route path="/about" element={<LandingPage />} />
-              {/* <Route
+              {/* <Route path="/judge" element={<JudgeHome />} /> */}
+              {/* <Route path="/about" element={<LandingPage />} />
+              <Route
                     path="/judge/playground/:folderId/:playgroundId"
                     element={<Playground />}
                   /> */}
 
-              {/* <Route
+              <Route
                 path="/getemployee/:employee_address"
                 element={<GetEmployee />}
               />
-              <Route path="/getOrg/:orgAddress" element={<GetOrg />} /> */}
+              <Route path="/getOrg/:orgAddress" element={<GetOrg />} />
 
               <Route path="*" element={<Error />} />
             </Routes>

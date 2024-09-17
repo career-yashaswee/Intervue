@@ -1,6 +1,6 @@
 import React from "react";
 import ChatScreen from "./components/ChatScreen";
-import { RecentBar } from "./components/RecentBar";
+import RecentBar from "./components/RecentBar";
 
 function MessagePage() {
   return (

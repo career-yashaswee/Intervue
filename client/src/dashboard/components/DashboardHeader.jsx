@@ -10,6 +10,7 @@ import {
   Star,
   MessageCircleQuestion,
   BookOpen,
+  NotebookPen,
 } from "lucide-react";
 import AskQuestionCard from "../community/components/AskQuestionCard";
 import { motion } from "framer-motion";
@@ -40,6 +41,7 @@ function DashboardHeader({
   isMentorRequired = false,
   isJobieRequired = false,
   isAskQuestionRequired = false,
+  isColabEditorRequired = false,
 }) {
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px]">
@@ -55,16 +57,14 @@ function DashboardHeader({
         <div className="w-full flex-1"></div>
       )}
       {isMentorRequired ? (
-        <Link to="mentor">
-          <div className="flex items-center space-x-2">
-            <Link to="mentor">
-              <Button variant="shine" className="flex items-center space-x-2">
-                <Video className="h-5 w-5" /> {/* Adjust size as needed */}
-                <span>Contact Mentor</span>
-              </Button>
-            </Link>
-          </div>
-        </Link>
+        <div className="flex items-center space-x-2">
+          <Link to="/mentor/connect">
+            <Button variant="shine" className="flex items-center space-x-2">
+              <Video className="h-5 w-5" /> {/* Adjust size as needed */}
+              <span>Contact Mentor</span>
+            </Button>
+          </Link>
+        </div>
       ) : null}
 
       {isJobieRequired ? (
@@ -74,6 +74,17 @@ function DashboardHeader({
             {/* Adjust size as needed */}
             <span>Ask Jobie</span>
           </Button>
+        </div>
+      ) : null}
+
+      {isColabEditorRequired ? (
+        <div className="flex items-center space-x-2">
+          <Link to="/notebook">
+            <Button variant="shine" className="flex items-center space-x-2">
+              <NotebookPen className="h-5 w-5" /> {/* Adjust size as needed */}
+              <span>Colab Editor</span>
+            </Button>
+          </Link>
         </div>
       ) : null}
 

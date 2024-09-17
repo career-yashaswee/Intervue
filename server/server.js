@@ -20,6 +20,8 @@ const documentRoutes = require("./routes/document");
 const jobRoutes = require("./routes/job");
 const insightsRoutes = require("./routes/insights");
 const pushRoutes = require("./routes/webPush");
+const chatRoutes = require("./routes/chatAiAvatar");
+const voiceRoutes = require("./routes/voice");
 // --- ROUTES ---
 
 const bodyParser = require("body-parser");
@@ -114,6 +116,8 @@ app.use("/document", documentRoutes);
 app.use("/job", jobRoutes);
 app.use("/insight", insightsRoutes);
 app.use("/webpush", pushRoutes);
+app.use("/chat", chatRoutes);
+app.use("/voices", voiceRoutes);
 
 // Global error handler
 app.use((err, req, res, next) => {

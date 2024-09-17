@@ -10,7 +10,7 @@ const StyledHome = styled.div`
   min-height: 100vh;
 `;
 
-const Home = () => {
+const JudgeHome = () => {
   const { isOpenModal } = useContext(ModalContext);
 
   return (
@@ -22,4 +22,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default JudgeHome;

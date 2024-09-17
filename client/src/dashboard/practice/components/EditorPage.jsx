@@ -50,11 +50,11 @@ const MonacoEditor = ({ socketRef, roomId, onCodeChange }) => {
 
   useEffect(() => {
     const handleCodeChange = ({ code }) => {
-      // console.log(code);
+      console.log(code);
       if (code !== null && editorRef.current) {
         // Update the editor content without triggering the change event again
         const currentValue = editorRef.current.getValue();
-        // console.log(currentValue);
+        console.log(currentValue);
         if (currentValue !== code) {
           editorRef.current.setValue(code);
         }

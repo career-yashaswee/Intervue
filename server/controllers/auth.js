@@ -88,7 +88,7 @@ const login = async (req, res, next) => {
       { userId: user._id, first: user.firstName },
       process.env.SECRET_KEY,
       {
-        expiresIn: "1 hour",
+        expiresIn: "1d",
       }
     );
     res.status(200).json({ token });
