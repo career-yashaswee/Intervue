@@ -11,6 +11,7 @@ import {
   MessageCircleQuestion,
   BookOpen,
   NotebookPen,
+  BadgeHelp,
 } from "lucide-react";
 import AskQuestionCard from "../community/components/AskQuestionCard";
 import { motion } from "framer-motion";
@@ -42,6 +43,7 @@ function DashboardHeader({
   isJobieRequired = false,
   isAskQuestionRequired = false,
   isColabEditorRequired = false,
+  isHelpRequired = false,
 }) {
   return (
     <header className="flex h-14 items-center gap-4 border-b bg-muted/40 px-4 lg:h-[60px]">
@@ -62,6 +64,17 @@ function DashboardHeader({
             <Button variant="shine" className="flex items-center space-x-2">
               <Video className="h-5 w-5" /> {/* Adjust size as needed */}
               <span>Contact Mentor</span>
+            </Button>
+          </Link>
+        </div>
+      ) : null}
+
+      {isHelpRequired ? (
+        <div className="flex items-center space-x-2">
+          <Link to="/help">
+            <Button variant="shine" className="flex items-center space-x-2">
+              <BadgeHelp className="h-5 w-5" /> {/* Adjust size as needed */}
+              <span>I need Help</span>
             </Button>
           </Link>
         </div>

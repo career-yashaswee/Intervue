@@ -7,6 +7,7 @@ const CheckoutButton = () => {
     const response = await createCheckoutSession().then((res) => {
       window.location.href = res.url;
     });
+    console.log(response);
   };
 
   return (

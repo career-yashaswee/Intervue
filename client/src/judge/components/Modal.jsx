@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
 import styled from "styled-components";
-import {
-  NewFolder,
-  NewPlayground,
-  NewPlaygroundAndFolder,
-  EditFolder,
-  EditPlaygroundTitle,
-  Loading,
-} from "./ModalTypes/EditFolder";
+
+import EditFolder from "./ModalTypes/EditFolder";
+import { EditPlaygroundTitle } from "./ModalTypes";
+import { Loading } from "./ModalTypes";
+import { NewPlaygroundAndFolder } from "./ModalTypes";
+import { NewPlayground } from "./ModalTypes";
+import { NewFolder } from "./ModalTypes";
 
 import { ModalContext } from "../context/ModalContext";
 

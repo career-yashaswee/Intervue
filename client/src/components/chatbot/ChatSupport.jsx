@@ -1,10 +1,10 @@
 "use client";
 
+import React, { useEffect, useRef, useState } from "react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
   ChatBubble,
-  ChatBubbleAvatar,
   ChatBubbleMessage,
 } from "@/components/ui/chat/chat-bubble";
 import { ChatInput } from "@/components/ui/chat/chat-input";
@@ -18,42 +18,36 @@ import {
   Paperclip,
   RefreshCcw,
   Volume2,
+  X,
+  Book,
 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
+import { Input } from "@/components/ui/input";
 
 const ChatAiIcons = [
-  {
-    icon: CopyIcon,
-    label: "Copy",
-  },
-  {
-    icon: RefreshCcw,
-    label: "Refresh",
-  },
-  {
-    icon: Volume2,
-    label: "Volume",
-  },
+  { icon: CopyIcon, label: "Copy" },
+  { icon: RefreshCcw, label: "Refresh" },
+  { icon: Volume2, label: "Volume" },
 ];
 
-export default function ChatSupport() {
-  const messages = useChatStore((state) => state.chatBotMessages);
-  const setMessages = useChatStore((state) => state.setchatBotMessages);
-  const selectedUser = useChatStore((state) => state.selectedUser);
-  const input = useChatStore((state) => state.input);
-  const setInput = useChatStore((state) => state.setInput);
-  const handleInputChange = useChatStore((state) => state.handleInputChange);
-  const hasInitialAIResponse = useChatStore(
-    (state) => state.hasInitialAIResponse
-  );
-  const setHasInitialAIResponse = useChatStore(
-    (state) => state.setHasInitialAIResponse
-  );
-  const [isLoading, setisLoading] = useState(false);
+export default function ChatSupport({ onClose, currentSection }) {
+  const {
+    messages,
+    setMessages,
+    input,
+    setInput,
+    handleInputChange,
+    hasInitialAIResponse,
+    setHasInitialAIResponse,
+  } = useChatStore();
+  const [isLoading, setIsLoading] = useState(false);
+  const [isRecording, setIsRecording] = useState(false);
+  const [audioBlob, setAudioBlob] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
 
   const messagesContainerRef = useRef(null);
   const inputRef = useRef(null);
   const formRef = useRef(null);
+  const fileInputRef = useRef(null);
 
   const getMessageVariant = (role) => (role === "ai" ? "received" : "sent");
 
@@ -72,20 +66,31 @@ export default function ChatSupport() {
 
   const handleSendMessage = (e) => {
     e.preventDefault();
-    if (!input) return;
+    if (!input && !audioBlob && !selectedFile) return;
 
-    setMessages((messages) => [
-      ...messages,
-      {
-        id: messages.length + 1,
-        avatar: selectedUser.avatar,
-        name: selectedUser.name,
-        role: "user",
-        message: input,
-      },
-    ]);
+    let newMessage = {
+      id: messages.length + 1,
+      avatar: "",
+      name: "User",
+      role: "user",
+      message: input,
+    };
+
+    if (audioBlob) {
+      newMessage.audio = URL.createObjectURL(audioBlob);
+      newMessage.message = "Audio message";
+    }
+
+    if (selectedFile) {
+      newMessage.file = selectedFile;
+      newMessage.message = `File: ${selectedFile.name}`;
+    }
+
+    setMessages((messages) => [...messages, newMessage]);
 
     setInput("");
+    setAudioBlob(null);
+    setSelectedFile(null);
     formRef.current?.reset();
   };
 
@@ -94,130 +99,178 @@ export default function ChatSupport() {
       inputRef.current.focus();
     }
 
-    // Simulate AI response
     if (!hasInitialAIResponse) {
-      setisLoading(true);
+      setIsLoading(true);
       setTimeout(() => {
         setMessages((messages) => [
-          ...messages.slice(0, messages.length - 1),
+          ...messages,
           {
             id: messages.length + 1,
             avatar: "",
             name: "ChatBot",
             role: "ai",
-            message: "Sure! If you have any more questions, feel free to ask.",
+            message: `Hello! How can I assist you with the ${currentSection} section today?`,
           },
         ]);
-        setisLoading(false);
+        setIsLoading(false);
         setHasInitialAIResponse(true);
-      }, 2500);
+      }, 1000);
     }
   }, []);
 
+  const handleAudioRecording = () => {
+    if (!isRecording) {
+      navigator.mediaDevices.getUserMedia({ audio: true }).then((stream) => {
+        const mediaRecorder = new MediaRecorder(stream);
+        const audioChunks = [];
+
+        mediaRecorder.addEventListener("dataavailable", (event) => {
+          audioChunks.push(event.data);
+        });
+
+        mediaRecorder.addEventListener("stop", () => {
+          const audioBlob = new Blob(audioChunks, { type: "audio/mp3" });
+          setAudioBlob(audioBlob);
+        });
+
+        mediaRecorder.start();
+        setIsRecording(true);
+
+        setTimeout(() => {
+          mediaRecorder.stop();
+          setIsRecording(false);
+        }, 5000); // Stop recording after 5 seconds
+      });
+    }
+  };
+
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setSelectedFile(file);
+    }
+  };
+
   return (
-    <div className="h-full w-full">
-      <div className="relative flex h-full flex-col rounded-xl bg-muted/20 dark:bg-muted/40 p-4 lg:col-span-2">
-        <ChatMessageList ref={messagesContainerRef}>
-          {/* Chat messages */}
+    <div className="flex flex-col h-full">
+      <div className="flex items-center justify-between p-4 border-b">
+        <h2 className="text-lg font-semibold">
+          Chat Support - {currentSection}
+        </h2>
+        <Button variant="ghost" size="icon" onClick={onClose}>
+          <X className="h-4 w-4" />
+        </Button>
+      </div>
+      <div className="flex-1 overflow-y-auto p-4" ref={messagesContainerRef}>
+        <ChatMessageList>
           <AnimatePresence>
-            {messages.map((message, index) => {
-              const variant = getMessageVariant(message.role);
-              return (
-                <motion.div
-                  key={index}
-                  layout
-                  initial={{ opacity: 0, scale: 1, y: 50, x: 0 }}
-                  animate={{ opacity: 1, scale: 1, y: 0, x: 0 }}
-                  exit={{ opacity: 0, scale: 1, y: 1, x: 0 }}
-                  transition={{
-                    opacity: { duration: 0.1 },
-                    layout: {
-                      type: "spring",
-                      bounce: 0.3,
-                      duration: index * 0.05 + 0.2,
-                    },
-                  }}
-                  style={{ originX: 0.5, originY: 0.5 }}
-                  className="flex flex-col gap-2 p-4"
-                >
-                  <ChatBubble key={index} variant={variant}>
-                    <Avatar>
-                      <AvatarImage
-                        src=""
-                        alt="Avatar"
-                        className={message.role === "ai" ? "dark:invert" : ""}
+            {messages.map((message, index) => (
+              <motion.div
+                key={index}
+                layout
+                initial={{ opacity: 0, y: 50 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -50 }}
+                transition={{ duration: 0.3 }}
+              >
+                <ChatBubble variant={getMessageVariant(message.role)}>
+                  <Avatar>
+                    <AvatarImage src="" alt="Avatar" />
+                    <AvatarFallback>
+                      {message.role === "ai" ? "🤖" : "👤"}
+                    </AvatarFallback>
+                  </Avatar>
+                  <ChatBubbleMessage>
+                    {message.message}
+                    {message.audio && (
+                      <audio
+                        controls
+                        src={message.audio}
+                        className="mt-2 w-full"
                       />
-                      <AvatarFallback>🤖</AvatarFallback>
-                    </Avatar>
-                    <ChatBubbleMessage
-                      isLoading={message.isLoading}
-                      variant={variant}
-                    >
-                      {message.message}
-                      {message.role === "ai" && (
-                        <div className="flex items-center mt-1.5 gap-1">
-                          {!message.isLoading && (
-                            <>
-                              {ChatAiIcons.map((icon, index) => {
-                                const Icon = icon.icon;
-                                return (
-                                  <Button
-                                    key={index}
-                                    variant="outline"
-                                    size="icon"
-                                    className="size-5"
-                                  >
-                                    <Icon className="size-3" />
-                                  </Button>
-                                );
-                              })}
-                            </>
-                          )}
-                        </div>
-                      )}
-                    </ChatBubbleMessage>
-                  </ChatBubble>
-                </motion.div>
-              );
-            })}
+                    )}
+                    {message.file && (
+                      <div className="mt-2">
+                        <a
+                          href={URL.createObjectURL(message.file)}
+                          download={message.file.name}
+                          className="text-blue-500 hover:underline"
+                        >
+                          Download: {message.file.name}
+                        </a>
+                      </div>
+                    )}
+                    {message.role === "ai" && (
+                      <div className="flex items-center mt-2 gap-1">
+                        {ChatAiIcons.map((icon, index) => (
+                          <Button
+                            key={index}
+                            variant="ghost"
+                            size="icon"
+                            className="h-6 w-6"
+                          >
+                            <icon.icon className="h-4 w-4" />
+                          </Button>
+                        ))}
+                      </div>
+                    )}
+                  </ChatBubbleMessage>
+                </ChatBubble>
+              </motion.div>
+            ))}
           </AnimatePresence>
         </ChatMessageList>
-        <div className="flex-1" />
-        <form
-          ref={formRef}
-          onSubmit={handleSendMessage}
-          className="relative rounded-lg border bg-background focus-within:ring-1 focus-within:ring-ring"
-        >
+      </div>
+      <form ref={formRef} onSubmit={handleSendMessage} className="border-t p-4">
+        <div className="flex items-center gap-2">
           <ChatInput
             ref={inputRef}
             onKeyDown={handleKeyDown}
             onChange={handleInputChange}
             placeholder="Type your message here..."
-            className="min-h-12 resize-none rounded-lg bg-background border-0 p-3 shadow-none focus-visible:ring-0"
+            className="flex-1"
           />
-          <div className="flex items-center p-3 pt-0">
-            <Button variant="ghost" size="icon">
-              <Paperclip className="size-4" />
-              <span className="sr-only">Attach file</span>
+          <Button
+            type="submit"
+            disabled={(!input && !audioBlob && !selectedFile) || isLoading}
+          >
+            <CornerDownLeft className="h-4 w-4 mr-2" />
+            Send
+          </Button>
+        </div>
+        <div className="flex items-center justify-between mt-2">
+          <div className="flex items-center space-x-2">
+            <Button variant="ghost" size="icon" onClick={handleAudioRecording}>
+              <Mic className={`h-4 w-4 ${isRecording ? "text-red-500" : ""}`} />
             </Button>
-
-            <Button variant="ghost" size="icon">
-              <Mic className="size-4" />
-              <span className="sr-only">Use Microphone</span>
-            </Button>
-
+            <Input
+              type="file"
+              ref={fileInputRef}
+              className="hidden"
+              onChange={handleFileUpload}
+            />
             <Button
-              disabled={!input || isLoading}
-              type="submit"
-              size="sm"
-              className="ml-auto gap-1.5"
+              variant="ghost"
+              size="icon"
+              onClick={() => fileInputRef.current.click()}
             >
-              Send Message
-              <CornerDownLeft className="size-3.5" />
+              <Paperclip className="h-4 w-4" />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => window.open("/docs", "_blank")}
+            >
+              <Book className="h-4 w-4" />
             </Button>
           </div>
-        </form>
-      </div>
+          {(audioBlob || selectedFile) && (
+            <span className="text-sm text-muted-foreground">
+              {audioBlob ? "Audio recorded" : `File: ${selectedFile.name}`}
+            </span>
+          )}
+        </div>
+      </form>
     </div>
   );
 }

@@ -1,11 +1,11 @@
-import React from 'react'
-import styled from 'styled-components'
-import { BiImport } from 'react-icons/bi'
+import React from "react";
+import styled from "styled-components";
+import { BiImport } from "react-icons/bi";
 export const Console = styled.div`
   background: #fff;
   display: flex;
   flex-direction: column;
-`
+`;
 
 export const Header = styled.div`
   background: #ededed;
@@ -18,17 +18,18 @@ export const Header = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  input{
+  input {
     display: none;
   }
-  label, a{
+  label,
+  a {
     font-weight: 400;
     display: flex;
     align-items: center;
     gap: 0.7rem;
     color: black;
   }
-`
+`;
 
 export const TextArea = styled.textarea`
   flex-grow: 1;
@@ -39,14 +40,20 @@ export const TextArea = styled.textarea`
   padding-top: 0.5rem;
   font-size: 1.1rem;
   min-height: 250px;
-`
+`;
 const InputConsole = ({ currentInput, setCurrentInput, getFile }) => {
   return (
     <Console>
       <Header>
-        Input: 
+        Input:
         <label htmlFor="inputfile">
-          <input type="file" accept="." id="inputfile" onChange={(e) => getFile(e, setCurrentInput)} /> <BiImport /> Import Input
+          <input
+            type="file"
+            accept="."
+            id="inputfile"
+            onChange={(e) => getFile(e, setCurrentInput)}
+          />{" "}
+          <BiImport /> Import Input
         </label>
       </Header>
       <TextArea
@@ -54,7 +61,7 @@ const InputConsole = ({ currentInput, setCurrentInput, getFile }) => {
         value={currentInput}
       />
     </Console>
-  )
-}
+  );
+};
 
-export default InputConsole
+export default InputConsole;

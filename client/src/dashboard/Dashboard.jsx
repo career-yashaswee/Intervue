@@ -64,10 +64,8 @@ const navItems = [
   },
   { label: "Practice", icon: <Dumbbell className="h-4 w-4" /> },
   { label: "Coach", icon: <Bot className="h-4 w-4" />, name: "Jobie Ai" },
-  // { label: "Scenario", icon: <Layers2 className="h-4 w-4" /> },
   { label: "Insights", icon: <Eye className="h-4 w-4" /> },
   { label: "Interview", icon: <MessagesSquare className="h-4 w-4" /> },
-
   { label: "Resume", icon: <Paperclip className="h-4 w-4" /> },
   { label: "Mentor", icon: <Hand className="h-4 w-4" /> },
   { label: "Achievements", icon: <Medal className="h-4 w-4" /> },
@@ -148,9 +146,9 @@ function Dashboard() {
 
   return (
     <div className="relative min-h-screen w-screen bg-white">
-      <div className="grid min-h-screen w-full md:grid-cols-[220px_1fr] lg:grid-cols-[280px_1fr]">
-        <div className="hidden border-r bg-muted/40 md:block">
-          <div className="flex h-full max-h-screen flex-col gap-2">
+      <div className="flex">
+        <div className="fixed left-0 top-0 bottom-0 w-[220px] lg:w-[280px] border-r bg-muted/40 overflow-y-auto">
+          <div className="flex flex-col h-full">
             <div className="flex h-14 items-center border-b px-4 lg:h-[60px] lg:px-6">
               <Link
                 to="/dashboard"
@@ -164,7 +162,7 @@ function Dashboard() {
                 <span className="sr-only">Toggle notifications</span>
               </Button>
             </div>
-            <div className="flex-1">
+            <div className="flex-1 overflow-y-auto">
               <nav className="grid items-start px-2 text-sm font-medium lg:px-4">
                 {navItems.map((item, index) => (
                   <button
@@ -175,10 +173,10 @@ function Dashboard() {
                         ? "bg-primary text-muted"
                         : "bg-muted text-primary hover:text-primary"
                     } ${
-                      index === 0 ? "rounded-tl-[12px] rounded-tr-[12px]" : "" // Rounded top for first item
+                      index === 0 ? "rounded-tl-[12px] rounded-tr-[12px]" : ""
                     } ${
                       index === navItems.length - 1
-                        ? "rounded-bl-[12px] rounded-br-[12px]" // Rounded bottom for last item
+                        ? "rounded-bl-[12px] rounded-br-[12px]"
                         : ""
                     }`}
                   >
@@ -188,18 +186,19 @@ function Dashboard() {
                 ))}
               </nav>
             </div>
-            <UpgradeCard></UpgradeCard>
+            <UpgradeCard />
           </div>
         </div>
-        <div className="flex flex-col">
+        <div className="flex-1 ml-[220px] lg:ml-[280px]">
           <DashboardHeader
             view={"Dashboard"}
             isColabEditorRequired
             isMentorRequired
-          ></DashboardHeader>
-          {renderComponent()}
+            isHelpRequired
+          />
+          <div className="p-4 lg:p-6">{renderComponent()}</div>
         </div>
-      </div>{" "}
+      </div>
     </div>
   );
 }

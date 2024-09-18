@@ -1,0 +1,16 @@
+.monaco-editor .cursor {
+  position: absolute;
+  background-color: rgba(255, 0, 0, 0.5); /* Example color: Red */
+  width: 2px;
+  height: 20px; /* Adjust height as needed */
+  z-index: 1;
+}
+
+/* Add styles for different users if necessary */
+.user1-cursor {
+  background-color: rgba(0, 255, 0, 0.5); /* Green */
+}
+
+.user2-cursor {
+  background-color: rgba(0, 0, 255, 0.5); /* Blue */
+}

@@ -1,229 +1,101 @@
-import React, { useContext } from "react";
-import styled from "styled-components";
-import { IoTrashOutline } from "react-icons/io5";
-import { BiEditAlt } from "react-icons/bi";
-import { FcOpenedFolder } from "react-icons/fc";
-import logo from "../../assets/logo-small.png";
-import { ModalContext } from "../../context/ModalContext";
-import { PlaygroundContext } from "../../context/PlaygroundContext";
+import React, { useContext, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Toaster } from "@/components/ui/toaster";
+import { useToast } from "@/components/ui/use-toast";
+import { ModalContext } from "@/judge/context/ModalContext";
+import { PlaygroundContext } from "@/judge/context/PlaygroundContext";
 import { useNavigate } from "react-router-dom";
+import Header from "./components/Header";
+import FolderSection from "./components/FolderSection";
+import { Skeleton } from "@/components/ui/skeleton";
 
-const StyledRightComponent = styled.div`
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 60%;
-  padding: 2rem;
-
-  @media (max-width: 768px) {
-    position: relative;
-    width: 100%;
-    padding: 1rem 0.5rem;
-  }
-`;
-
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  padding: 0.75rem 0;
-  border-bottom: 1px solid #989898;
-  margin-bottom: 1rem;
-`;
-
-const Heading = styled.h3`
-  font-size: ${(props) => (props.size === "small" ? "1.25rem" : "1.75rem")};
-  font-weight: 400;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  span {
-    font-weight: 700;
-  }
-`;
-
-const AddButton = styled.div`
-  font-size: 1rem;
-  border-radius: 30px;
-  color: black;
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  span {
-    font-size: 1.5rem;
-    font-weight: 700;
-  }
-
-  &:hover {
-    cursor: pointer;
-  }
-`;
-
-const FolderCard = styled.div`
-  margin-bottom: 1rem;
-`;
-
-const FolderIcons = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 0.7rem;
-  cursor: pointer;
-`;
-
-const PlayGroundCards = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 2rem;
-
-  @media (max-width: 428px) {
-    grid-template-columns: 1fr;
-  }
-`;
-
-const Card = styled.div`
-  padding: 0.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  border-radius: 8px;
-  box-shadow: 0 0 4px 0px #989898;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
-
-  &:hover {
-    scale: 1.05;
-    box-shadow: 0 0 8px 0px #989898;
-  }
-`;
-
-const CardContainer = styled.div`
-  display: flex;
-  align-items: center;
-`;
-
-const CardContent = styled.div``;
-
-const Logo = styled.img`
-  width: 70px;
-  margin-right: 1rem;
-
-  @media (max-width: 425px) {
-    width: 50px;
-    margin-right: 0.5rem;
-  }
-`;
-const RightComponent = () => {
+export default function RightComponent() {
   const navigate = useNavigate();
-
+  const { toast } = useToast();
   const { openModal } = useContext(ModalContext);
   const { folders, deleteFolder, deleteCard } = useContext(PlaygroundContext);
+  const [isLoading, setIsLoading] = useState(true);
+
+  React.useEffect(() => {
+    // Simulate loading
+    const timer = setTimeout(() => setIsLoading(false), 2000);
+    return () => clearTimeout(timer);
+  }, []);
+
+  const handleDeleteFolder = (folderId) => {
+    try {
+      deleteFolder(folderId);
+      toast({
+        title: "Folder deleted",
+        description: "The folder has been successfully deleted.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete folder. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const handleDeleteCard = (folderId, cardId) => {
+    try {
+      deleteCard(folderId, cardId);
+      toast({
+        title: "Playground deleted",
+        description: "The playground has been successfully deleted.",
+      });
+    } catch (error) {
+      toast({
+        title: "Error",
+        description: "Failed to delete playground. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   return (
-    <StyledRightComponent>
-      <Header>
-        <Heading size="large">
-          My <span>Playground</span>
-        </Heading>
-        <AddButton
-          onClick={() =>
-            openModal({
-              show: true,
-              modalType: 1,
-              identifiers: {
-                folderId: "",
-                cardId: "",
-              },
-            })
-          }
-        >
-          {" "}
-          <span>+</span> New Folder
-        </AddButton>
-      </Header>
-
-      {Object.entries(folders).map(([folderId, folder]) => (
-        <FolderCard key={folderId}>
-          <Header>
-            <Heading size="small">
-              <FcOpenedFolder /> {folder.title}
-            </Heading>
-            <FolderIcons>
-              <IoTrashOutline onClick={() => deleteFolder(folderId)} />
-              <BiEditAlt
-                onClick={() =>
-                  openModal({
-                    show: true,
-                    modalType: 4,
-                    identifiers: {
-                      folderId: folderId,
-                      cardId: "",
-                    },
-                  })
-                }
-              />
-              <AddButton
-                onClick={() =>
-                  openModal({
-                    show: true,
-                    modalType: 2,
-                    identifiers: {
-                      folderId: folderId,
-                      cardId: "",
-                    },
-                  })
-                }
-              >
-                <span>+</span> New Playground
-              </AddButton>
-            </FolderIcons>
-          </Header>
-
-          <PlayGroundCards>
-            {Object.entries(folder["playgrounds"]).map(
-              ([playgroundId, playground]) => (
-                <Card
-                  key={playgroundId}
-                  onClick={() => {
-                    navigate(`/judge/playground/${folderId}/${playgroundId}`);
-                  }}
-                >
-                  <CardContainer>
-                    <Logo src={logo} />
-                    <CardContent>
-                      <p>{playground.title}</p>
-                      <p>Language: {playground.language}</p>
-                    </CardContent>
-                  </CardContainer>
-                  <FolderIcons
-                    onClick={(e) => {
-                      e.stopPropagation(); //stop click propagation from child to parent
-                    }}
-                  >
-                    <IoTrashOutline
-                      onClick={() => deleteCard(folderId, playgroundId)}
-                    />
-                    <BiEditAlt
-                      onClick={() =>
-                        openModal({
-                          show: true,
-                          modalType: 5,
-                          identifiers: {
-                            folderId: folderId,
-                            cardId: playgroundId,
-                          },
-                        })
-                      }
-                    />
-                  </FolderIcons>
-                </Card>
-              )
-            )}
-          </PlayGroundCards>
-        </FolderCard>
-      ))}
-    </StyledRightComponent>
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -20 }}
+      className="absolute top-0 right-0 w-3/5 p-8 md:relative md:w-full md:p-4"
+    >
+      <Header openModal={openModal} />
+      {isLoading ? (
+        <SkeletonLoading />
+      ) : (
+        <AnimatePresence>
+          {Object.entries(folders).map(([folderId, folder]) => (
+            <FolderSection
+              key={folderId}
+              folderId={folderId}
+              folder={folder}
+              openModal={openModal}
+              deleteFolder={handleDeleteFolder}
+              deleteCard={handleDeleteCard}
+              navigate={navigate}
+            />
+          ))}
+        </AnimatePresence>
+      )}
+      <Toaster />
+    </motion.div>
   );
-};
+}
 
-export default RightComponent;
+function SkeletonLoading() {
+  return (
+    <div className="space-y-4">
+      {[...Array(3)].map((_, i) => (
+        <div key={i} className="space-y-2">
+          <Skeleton className="h-4 w-1/4" />
+          <div className="grid grid-cols-2 gap-4">
+            <Skeleton className="h-20" />
+            <Skeleton className="h-20" />
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+}

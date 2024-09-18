@@ -23,7 +23,7 @@ const SideBar = ({ clients, copyRoomId, leaveRoom }) => {
       <ScrollArea className="flex-grow mb-4">
         <div className="space-y-2">
           {clients?.map((client) => (
-            <Client key={client.socketId} username={client.username} />
+            <Client key={client.socketId} username={client?.username} />
           ))}
         </div>
       </ScrollArea>

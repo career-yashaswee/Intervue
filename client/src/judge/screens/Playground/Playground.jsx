@@ -98,7 +98,7 @@ const Playground = () => {
         return res5?.data;
       });
     }
-    // return res?.data;
+    return res2?.data;
   };
 
   const runCode = async () => {

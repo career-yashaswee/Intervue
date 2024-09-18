@@ -62,9 +62,10 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import Mentor from "./mentor/Mentor";
 
 import ModalProvider from "./judge/context/ModalContext";
+import PlaygroundProvider from "./judge/context/PlaygroundContext";
 // import PlaygroundProvider from "./judge/context/PlaygroundContext";
 // import Home from "./judge/screens/Home";
-// import Playground from "./judge/screens/Playground";
+import Playground from "./judge/screens/Playground/Playground";
 import { StakeHolderCard } from "./home/landing/components/StakeHolderCard";
 import LandingPage from "./home/landing/LandingPage";
 import Practice from "./dashboard/practice/Practice";
@@ -73,6 +74,11 @@ import TestSession from "./jobs/Diagnostic/components/TestSession";
 import ResumeLatexBuilder from "./dashboard/resume/components/ResumeLatexBuilder";
 import Notebook from "./workbench/Notebook";
 import VideoCall from "./mentor/components/VideoCall";
+import JudgeHome from "./judge/screens/Home/JudgeHome";
+import InterviewFeedback from "./dashboard/interview/components/FeedbackPage";
+import TransactionResultPage from "./components/transaction/Transaction";
+import DashboardLayout from "./help/DashboardLayout";
+import TicketPage from "./help/pages/TicketPage";
 // import JudgeHome from "./judge/screens/Home";
 
 // function App() {
@@ -350,214 +356,240 @@ function App() {
         <Toaster position="top-right" richColors />
         <NetworkStatusHandler />
         <div className="App relative">
-          {/* <PlaygroundProvider> */}
-          {/* <ModalProvider> */}
-          <BrowserRouter>
-            <SessionExpiryPopup
-              show={isSessionExpired}
-              onClose={() => setIsSessionExpired(false)}
-              message={
-                isSessionExpired
-                  ? "Please log in again to continue using the app."
-                  : "You do not have access to this resource."
-              }
-            />
+          <PlaygroundProvider>
+            <ModalProvider>
+              <BrowserRouter>
+                <SessionExpiryPopup
+                  show={isSessionExpired}
+                  onClose={() => setIsSessionExpired(false)}
+                  message={
+                    isSessionExpired
+                      ? "Please log in again to continue using the app."
+                      : "You do not have access to this resource."
+                  }
+                />
 
-            <Routes>
-              <Route path="/" element={<Base />} />
-              <Route
-                path="/log-in"
-                element={
-                  <GoogleOAuthProvider clientId={"SDS"}>
-                    <Login />
-                  </GoogleOAuthProvider>
-                }
-              />
-              <Route
-                path="/sign-up"
-                element={
-                  <GoogleOAuthProvider
-                    clientId={
-                      "18778878240-e4a51gclug69terlnlib92jddu5s84gg.apps.googleusercontent.com"
+                <Routes>
+                  <Route path="/" element={<Base />} />
+                  <Route
+                    path="/log-in"
+                    element={
+                      <GoogleOAuthProvider clientId={"SDS"}>
+                        <Login />
+                      </GoogleOAuthProvider>
                     }
-                  >
-                    <SignUp />
-                  </GoogleOAuthProvider>
-                }
-              />
-              <Route path="/verify" element={<InputOTPForm />} />
+                  />
+                  <Route
+                    path="/sign-up"
+                    element={
+                      <GoogleOAuthProvider
+                        clientId={
+                          "18778878240-e4a51gclug69terlnlib92jddu5s84gg.apps.googleusercontent.com"
+                        }
+                      >
+                        <SignUp />
+                      </GoogleOAuthProvider>
+                    }
+                  />
+                  <Route path="/verify" element={<InputOTPForm />} />
 
-              <Route
-                path="/flow"
-                element={
-                  <AnimateR>
-                    <FlowLayout>
-                      <Flow />
-                    </FlowLayout>
-                  </AnimateR>
-                }
-              />
+                  <Route
+                    path="/flow"
+                    element={
+                      <AnimateR>
+                        <FlowLayout>
+                          <Flow />
+                        </FlowLayout>
+                      </AnimateR>
+                    }
+                  />
 
-              <Route
-                path="/profile"
-                element={
-                  <ProtectedRoute>
-                    <MyProfile />
-                  </ProtectedRoute>
-                }
-              />
-              <Route path="/community" element={<Community />} />
-              <Route
-                path="/jobs/:jobId"
-                element={<ProtectedRoute></ProtectedRoute>}
-              />
-              <Route
-                path="/dashboard/interviews/track"
-                element={<ProtectedRoute></ProtectedRoute>}
-              />
+                  <Route
+                    path="/profile"
+                    element={
+                      <ProtectedRoute>
+                        <MyProfile />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route path="/community" element={<Community />} />
+                  <Route
+                    path="/jobs/:jobId"
+                    element={<ProtectedRoute></ProtectedRoute>}
+                  />
+                  <Route
+                    path="/dashboard/interviews/track"
+                    element={<ProtectedRoute></ProtectedRoute>}
+                  />
 
-              <Route
-                path="/dashboard/next-step"
-                element={
-                  <ProtectedRoute>
-                    <NextBestStepWidget />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/mentor"
-                element={
-                  <ProtectedRoute>
-                    <Mentor />
-                  </ProtectedRoute>
-                }
-              />
+                  <Route
+                    path="/dashboard/next-step"
+                    element={
+                      <ProtectedRoute>
+                        <NextBestStepWidget />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/mentor"
+                    element={
+                      <ProtectedRoute>
+                        <Mentor />
+                      </ProtectedRoute>
+                    }
+                  />
 
-              <Route
-                path="/diagnostic"
-                element={<ProtectedRoute></ProtectedRoute>}
-              />
+                  <Route
+                    path="/diagnostic"
+                    element={<ProtectedRoute></ProtectedRoute>}
+                  />
 
-              <Route
-                path="/dashboard"
-                element={
-                  <ProtectedRoute>
-                    <Dashboard />
-                  </ProtectedRoute>
-                }
-              />
+                  <Route
+                    path="/dashboard"
+                    element={
+                      <ProtectedRoute>
+                        <Dashboard />
+                      </ProtectedRoute>
+                    }
+                  />
 
-              <Route
-                path="/mock"
-                element={
-                  <ProtectedRoute>
-                    <InterviewPage />
-                  </ProtectedRoute>
-                }
-              />
+                  <Route
+                    path="/mock"
+                    element={
+                      <ProtectedRoute>
+                        <InterviewPage />
+                      </ProtectedRoute>
+                    }
+                  />
 
-              <Route path="/resume/build" element={<ResumeLatexBuilder />} />
-              <Route path="/notebook" element={<Notebook />} />
-              <Route path="/jobs" element={<JobsPageLayout />} />
-              <Route
-                path="/dashboard/cc"
-                element={
-                  <ProtectedRoute>
-                    <CreateCourseLayout>
-                      <CreateCourse />
-                    </CreateCourseLayout>
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/dashboard/cc/:courseId"
-                element={
-                  <ProtectedRoute>
-                    <CourseLayout />
-                  </ProtectedRoute>
-                }
-              />
+                  {/* <Route
+                    path="/resume/build"
+                    element={<ResumeLatexBuilder />}
+                  /> */}
+                  <Route path="/notebook" element={<Notebook />} />
+                  <Route path="/jobs" element={<JobsPageLayout />} />
+                  <Route
+                    path="/dashboard/cc"
+                    element={
+                      <ProtectedRoute>
+                        <CreateCourseLayout>
+                          <CreateCourse />
+                        </CreateCourseLayout>
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/dashboard/cc/:courseId"
+                    element={
+                      <ProtectedRoute>
+                        <CourseLayout />
+                      </ProtectedRoute>
+                    }
+                  />
 
-              <Route path="/mentor/connect" element={<VideoCall />} />
-              <Route
-                path="/competency/:competencyId"
-                element={<TestSession />}
-              />
+                  <Route path="/help" element={<DashboardLayout />} />
 
-              <Route path="/practice" element={<PracticeLayout />} />
+                  <Route path="/help/ticket/:id" element={<TicketPage />} />
 
-              <Route
-                path="/practice/editor/:roomId"
-                element={<EditorPageLayout />}
-              />
-              <Route
-                path="/course/:courseId"
-                element={
-                  <ProtectedRoute>
-                    <Course />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/course/:courseId/learn"
-                element={
-                  <ProtectedRoute>
-                    <Learn />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/scenario"
-                element={
-                  <ProtectedRoute>
-                    <Scenario />
-                  </ProtectedRoute>
-                }
-              />
+                  <Route path="/judge/home" element={<JudgeHome />} />
+                  <Route
+                    path="/judge/playground/:folderId/:playgroundId"
+                    element={<Playground />}
+                  />
+                  <Route path="/mentor/connect" element={<VideoCall />} />
+                  <Route
+                    path="/competency/:competencyId"
+                    element={<TestSession />}
+                  />
 
-              <Route
-                path="/resume"
-                element={
-                  <ProtectedRoute>
-                    <Resume />
-                  </ProtectedRoute>
-                }
-              />
+                  <Route path="/practice" element={<PracticeLayout />} />
 
-              <Route
-                path="/interview"
-                element={
-                  <ProtectedRoute>
-                    <Interview />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
-                path="/setting"
-                element={
-                  <ProtectedRoute>
-                    <Setting />
-                  </ProtectedRoute>
-                }
-              />
-              {/* <Route path="/judge" element={<JudgeHome />} /> */}
-              {/* <Route path="/about" element={<LandingPage />} />
+                  <Route
+                    path="/practice/editor/:roomId"
+                    element={<EditorPageLayout />}
+                  />
+                  <Route
+                    path="/course/:courseId"
+                    element={
+                      <ProtectedRoute>
+                        <Course />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/course/:courseId/learn"
+                    element={
+                      <ProtectedRoute>
+                        <Learn />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/scenario"
+                    element={
+                      <ProtectedRoute>
+                        <Scenario />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/resume"
+                    element={
+                      <ProtectedRoute>
+                        <Resume />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  {/* <Route path="/graph/*" element={<GraphComponent />} /> */}
+
+                  <Route
+                    path="/interview"
+                    element={
+                      <ProtectedRoute>
+                        <Interview />
+                      </ProtectedRoute>
+                    }
+                  />
+                  <Route
+                    path="/setting"
+                    element={
+                      <ProtectedRoute>
+                        <Setting />
+                      </ProtectedRoute>
+                    }
+                  />
+
+                  <Route
+                    path="/interview/:interviewId/feedback"
+                    element={<InterviewFeedback />}
+                  />
+
+                  <Route
+                    path="/cancel"
+                    element={
+                      <TransactionResultPage transactionSuccess={false} />
+                    }
+                  />
+                  {/* <Route path="/judge" element={<JudgeHome />} /> */}
+                  {/* <Route path="/about" element={<LandingPage />} />
               <Route
                     path="/judge/playground/:folderId/:playgroundId"
                     element={<Playground />}
                   /> */}
 
-              <Route
-                path="/getemployee/:employee_address"
-                element={<GetEmployee />}
-              />
-              <Route path="/getOrg/:orgAddress" element={<GetOrg />} />
+                  <Route
+                    path="/getemployee/:employee_address"
+                    element={<GetEmployee />}
+                  />
+                  <Route path="/getOrg/:orgAddress" element={<GetOrg />} />
 
-              <Route path="*" element={<Error />} />
-            </Routes>
-          </BrowserRouter>
-          {/* </ModalProvider> */}
-          {/* </PlaygroundProvider> */}
+                  <Route path="*" element={<Error />} />
+                </Routes>
+              </BrowserRouter>
+            </ModalProvider>
+          </PlaygroundProvider>
         </div>
       </NetworkStatusProvider>
     </ThemeProvider>

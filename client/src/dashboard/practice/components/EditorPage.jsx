@@ -2,29 +2,24 @@ import React, { useEffect, useRef } from "react";
 import Editor, { useMonaco } from "@monaco-editor/react";
 import ACTIONS from "@/shared/Actions";
 
-const MonacoEditor = ({ socketRef, roomId, onCodeChange }) => {
+const MonacoEditor = ({ socketRef, roomId, onCodeChange, userId }) => {
   const editorRef = useRef(null); // Reference to store Monaco editor instance
   const monaco = useMonaco(); // Access to the Monaco instance
+
+  // Define cursor colors for different users
+  const userCursorColors = {
+    user1: "red",
+    user2: "blue",
+    user3: "green",
+    // Add more users and colors as needed
+  };
 
   useEffect(() => {
     if (monaco) {
       console.log("Monaco instance is ready");
 
-      // Define a custom theme if needed
-      // monaco.editor.defineTheme("myCustomTheme", {
-      //   base: "vs-dark",
-      //   inherit: true,
-      //   rules: [
-      //     { background: "1E1E1E" },
-      //     { token: "comment", foreground: "6A9955" },
-      //     { token: "keyword", foreground: "569CD6" },
-      //   ],
-      //   colors: {
-      //     "editor.background": "#1E1E1E",
-      //   },
-      // });
-
-      // Set the theme
+      // Set custom theme if needed
+      // monaco.editor.defineTheme("myCustomTheme", { ... });
       // monaco.editor.setTheme("myCustomTheme");
     }
   }, [monaco]);
@@ -49,7 +44,7 @@ const MonacoEditor = ({ socketRef, roomId, onCodeChange }) => {
   };
 
   useEffect(() => {
-    const handleCodeChange = ({ code }) => {
+    const handleCodeChange = ({ code, userId, cursorPosition }) => {
       console.log(code);
       if (code !== null && editorRef.current) {
         // Update the editor content without triggering the change event again
@@ -59,6 +54,35 @@ const MonacoEditor = ({ socketRef, roomId, onCodeChange }) => {
           editorRef.current.setValue(code);
         }
       }
+
+      // Update cursor position and color
+      if (editorRef.current && cursorPosition) {
+        const color = userCursorColors[userId] || "black"; // Default color if user ID not found
+        const model = editorRef.current.getModel();
+        const position = new monaco.Position(
+          cursorPosition.lineNumber,
+          cursorPosition.column
+        );
+        const range = new monaco.Range(
+          cursorPosition.lineNumber,
+          cursorPosition.column,
+          cursorPosition.lineNumber,
+          cursorPosition.column
+        );
+
+        editorRef.current.deltaDecorations(
+          [],
+          [
+            {
+              range: range,
+              options: {
+                isWholeLine: false,
+                className: `cursor-${color}`,
+              },
+            },
+          ]
+        );
+      }
     };
 
     if (socketRef.current) {
@@ -66,13 +90,13 @@ const MonacoEditor = ({ socketRef, roomId, onCodeChange }) => {
       socketRef.current.on(ACTIONS.CODE_CHANGE, handleCodeChange);
     }
 
-    // return () => {
-    //   // Cleanup the socket listener on unmount
-    //   if (socketRef?.current) {
-    //     socketRef?.current.off(ACTIONS.CODE_CHANGE, handleCodeChange);
-    //   }
-    // };
-  }, [socketRef, roomId]); // Add socketRef and roomId as dependencies
+    return () => {
+      // Cleanup the socket listener on unmount
+      if (socketRef?.current) {
+        socketRef.current.off(ACTIONS.CODE_CHANGE, handleCodeChange);
+      }
+    };
+  }, [socketRef, roomId, monaco]); // Add monaco as a dependency
 
   return (
     <div className="h-screen w-full">

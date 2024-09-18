@@ -1,91 +1,55 @@
-import React, { useContext } from 'react'
-import styled from 'styled-components'
-import logo from '../../assets/logo.png'
-import { ModalContext } from '../../context/ModalContext'
+import React from "react";
+import { motion } from "framer-motion";
+import { useToast } from "@/components/ui/use-toast";
 
-const StyledLeftComponent = styled.div`
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 40%;
-    height: 100vh;
-    background-color: #1e1e1e;
+import {
+  Logo,
+  MainHeading,
+  SubHeading,
+  AddNewButton,
+  SkeletonLoader,
+} from "./components/Components";
 
-    display: flex;
-    justify-content: center;
-    align-items: center;
+export default function LeftComponent() {
+  const [isLoading, setIsLoading] = React.useState(true);
+  const { toast } = useToast();
 
-    @media (max-width: 768px){
-        position: relative;
-        width: 100%;
-    }
-`
-const ContentContainer = styled.div`
-    text-align: center;
-`
+  React.useEffect(() => {
+    // Simulating content loading
+    const timer = setTimeout(() => {
+      setIsLoading(false);
+    }, 2000);
 
-const Logo = styled.img`
-    width: 165px;
-    margin-bottom: 1rem;
-`
+    return () => clearTimeout(timer);
+  }, []);
 
-const MainHeading = styled.h1`
-    font-size: 2.5rem;
-    font-weight: 400;
-    color: #fff;
-    margin-bottom: 0.75rem;
+  const handleCreatePlayground = () => {
+    // Your logic for opening the modal goes here
+    toast({
+      title: "Creating new playground",
+      description: "Your new playground is being set up.",
+    });
+  };
 
-    span{
-        font-weight: 700;
-    }
-`
-const SubHeading = styled.div`
-    font-size: 1.5rem;
-    color: #fff;
-    opacity: 0.7;
-    margin-bottom: 1.5rem;
-`
-
-const AddNewButton = styled.button`
-    padding: 0.25rem 1.5rem;
-    font-size: 1rem;
-    border: none;
-    border-radius: 30px;
-    box-shadow: 0px 0px 4px 2px #8b8b8b;
-    display: flex;
-    align-items: center;
-    gap: 0.25rem;
-    transition: all 0.2s ease-in-out;
-    span{
-        font-size: 2rem;
-        font-weight: 700;
-    }
-
-    &:hover{
-        cursor: pointer;
-        scale: 1.05;
-        box-shadow: 0px 0px 6px 2px #8b8b8b;
-    }
-`
-const LeftComponent = () => {
-    const { openModal } = useContext(ModalContext);
-    return (
-        <StyledLeftComponent>
-            <ContentContainer>
-                <Logo src={logo} alt="" />
-                <MainHeading> <span>Code</span> Deck</MainHeading>
-                <SubHeading>Code. Compile. Debug.</SubHeading>
-                <AddNewButton onClick={() => openModal({
-                    show: true,
-                    modalType: 3,
-                    identifiers: {
-                        folderId: "",
-                        cardId: "",
-                    }
-                })} ><span>+</span> Create New Playground</AddNewButton>
-            </ContentContainer>
-        </StyledLeftComponent>
-    )
+  return (
+    <motion.div
+      className="fixed top-0 left-0 w-2/5 h-screen bg-background flex justify-center items-center"
+      initial={{ x: "-100%" }}
+      animate={{ x: 0 }}
+      transition={{ type: "spring", stiffness: 100 }}
+    >
+      <div className="text-center">
+        {isLoading ? (
+          <SkeletonLoader />
+        ) : (
+          <>
+            <Logo />
+            <MainHeading />
+            <SubHeading />
+            <AddNewButton onClick={handleCreatePlayground} />
+          </>
+        )}
+      </div>
+    </motion.div>
+  );
 }
-
-export default LeftComponent
