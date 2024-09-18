@@ -5,10 +5,10 @@ const {
   readJsonTranscript,
 } = require("../models/aiModel.js");
 const { voiceID, elevenLabsApiKey } = require("../models/voiceModel.js");
-
+const { textToSpeech } = require("elevenlabs-node"); // Missing import added
 const handleChat = async (req, res) => {
   const userMessage = req.body.message;
-
+  console.log(userMessage);
   if (!userMessage) {
     res.send({
       messages: [
@@ -33,12 +33,13 @@ const handleChat = async (req, res) => {
 
   const result = await startChatSession(userMessage);
   let messages = result.response.text();
+  console.log(messages);
 
   for (let i = 0; i < messages.length; i++) {
     const message = messages[i];
     const fileName = `audios/message_${i}.mp3`;
     const textInput = message.text;
-    await voice.textToSpeech(elevenLabsApiKey, voiceID, fileName, textInput);
+    await textToSpeech(elevenLabsApiKey, voiceID, fileName, textInput);
     await lipSyncMessage(i);
 
     message.audio = await audioFileToBase64(fileName);

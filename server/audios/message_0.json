@@ -1,0 +1,25 @@
+{
+  "metadata": {
+    "soundFile": "/Users/yashaswee/Code/3D Animation/r3f-virtual-girlfriend-backend/audios/message_0.wav",
+    "duration": 2.35
+  },
+  "mouthCues": [
+    { "start": 0.00, "end": 0.04, "value": "X" },
+    { "start": 0.04, "end": 0.08, "value": "B" },
+    { "start": 0.08, "end": 0.19, "value": "C" },
+    { "start": 0.19, "end": 0.33, "value": "E" },
+    { "start": 0.33, "end": 0.40, "value": "F" },
+    { "start": 0.40, "end": 0.54, "value": "C" },
+    { "start": 0.54, "end": 0.68, "value": "E" },
+    { "start": 0.68, "end": 1.03, "value": "C" },
+    { "start": 1.03, "end": 1.10, "value": "G" },
+    { "start": 1.10, "end": 1.38, "value": "C" },
+    { "start": 1.38, "end": 1.45, "value": "B" },
+    { "start": 1.45, "end": 1.52, "value": "F" },
+    { "start": 1.52, "end": 1.80, "value": "B" },
+    { "start": 1.80, "end": 1.94, "value": "C" },
+    { "start": 1.94, "end": 2.08, "value": "B" },
+    { "start": 2.08, "end": 2.15, "value": "C" },
+    { "start": 2.15, "end": 2.35, "value": "X" }
+  ]
+}

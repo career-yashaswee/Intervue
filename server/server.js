@@ -22,6 +22,7 @@ const insightsRoutes = require("./routes/insights");
 const pushRoutes = require("./routes/webPush");
 const chatRoutes = require("./routes/chatAiAvatar");
 const voiceRoutes = require("./routes/voice");
+const stripeRoutes = require("./routes/stripe");
 // --- ROUTES ---
 
 const bodyParser = require("body-parser");
@@ -63,6 +64,21 @@ io.on("connection", (socket) => {
         username,
         socketId: socket.id,
       });
+    });
+  });
+
+  // Emit cursor movement
+  socket.on(ACTIONS.CURSOR_MOVE, ({ roomId, x, y }) => {
+    const username = userSocketMap[socket.id];
+    const color = userSocketMap[socket.id].color || getRandomColor();
+
+    // Emit cursor position and color to others in the room
+    socket.to(roomId).emit(ACTIONS.CURSOR_MOVE, {
+      socketId: socket.id,
+      x,
+      y,
+      username,
+      color,
     });
   });
 
@@ -118,15 +134,20 @@ app.use("/insight", insightsRoutes);
 app.use("/webpush", pushRoutes);
 app.use("/chat", chatRoutes);
 app.use("/voices", voiceRoutes);
-
+app.use("/stripe", stripeRoutes);
 // Global error handler
 app.use((err, req, res, next) => {
   console.error(err.stack);
   res.status(500).send("Something broke!");
 });
 
+const backendUrl =
+  process.env.NODE_ENV === "production"
+    ? process.env.BACKEND_URL_PROD
+    : process.env.BACKEND_URL_DEV;
+
 server.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
+  console.log(`SERVER listening on ${backendUrl}:${port}`);
 });
 
 module.exports = app;

@@ -6,6 +6,7 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 const apiKey = process.env.GEMINI_API_KEY;
+console.log(apiKey);
 
 const genAI = new GoogleGenerativeAI(apiKey);
 const model = genAI.getGenerativeModel({
